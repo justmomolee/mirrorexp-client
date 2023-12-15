@@ -7,7 +7,6 @@ import { MdVisibility } from "react-icons/md"
 
 export default function Login() {
   const navigate = useNavigate()
-  const [accountType, setAccountType] = useState('none')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -42,6 +41,7 @@ export default function Login() {
 
   const handleSubmit = async(e:any) => {
     e.preventDefault()
+    return
     setLoading(true)
     setError('')
     setSuccess(false)
@@ -51,7 +51,7 @@ export default function Login() {
 
     try{
       // send info to server
-      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/${accountType}/login`, {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/login`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ email, password })
@@ -60,8 +60,8 @@ export default function Login() {
 
       if (res.ok) {
         setSuccess(true)
-        localStorage.setItem('resendDetails', JSON.stringify({email, password, accountType}))
-        navigate(`/login/otp/${accountType}`)
+        localStorage.setItem('resendDetails', JSON.stringify({email, password}))
+        navigate(`/login/otp/`)
       }
       else throw new Error(data.message)
       setLoading(false)
