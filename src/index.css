@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Palanquin:wght@100;200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Palanquin:wght@100;200;300;400;500;600;700&display=swap");
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+html, body {
+  width: 100%;
+}
+
+section{
+  width: 100%;
+}
+
+h1, h2{
+  line-height: normal !important;
+}
+
+h3, p{
+  font-family: 'Palanquin' !important;
+}
+
+
+
+
+/* button styling */
+.bigBtn{
+  width: fit-content;
+  background: #081f00;
+  padding: 20px 40px;
+  border-radius: 10px;
+  color: #ffffff;
+  transition: all ease-out .3s;
+  transition-delay: .1s;
+  font-size: .9rem;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  cursor: pointer;
+}
+
+.bigBtn svg{
+  font-size: 1.2rem;
+}
+
+.bigBtn::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #4ECB71;
+  transform: scaleX(0);
+  transform-origin: 0;
+  transition: all ease-in-out .3s;
+  z-index: -1;
+}
+
+.bigBtn:hover:before,
+.bigBtn:focus:before{
+  transform: scaleX(1);
+}
+
+
+
+@layer components {
+  .max-ctn {
+    width: 100%;
+    max-width: 1290px;
+    margin: 0 auto;
+  }
+
+  .input {
+    @apply sm:flex-1 max-sm:w-full text-base leading-normal text-slate-900 pl-5 max-sm:p-4 outline-none sm:border-none border max-sm:border-slate-900 max-sm:rounded-full;
+  }
+
+  .primaryBtn {
+    @apply text-white py-[18px] px-4 inline-block rounded-xl font-semibold text-sm bg-gray-900
+  }
+}
+
+@layer utilities {
+  .pad {
+    @apply sm:px-16 px-5 sm:py-24 py-12;
+  }
+
+  .pad-x {
+    @apply sm:px-16 px-5;
+  }
+
+  .pad-y {
+    @apply sm:py-24 py-12;
+  }
+
+  .pad-l {
+    @apply sm:pl-16 pl-5;
+  }
+
+  .pad-r {
+    @apply sm:pr-16 pr-5;
+  }
+
+  .pad-t {
+    @apply sm:pt-24 pt-12;
+  }
+
+  .pad-b {
+    @apply sm:pb-24 pb-12;
+  }
+
+  .info-text {
+    @apply font-montserrat text-slate-900 text-lg leading-7;
+  }
+  
+  .hd-text {
+    @apply text-3xl font-semibold md:text-5xl;
+  }
+
+  .desc {
+    @apply mb-6 max-w-[528px] text-xl md:mb-10 lg:mb-12
+  }
+
+  .avatar {
+    @apply inline-block h-12 w-12 rounded-full object-cover z-10
+  }
+}
+
+
+
+@media screen and (max-width: 1024px){
+#headlessui-portal-root .relative{
+  margin: 20px 0 !important;
+}
+
+#headlessui-portal-root .relative span{
+  font-size: 1.2rem !important;
+}
+}
+
