@@ -1,6 +1,6 @@
 import React from 'react';
 import imgSrc from '../assets/copy-trade3.png'
-import textBg from "../assets/textBg.svg"
+import textBg from "../assets/textBg.png"
 
 const LightSection2: React.FC = () => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Transition } from '@headlessui/react';
-import textBg from "../assets/textBg.svg"
+import textBg from "../assets/textBg.png"
 
 const HowItWorksSection: React.FC = () => {
   return (

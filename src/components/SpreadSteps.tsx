@@ -1,5 +1,5 @@
 const listItems = ['Raw spreads means really from 0.0 pips*', 'Our diverse and proprietary liquidity mix keeps spreads tight 24/5']
-import textBg from "../assets/textBg.svg"
+import textBg from "../assets/textBg.png"
 import CheckList from "./CheckList";
 
 const SpreadSteps = () => {

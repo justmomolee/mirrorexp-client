@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import copyTradeImg from "../assets/copy-trade3.png"
-import heroBg from "../assets/heroBg.svg"
-import phoneBg from "../assets/phoneBg.svg"
+import heroBg from "../assets/heroBg.png"
+import phoneBg from "../assets/phoneBg.png"
 import ChartSlide from "./ChartSlide";
 
 export default function Hero2 () {

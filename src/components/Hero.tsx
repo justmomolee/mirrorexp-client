@@ -1,13 +1,13 @@
 import { heroAvatarLinks } from "@/lib/utils";
-import heroBg from "../assets/heroBg.svg"
-import phoneBg from "../assets/phoneBg.svg"
+import heroBg from "../assets/heroBg.png"
+import phoneBg from "../assets/phoneBg.png"
 import ChartSlide from "./ChartSlide";
 import { Link } from "react-router-dom";
 
 const Hero:React.FC = () => {
 
   return (
-    <section className="relative bg-no-repeat bg-center" style={{ backgroundImage: `url(${heroBg})` }}>
+    <section className="relative bg-no-repeat bg-center" style={{backgroundImage: `url(${heroBg})`}}>
       <div className="max-ctn px-5 pad-y max-md:pt-40 md:px-10 grid grid-cols-1 items-center gap-12 sm:gap-20 md:grid-cols-2">
         <div className="max-w-[720px] lg:max-w-[842px]">
           <h1 className="hd-text text-white  mb-4 md:mb-10 lg:mb-12">
