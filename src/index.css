@@ -30,6 +30,29 @@ h3, p{
   font-family: 'Palanquin' !important;
 }
 
+.slideLoad{
+  transition: all ease-in-out .5s;
+  animation: toNfro 4s linear 0s infinite;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+
+
+@keyframes toNfro{
+  0%{
+    width: 0%;
+    left: 0%;
+  }
+  50%{
+    width: 70%;
+    left: 100%;
+  }
+  100%{
+    width: 0%;
+    left: 0%;
+  }
+}
 
 
 

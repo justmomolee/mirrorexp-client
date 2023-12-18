@@ -27,19 +27,47 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import PasswordReset from './pages/passwordReset/PasswordReset';
 import PricingPage from './pages/Pricing';
+import { useEffect, useState } from 'react';
+import PageLoader from './components/PageLoader';
 
 function App() {
-  // const { user, fetching } = useAuthContext();
+  const [assetsLoaded, setAssetsLoaded] = useState(false);
 
-  if (false) {
+
+  useEffect(() => {
+    const images = document.querySelectorAll('img');
+    const videos = document.querySelectorAll('video');
+
+    const loadAssets = async () => {
+      const imagePromises = Array.from(images).map((image) => {
+        return new Promise((resolve) => {
+          image.onload = resolve;
+        });
+      });
+
+      const videoPromises = Array.from(videos).map((video) => {
+        return new Promise((resolve) => {
+          video.onloadeddata = resolve;
+        });
+      });
+
+      // Wait for all image and video promises to resolve
+      await Promise.all([...imagePromises, ...videoPromises]);
+
+      // All assets are loaded, update state
+      setAssetsLoaded(true);
+    };
+
+    loadAssets();
+  }, [])
+
+  if (!assetsLoaded) {
     return (
-      <div className="formCtn">
-        <ImSpinner8 className="spin" style={{ color: '#031C6E', fontSize: '4rem' }} />
-      </div>
+      <PageLoader />
     );
   }
 
-  if (!false) {
+  if (assetsLoaded) {
     return (
       <div className="App">
         <Router>

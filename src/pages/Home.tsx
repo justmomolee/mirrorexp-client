@@ -16,6 +16,7 @@ import LightSection2 from "@/components/LightSection2";
 import LightSectionV2 from "@/components/LightSectionV2";
 import Testimonials from "@/components/Testimonials";
 import DarkSection from "@/components/DarkSection";
+import StockSlide from "@/components/stockSlide/StockSlide";
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
       <HowItWorksSection />
       <AutoCount />
       <Features />
+      <StockSlide />
       <LightSectionV2 secData={HomeSec1}/>
       <CryptoCarousel />
       <DarkSection />

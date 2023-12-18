@@ -1,4 +1,18 @@
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import netflixImg from '../assets/stocksLogos/netflix.svg'
+import bitcoinImg from '../assets/stocksLogos/bitcoin.svg'
+import coffeeImg from '../assets/stocksLogos/coffee.svg'
+import cornImg from '../assets/stocksLogos/corn.svg'
+import ethereumImg from '../assets/stocksLogos/ethereum.svg'
+import goldImg from '../assets/stocksLogos/gold.svg'
+import googleImg from '../assets/stocksLogos/google.svg'
+import litecoinImg from '../assets/stocksLogos/litecoin.svg'
+import mcdonaldsImg from '../assets/stocksLogos/mcdonalds.svg'
+import metalImg from '../assets/stocksLogos/metal.svg'
+import microsoftImg from '../assets/stocksLogos/microsoft.svg'
+import openaiImg from '../assets/stocksLogos/openai.svg'
+import rippleImg from '../assets/stocksLogos/ripple.svg'
+import teslaImg from '../assets/stocksLogos/tesla.svg'
 
 interface MenuItem {
   name: string;
@@ -461,3 +475,111 @@ export const swapHero = {
   title: "Swap Rates",
   subtitle: "(BCT) swap rates are amongst the most competitive in the world. Maximise your overnight swap earnings or reduce your swap costs across our wide range of products.",
 }
+
+
+
+
+
+
+//Stock Information
+
+export const stockInfo = [
+  {
+    name: "Bitcoin",
+    buy: "9.99",
+    sell: "10.99",
+    img: bitcoinImg,
+    bg: "#FEBD0D",
+  },
+  {
+    name: "Coffee",
+    buy: "9.99",
+    sell: "10.99",
+    img: coffeeImg,
+    bg: "#",
+  },
+  {
+    name: "Corn",
+    buy: "9.99",
+    sell: "10.99",
+    img:  cornImg,
+    bg: "#C9B33F",
+  },
+  {
+    name: "Ethereum",
+    buy: "9.99",
+    sell: "10.99",
+    img: ethereumImg,
+    bg: "#343434",
+  },
+  {
+    name: "Gold",
+    buy: "9.99",
+    sell: "10.99",
+    img: goldImg,
+    bg: "#FFB00E",
+  },
+  {
+    name: "Google",
+    buy: "9.99",
+    sell: "10.99",
+    img: googleImg,
+    bg: "#337B47",
+  },
+  {
+    name: "Litecoin",
+    buy: "9.99",
+    sell: "10.99",
+    img: litecoinImg,
+    bg: "#EEF0EF",
+  },
+  {
+    name: "Mcdonalds",
+    buy: "9.99",
+    sell: "10.99",
+    img: mcdonaldsImg,
+    bg: "#F6D746",
+  },
+  {
+    name: "Metal",
+    buy: "9.99",
+    sell: "10.99",
+    img: metalImg,
+    bg: "#2F2F2E",
+  },
+  {
+    name: "Microsoft",
+    buy: "9.99",
+    sell: "10.99",
+    img: microsoftImg,
+    bg: "#8C7845",
+  },
+  {
+    name: "Netflix",
+    buy: "9.99",
+    sell: "10.99",
+    img: netflixImg,
+    bg: "#D77E80",
+  },
+  {
+    name: "Openai",
+    buy: "9.99",
+    sell: "10.99",
+    img: openaiImg,
+    bg: "#2B2B2B",
+  },
+  {
+    name: "Ripple",
+    buy: "9.99",
+    sell: "10.99",
+    img: rippleImg,
+    bg: "#2F4A54",
+  },
+  {
+    name: "Tesla",
+    buy: "9.99",
+    sell: "10.99",
+    img: teslaImg,
+    bg: "#948988",
+  },
+]
