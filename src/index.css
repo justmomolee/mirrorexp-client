@@ -30,6 +30,10 @@ h3, p{
   font-family: 'Palanquin' !important;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .slideLoad{
   transition: all ease-in-out .5s;
   animation: toNfro 4s linear 0s infinite;

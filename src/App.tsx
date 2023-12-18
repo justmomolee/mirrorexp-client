@@ -54,7 +54,9 @@ function App() {
       await Promise.all([...imagePromises, ...videoPromises]);
 
       // All assets are loaded, update state
-      setAssetsLoaded(true);
+      setTimeout(() => {
+        setAssetsLoaded(true);
+      }, 10000);
     };
 
     loadAssets();
