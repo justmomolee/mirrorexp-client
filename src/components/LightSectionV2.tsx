@@ -22,11 +22,11 @@ export default function LightSectionV2({ secData }: {secData: secProps}) {
           <div className="w-full max-w-lg h-[450px] relative overflow-hidden">
             {secData.animUrls && 
             <div className="absolute top-0 left-0 flex items-center justify-center gap-8 scaleWrp">
-              <img src={secData.animUrls.img1} alt="trading asset" className="w-[40%] z-10 mt-20"/>
-              <img src={secData.animUrls.img2} alt="trading asset" className="w-[40%] z-10"/>
+              <img src={secData.animUrls.img1} alt="trading asset" className="w-[50%] z-10 mt-20"/>
+              <img src={secData.animUrls.img2} alt="trading asset" className="w-[50%] z-10"/>
             </div>
             }
-            <img className="absolute rounded-xl w-full" src={secData.imgUrl} alt="Image Description" />
+            <img className="absolute rounded-xl w-full h-full object-cover" src={secData.imgUrl} alt="Image Description" />
           </div>
 
           <div className=" w-full max-w-lg lg:mt-0">

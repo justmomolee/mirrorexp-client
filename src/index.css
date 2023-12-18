@@ -30,9 +30,6 @@ h3, p{
   font-family: 'Palanquin' !important;
 }
 
-body::-webkit-scrollbar {
-  display: none;
-}
 
 .slideLoad{
   transition: all ease-in-out .5s;
@@ -194,5 +191,11 @@ body::-webkit-scrollbar {
 #headlessui-portal-root .relative span{
   font-size: 1.2rem !important;
 }
+}
+
+@media screen and (max-width: 500px){
+  #slide{
+    overflow: -moz-hidden-unscrollable;
+  }
 }
 

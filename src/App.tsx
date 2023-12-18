@@ -37,29 +37,48 @@ function App() {
     const images = document.querySelectorAll('img');
     const videos = document.querySelectorAll('video');
 
-    const loadAssets = async () => {
-      const imagePromises = Array.from(images).map((image) => {
-        return new Promise((resolve) => {
-          image.onload = resolve;
-        });
-      });
+    const checkAssetsLoaded = () => {
+      const areImagesLoaded = Array.from(images).every((image) => image.complete);
+      const areVideosLoaded = Array.from(videos).every((video) => video.readyState >= 3);
 
-      const videoPromises = Array.from(videos).map((video) => {
-        return new Promise((resolve) => {
-          video.onloadeddata = resolve;
-        });
-      });
-
-      // Wait for all image and video promises to resolve
-      await Promise.all([...imagePromises, ...videoPromises]);
-
-      // All assets are loaded, update state
-      setTimeout(() => {
-        setAssetsLoaded(true);
-      }, 10000);
+      return areImagesLoaded && areVideosLoaded;
     };
 
-    loadAssets();
+    const handleLoad = () => {
+      if (checkAssetsLoaded()) {
+        setTimeout(() =>{
+          setAssetsLoaded(true);
+        }, 5000)
+      }
+    };
+
+    // Attach the load event listeners to each image
+    Array.from(images).forEach((image) => {
+      image.addEventListener('load', handleLoad);
+    });
+
+    // Attach the loadeddata event listeners to each video
+    Array.from(videos).forEach((video) => {
+      video.addEventListener('loadeddata', handleLoad);
+    });
+
+    // Check if assets are already loaded (e.g., cached assets)
+    if (checkAssetsLoaded()) {
+      setTimeout(() =>{
+        setAssetsLoaded(true);
+      }, 5000)
+    }
+
+    // Cleanup event listeners on component unmount
+    return () => {
+      Array.from(images).forEach((image) => {
+        image.removeEventListener('load', handleLoad);
+      });
+
+      Array.from(videos).forEach((video) => {
+        video.removeEventListener('loadeddata', handleLoad);
+      });
+    };
   }, [])
 
   if (!assetsLoaded) {

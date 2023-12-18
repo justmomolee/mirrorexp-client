@@ -44,7 +44,7 @@ const CryptoCarousel: React.FC = () => {
 
 
   return (
-    <section className={s.ctn} id='slideSection'>
+    <section className={s.ctn} id='slide'>
       <div className={s.wrp}>
         {["1", "2", "3"].map(() => cryptoData.map((crypto, i) => (        
           <img key={i} src={crypto.imageUrl} alt={`${crypto.symbol} Logo`} />

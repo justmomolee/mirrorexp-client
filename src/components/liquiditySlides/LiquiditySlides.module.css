@@ -1,5 +1,5 @@
 .ctn{
-  overflow: scroll;
+  overflow: hidden;
   position: relative;
   background-image: url('../../assets/liquidity-2.jpg');
   background-repeat: no-repeat;

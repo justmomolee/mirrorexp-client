@@ -11,13 +11,13 @@ interface StockData {
 export default function StockSlide({ stockData }: { stockData: StockData[] })  {
 
   return (
-    <section className={s.ctn}>
-    <h1 className=" w-full max-w-sm m-auto font-medium text-3xl text-black">
-      Trade Our Top Performing {" "}
-      <span className="bg-cover bg-center bg-no-repeat px-4 text-white" style={{ backgroundImage: `url(${textBg})`}}>
-        Products.
-      </span>
-    </h1>
+    <section className={s.ctn} id='slide'>
+      <h1 className="pl-3 w-full max-w-sm m-auto font-medium text-3xl max-md:text-2xl text-black">
+        Trade Our Top Performing {" "}
+        <span className="bg-cover bg-center bg-no-repeat px-4 text-white" style={{ backgroundImage: `url(${textBg})`}}>
+          Products.
+        </span>
+      </h1>
       <div className={s.wrp}>
         {["1", "2", "3"].map(() => stockData.map((stock, i) => (
           <div key={i} className='w-[200px] flex flex-col shadow-md'>

@@ -60,9 +60,9 @@ const imageArray = [
 
 export default function LiquiditySlides() {
   return (
-    <section className={`${s.ctn} bg-gray-900 py-16`} id='slideSection'>
+    <section className={`${s.ctn} bg-gray-900 py-16`} id='slide'>
       <div className='w-full'>
-        <h1 className='text-white text-5xl font-extrabold w-fit m-auto font-Palanquin mb-10'>Liquidity Providers</h1>
+        <h1 className='pl-3 text-white text-5xl font-extrabold w-fit m-auto font-Palanquin mb-10'>Liquidity Providers</h1>
       </div>
 
       <div className={s.wrp1}>

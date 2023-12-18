@@ -1,5 +1,5 @@
 .ctn{
-  overflow: scroll;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   position: relative;
