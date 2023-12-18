@@ -7,6 +7,10 @@ export type secProps = {
   moreDesc: string[],
   imgUrl: string,
   bulletList ?: boolean
+  animUrls ?: {
+    img1: string,
+    img2: string,
+  }
 }
 
 
@@ -14,12 +18,18 @@ export default function LightSectionV2({ secData }: {secData: secProps}) {
   return (
     <section>
       <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-        <div className="md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32">
-          <div>
-            <img className="rounded-xl" src={secData.imgUrl} alt="Image Description" />
+        <div className="flex flex-wrap lg:justify-between">
+          <div className="w-full max-w-md h-[450px] relative overflow-hidden">
+            {secData.animUrls && 
+            <div className="absolute top-0 left-0 flex items-center justify-center gap-8 scaleWrp">
+              <img src={secData.animUrls.img1} alt="trading asset" className="w-[40%] z-10 mt-20"/>
+              <img src={secData.animUrls.img2} alt="trading asset" className="w-[40%] z-10"/>
+            </div>
+            }
+            <img className="absolute rounded-xl w-full" src={secData.imgUrl} alt="Image Description" />
           </div>
 
-          <div className="mt-5 sm:mt-10 lg:mt-0">
+          <div className=" w-full max-w-md lg:mt-0">
             <div className="space-y-6 sm:space-y-8">
               <div className="space-y-2 md:space-y-4">
                 <h2 className="font-bold text-3xl lg:text-5xl text-gray-800 dark:text-gray-200">

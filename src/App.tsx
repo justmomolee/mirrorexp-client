@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-// importing pages
-import { ImSpinner8 } from 'react-icons/im';
+//importing pages
 import Home from './pages/Home';
 import Copytrade from './pages/Copytrade';
 import WhyMirrorExp from './pages/WhyMirrorExp';

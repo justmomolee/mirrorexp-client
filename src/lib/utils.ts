@@ -13,6 +13,9 @@ import microsoftImg from '../assets/stocksLogos/microsoft.svg'
 import openaiImg from '../assets/stocksLogos/openai.svg'
 import rippleImg from '../assets/stocksLogos/ripple.svg'
 import teslaImg from '../assets/stocksLogos/tesla.svg'
+import copyTradeDevice from '../assets/multibank-mt4-mt5-app-1@2x.png'
+import copyTradeDevice2 from '../assets/multibank-mt4-mt5-app-2@2x.png'
+import copyTradeDevice3 from '../assets/multibank-mt4-mt5-app-3@2x.png'
 
 interface MenuItem {
   name: string;
@@ -336,7 +339,11 @@ export const HomeSec1 = {
     "Choose if you want to invest relative or a fixed amount per each trade.", 
     "Begin mirroring the strategies of other traders automatically in real-time.",
   ],
-  imgUrl: "https://images.unsplash.com/photo-1648737963503-1a26da876aca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=900&q=80",
+  imgUrl: copyTradeDevice,
+  animUrls: {
+    img1: copyTradeDevice2,
+    img2: copyTradeDevice3,
+  }
 }
 
 
@@ -489,97 +496,83 @@ export const stockInfo = [
     buy: "9.99",
     sell: "10.99",
     img: bitcoinImg,
-    bg: "#FEBD0D",
   },
   {
     name: "Coffee",
     buy: "9.99",
     sell: "10.99",
     img: coffeeImg,
-    bg: "#",
   },
   {
     name: "Corn",
     buy: "9.99",
     sell: "10.99",
     img:  cornImg,
-    bg: "#C9B33F",
   },
   {
     name: "Ethereum",
     buy: "9.99",
     sell: "10.99",
     img: ethereumImg,
-    bg: "#343434",
   },
   {
     name: "Gold",
     buy: "9.99",
     sell: "10.99",
     img: goldImg,
-    bg: "#FFB00E",
   },
   {
     name: "Google",
     buy: "9.99",
     sell: "10.99",
     img: googleImg,
-    bg: "#337B47",
   },
   {
     name: "Litecoin",
     buy: "9.99",
     sell: "10.99",
     img: litecoinImg,
-    bg: "#EEF0EF",
   },
   {
     name: "Mcdonalds",
     buy: "9.99",
     sell: "10.99",
     img: mcdonaldsImg,
-    bg: "#F6D746",
   },
   {
     name: "Metal",
     buy: "9.99",
     sell: "10.99",
     img: metalImg,
-    bg: "#2F2F2E",
   },
   {
     name: "Microsoft",
     buy: "9.99",
     sell: "10.99",
     img: microsoftImg,
-    bg: "#8C7845",
   },
   {
     name: "Netflix",
     buy: "9.99",
     sell: "10.99",
     img: netflixImg,
-    bg: "#D77E80",
   },
   {
     name: "Openai",
     buy: "9.99",
     sell: "10.99",
     img: openaiImg,
-    bg: "#2B2B2B",
   },
   {
     name: "Ripple",
     buy: "9.99",
     sell: "10.99",
     img: rippleImg,
-    bg: "#2F4A54",
   },
   {
     name: "Tesla",
     buy: "9.99",
     sell: "10.99",
     img: teslaImg,
-    bg: "#948988",
   },
 ]

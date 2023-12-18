@@ -1,82 +1,45 @@
-import React, { useEffect, useState } from 'react';
 import s from './StockSlide.module.css';
-import Vibrant from 'node-vibrant';
+import textBg from "../../assets/textBg.png"
 
 interface StockData {
   name: string;
-  symbol: string;
-  currentPrice: number;
-  logoUrl: string;
-  palette: any;
+  buy: string;
+  sell: string;
+  img: string;
 }
 
-const StockSlide: React.FC = () => {
-  const [stockData, setStockData] = useState<StockData[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false'
-        );
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch stock data');
-        }
-
-        const data: any[] = await response.json();
-
-        const stocks: StockData[] = await Promise.all(
-          data.map(async (stock: any) => {
-            const palette = await getVibrantPalette(stock.image);
-            const logoUrl = `https://cors-anywhere.herokuapp.com/${stock.image}`;
-            return {
-              name: stock.name,
-              symbol: stock.symbol.toUpperCase(),
-              currentPrice: stock.current_price,
-              logoUrl,
-              palette,
-            };
-          })
-        );
-
-        setStockData(stocks);
-      } catch (error) {
-        console.error('Error fetching stock data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const getVibrantPalette = async (imageUrl: string): Promise<string> => {
-    return new Promise<string>((resolve) => {
-      Vibrant.from(imageUrl)
-        .getPalette()
-        .then((palette) => {
-          resolve(palette.Vibrant?.hex || '#ffffff');
-        });
-    });
-  };
+export default function StockSlide({ stockData }: { stockData: StockData[] })  {
 
   return (
-    <section className={s.ctn} id='slideSection'>
+    <section className={s.ctn}>
+    <h1 className=" w-full max-w-sm m-auto font-medium text-3xl text-black">
+      Trade Our Top Performing {" "}
+      <span className="bg-cover bg-center bg-no-repeat px-4 text-white" style={{ backgroundImage: `url(${textBg})`}}>
+        Products.
+      </span>
+    </h1>
       <div className={s.wrp}>
-        {stockData.map((stock, i) => (
-          <div key={i} style={{ backgroundColor: stock.palette }}>
-            <div className={s.topPart}>
-              <img src={stock.logoUrl} alt={`${stock.symbol} Logo`} />
-              <p>{stock.name}</p>
+        {["1", "2", "3"].map(() => stockData.map((stock, i) => (
+          <div key={i} className='w-[200px] flex flex-col shadow-md'>
+            <div className="flex items-center justify-around h-[80px] bg-gray-900">
+              <img src={stock.img} alt={`${stock.name} Logo`} className='w-[40px] h-10'/>
+              <p className='text-white font-medium text-normal'>{stock.name}</p>
             </div>
-            <div className={s.bottomPart}>
-              <p>Buy Price: ${stock.currentPrice.toFixed(2)}</p>
-              {/* Add additional pricing information as needed */}
+
+            <div className="w-full flex justify-between p-4">
+              <div className='flex flex-col items-center gap-3'>
+                <p className='text-xs text-green-600'>{stock.buy}</p>
+                <button className='py-1 px-4 bg-green-500 text-white font-semibold text-[10px]'>Buy</button>
+              </div>
+
+              <div className='flex flex-col items-center gap-3'>
+                <p className='text-xs text-green-600'>{stock.sell}</p>
+                <button className='py-1 px-4 bg-rose-600 text-white font-semibold text-[10px]'>Sell</button>
+              </div>
             </div>
           </div>
-        ))}
+        )))}
       </div>
     </section>
   );
 };
-
-export default StockSlide;

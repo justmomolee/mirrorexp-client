@@ -54,6 +54,22 @@ h3, p{
   }
 }
 
+.scaleWrp{
+  animation: scale 20s linear 0s infinite;
+  z-index: 10;
+}
+
+@keyframes scale{
+  0%{
+    scale: 1.1;
+  }
+  50%{
+    scale: 1;
+  }
+  100%{
+    scale: 1.1;
+  }
+}
 
 
 /* button styling */
