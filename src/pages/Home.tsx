@@ -11,12 +11,13 @@ import Navbar from "@/components/Navbar";
 import SpreadSteps from "@/components/SpreadSteps";
 import CryptoCarousel from "@/components/cryptoCarousel/CryptoCarousel";
 import Pricing from "@/components/pricing/Pricing";
-import { standardPlan, advancedPlan, NFP, BTC, testimonies, HomeSec1, stockInfo } from "@/lib/utils";
-import LightSection2 from "@/components/LightSection2";
+import { standardPlan, advancedPlan, NFP, BTC, testimonies, HomeSec1, stockInfo, HomeSec2, HomeSec3 } from "@/lib/utils";
 import LightSectionV2 from "@/components/LightSectionV2";
 import Testimonials from "@/components/Testimonials";
 import DarkSection from "@/components/DarkSection";
 import StockSlide from "@/components/stockSlide/StockSlide";
+import WideCard from "@/components/wideCard";
+import StockHeatmap from "@/components/StockHeatmap";
 
 export default function Home() {
   return (
@@ -31,11 +32,13 @@ export default function Home() {
       <CryptoCarousel />
       <DarkSection />
       <Pricing standardPlan={standardPlan} advancedPlan={advancedPlan} NFP={NFP} BTC={BTC}/>
-      <LightSection />
+      <StockHeatmap />
+      <LightSection secData={HomeSec2}/>
       <BlackSection />
       <SpreadSteps />
       <Testimonials data={testimonies}/>
-      <LightSection2 />
+      <WideCard />
+      <LightSection secData={HomeSec3}/>
       <LiquiditySlides />
       <FAQ />
       <Footer />

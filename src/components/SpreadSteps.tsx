@@ -1,106 +1,95 @@
 const listItems = ['Raw spreads means really from 0.0 pips*', 'Our diverse and proprietary liquidity mix keeps spreads tight 24/5']
-import textBg from "../assets/textBg.png"
 import CheckList from "./CheckList";
 
 const SpreadSteps = () => {
 
   return (
-    <section>
+    <section className="px-3 py-28">
       <div className="max-ctn flex flex-wrap gap-x-10 gap-y-20 justify-between py-12">
-        <div className="w-full p-8 bg-gray-50">
-          <h2 className="text-[2rem] font-bold mb-4">
-            Spreads from {' '}
-            <span className="bg-cover bg-center bg-no-repeat px-4 text-white" style={{ backgroundImage: `url(${textBg})`}}>
-              0.0
-            </span>
-            {' '} Pips
-          </h2>
+        <div className="w-full px-5 py-10 bg-gray-100 rounded-3xl">
+          <h3 className="text-3xl font-semibold mb-8">
+            Spreads from 0.0 Pips
+          </h3>
           <ul className="list mb-5 text-[1rem]">
             {listItems.map((item, i) => (
-            <li key={i} className="flex space-x-3">
+            <li key={i} className="flex space-x-3 mb-4">
               <CheckList />
 
-              <span className="text-sm sm:text-base text-gray-500">
+              <span className="text-sm text-gray-900 font-semibold">
                 {item}
               </span>
             </li>
             ))}
           </ul>
-          <a href="#" className="primaryBtn" >
+          <a href="#" className="primaryBtn !bg-gray-200 !text-black" >
             Pricing Overview <span className="ml-3">&rarr;</span>
           </a>
         </div>
 
-        <div className="bg-gray-50 p-8 w-full max-w-[580px]">
-          <h2 className="text-[2rem] font-bold mb-4">
-            <span className="bg-cover bg-center bg-no-repeat px-4 text-white" style={{ backgroundImage: `url(${textBg})`}}>
-              Fast
-            </span>
-            {' '} Order Execution
-          </h2>
+        <div className="bg-gray-100 rounded-3xl px-5 py-10 w-full max-w-[580px]">
+          <h3 className="text-3xl font-semibold mb-8">
+            Fast Order Execution
+          </h3>
           <ul className="list mb-5 text-[1rem]">
-            <li className="flex space-x-3">
+            <li className="flex space-x-3 mb-4">
               <CheckList />
 
-              <span className="text-sm sm:text-base text-gray-500">
+              <span className="text-sm text-gray-900 font-semibold">
                 Average execution speeds of under 40ms***
               </span>
             </li>
 
-            <li className="flex space-x-3">
+            <li className="flex space-x-3 mb-4">
               <CheckList />
 
-              <span className="text-sm sm:text-base text-gray-500">
+              <span className="text-sm text-gray-900 font-semibold">
                 Low latency fibre optic and Equinix NY4 server
               </span>
             </li>
 
-            <li className="flex space-x-3">
+            <li className="flex space-x-3 mb-4">
               <CheckList />
 
-              <span className="text-sm sm:text-base text-gray-500">
+              <span className="text-sm text-gray-900 font-semibold">
                 Free Low latency collocated VPS available
               </span>
             </li>
           </ul>
-          <a href="#" className="primaryBtn" >
+          <a href="#" className="primaryBtn !bg-gray-200 !text-black" >
             Get your Free VPS <span className="ml-3">&rarr;</span>
           </a>
         </div>
 
-        <div className="bg-gray-50 p-8 w-full max-w-[580px]">
-          <h2 className="text-[2rem] font-bold mb-4">
-            Grade {' '}
-            <span className="bg-cover bg-center bg-no-repeat px-4 text-white" style={{ backgroundImage: `url(${textBg})`}}>
-              Trading
-            </span>
-          </h2>
+        <div className="bg-gray-100 rounded-3xl px-5 py-10 w-full max-w-[580px]">
+          <h3 className="text-3xl font-semibold mb-8">
+            Grade Trading
+          </h3>
           <ul className="list mb-5 text-[1rem]">
-            <li className="flex space-x-3">
+            <li className="flex space-x-3 mb-4">
               <CheckList />
 
-              <span className="text-sm sm:text-base text-gray-500">
+              <span className="text-sm text-gray-900 font-semibold">
                 Real, deep and diverse liquidity you can trade on
               </span>
             </li>
 
-            <li className="flex space-x-3">
+            <li className="flex space-x-3 mb-4">
               <CheckList />
 
-              <span className="text-sm sm:text-base text-gray-500">
+              <span className="text-sm text-gray-900 font-semibold">
                 Over 29 Billion USD in FX trades processed daily
               </span>
             </li>
 
-            <li className="flex space-x-3">
+            <li className="flex space-x-3 mb-4">
               <CheckList />
 
-              <span className="text-sm sm:text-base text-gray-500">
+              <span className="text-sm text-gray-900 font-semibold">
                 Copied Trades have 100% success rates
               </span>
             </li>
           </ul>
-          <a href="#" className="primaryBtn" >
+          <a href="#" className="primaryBtn !bg-gray-200 !text-black" >
             Raw Pricing Benefits <span className="ml-3">&rarr;</span>
           </a>
         </div>

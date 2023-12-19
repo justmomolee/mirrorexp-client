@@ -17,6 +17,16 @@ import copyTradeDevice from '../assets/multibank-mt4-mt5-app-1@2x.png'
 import copyTradeDevice2 from '../assets/multibank-mt4-mt5-app-2@2x.png'
 import copyTradeDevice3 from '../assets/multibank-mt4-mt5-app-3@2x.png'
 
+import secImg2 from '../assets/copy-trade3.png'
+import secImg3 from '../assets/copy-trade2.png'
+
+
+
+
+
+
+
+
 interface MenuItem {
   name: string;
   description?: string;
@@ -344,6 +354,21 @@ export const HomeSec1 = {
     img1: copyTradeDevice2,
     img2: copyTradeDevice3,
   }
+}
+
+
+//Home Sections
+export const HomeSec2 = {
+  title: "Copy Trading Simplified",
+  desc: "Discover the power of copy trading with our transparent platform. Follow successful traders and replicate their strategies seamlessly.",
+  imgUrl: secImg2,
+}
+
+//Home Sections
+export const HomeSec3 = {
+  title: "When They Trade, You Trade",
+  desc: "Whether you're a beginner learning the basics or you simply don't have time to watch the markets, now it's easy to leverage other traders' expertise. With MirrorExp Copy Trading, you can automatically copy top-performing traders, instantly replicating their trading in your own portfolio.",
+  imgUrl: secImg3,
 }
 
 
