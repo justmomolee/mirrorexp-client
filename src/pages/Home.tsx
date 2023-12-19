@@ -16,8 +16,8 @@ import LightSectionV2 from "@/components/LightSectionV2";
 import Testimonials from "@/components/Testimonials";
 import DarkSection from "@/components/DarkSection";
 import StockSlide from "@/components/stockSlide/StockSlide";
-import WideCard from "@/components/wideCard";
 import StockHeatmap from "@/components/StockHeatmap";
+import WideCard from "@/components/WideCard";
 
 export default function Home() {
   return (
