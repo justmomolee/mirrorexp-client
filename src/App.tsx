@@ -28,6 +28,8 @@ import PasswordReset from './pages/passwordReset/PasswordReset';
 import PricingPage from './pages/Pricing';
 import { useEffect, useState } from 'react';
 import PageLoader from './components/PageLoader';
+import DbLayout from './components/Layouts/DbLayout';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   const [assetsLoaded, setAssetsLoaded] = useState(false);
@@ -118,6 +120,10 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/password-reset" element={<PasswordReset />} />
+
+            <Route path="/dashboard/" element={<DbLayout />}>
+              <Route path="/dashboard/home" element={<Dashboard />} />
+            </Route>
           </Routes>
         </Router>
       </div>

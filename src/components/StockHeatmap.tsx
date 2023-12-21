@@ -14,7 +14,7 @@ const StockHeatmap: FC = () => {
         "dataSource": "SPX500",
         "grouping": "sector",
         "blockSize": "market_cap_basic",
-        "blockColor": "change|240",
+        "blockColor": "change|60",
         "locale": "en",
         "symbolUrl": "",
         "colorTheme": "dark",
@@ -34,8 +34,8 @@ const StockHeatmap: FC = () => {
   }, []);
 
   return (
-    <section className='w-full h-screen min-h-[600px]'>
-      <div className="tradingview-widget-container" ref={container}>
+    <section className='h-screen min-h-[600px]'>
+      <div className="tradingview-widget-container m-auto max-ctn rounded-xl overflow-hidden" ref={container}>
         <div className="tradingview-widget-container__widget"></div>
       </div>
     </section>

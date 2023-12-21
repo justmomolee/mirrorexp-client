@@ -11,7 +11,7 @@ import Navbar from "@/components/Navbar";
 import SpreadSteps from "@/components/SpreadSteps";
 import CryptoCarousel from "@/components/cryptoCarousel/CryptoCarousel";
 import Pricing from "@/components/pricing/Pricing";
-import { standardPlan, advancedPlan, NFP, BTC, testimonies, HomeSec1, stockInfo, HomeSec2, HomeSec3 } from "@/lib/utils";
+import { standardPlan, advancedPlan, NFP, BTC, testimonies, HomeSec1, stockInfo, HomeSec2, HomeSec3, HomeSec4 } from "@/lib/utils";
 import LightSectionV2 from "@/components/LightSectionV2";
 import Testimonials from "@/components/Testimonials";
 import DarkSection from "@/components/DarkSection";
@@ -25,6 +25,7 @@ export default function Home() {
       <Navbar />  
       <Hero />
       <HowItWorksSection />
+      <LightSectionV2 secData={HomeSec4}/>
       <AutoCount />
       <Features />
       <StockSlide stockData={stockInfo}/>

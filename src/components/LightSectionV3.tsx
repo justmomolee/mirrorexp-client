@@ -21,9 +21,9 @@ export default function LightSectionV3() {
                   Their potential becomes yours too!
                 </p>
                 <p className="text-gray-500 flex flex-col gap-2">
-                  <span className="">Find a trader you like and make sure to check if the risk score suits you.</span>
-                  <span className="">Choose if you want to invest relative or a fixed amount per each trade.</span>
-                  <span className="">Begin mirroring the strategies of other traders automatically in real-time.</span>
+                  <span>Find a trader you like and make sure to check if the risk score suits you.</span>
+                  <span>Choose if you want to invest relative or a fixed amount per each trade.</span>
+                  <span>Begin mirroring the strategies of other traders automatically in real-time.</span>
                 </p>
               </div>
 
