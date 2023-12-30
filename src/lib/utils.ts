@@ -88,13 +88,6 @@ export const menuItems: MenuGroup[] = [
   { name: 'More', icon: ChevronDownIcon, items: [...more], href: '/' },
 ];
 
-export const mobileMenuItems: MenuGroup[] = [
-  ...menuItems,
-  { name: 'Log in', items: [], href: '/login' },
-  { name: 'Register', items: [], href: '/register' },
-];
-
-
 
 export const standardPlan = [
   {

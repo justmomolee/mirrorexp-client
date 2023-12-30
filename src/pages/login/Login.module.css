@@ -40,21 +40,24 @@
 }
 
 .ctn{
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  overflow-y: scroll;
+  overflow-y: hidden;
   padding: 100px 0;
+  background-image: url(../../assets/greenBg.png);
+  background-size: cover;
+  background-position: center;
 }
 
 .formWrp{
   width: 350px;
   border-radius: 10px;
-  padding: 20px 15px;
+  padding: 20px;
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -64,6 +67,8 @@
   transform-origin: center;
   transition: all ease-in .5s;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.04);
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
 }
 
 .formWrp p{
@@ -108,7 +113,7 @@
   margin-bottom: 15px;
   font-size: .9rem;
   font-weight: 500;
-  color: rgba(35, 35, 36, 0.6);
+  color: rgba(35, 35, 36, 0.8);
   transition: all ease-out .3s;
   outline: none;
   background: none;

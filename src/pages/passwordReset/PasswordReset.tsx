@@ -13,6 +13,7 @@ export default function PasswordReset() {
   const [newPassword, setNewPassword] = useState('');
   const [isAdmin, setIsAdmin] = useState(false)
   const { page } = useParams();
+  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
   // handling reset
   const handleReset = async(e:any) => {
@@ -26,7 +27,7 @@ export default function PasswordReset() {
       setError(null)
 
       if(isAdmin) {
-        const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/forgot-password/admin/${email}`)
+        const res = await fetch(`${url}/users/forgot-password/admin/${email}`)
         const data = await res.json()
         
         if(res.ok) {
@@ -36,7 +37,7 @@ export default function PasswordReset() {
       }
 
       if(!isAdmin) {
-        const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/forgot-password/${email}`)
+        const res = await fetch(`${url}/users/forgot-password/${email}`)
         const data = await res.json()
 
         if(res.ok) {
@@ -65,7 +66,7 @@ export default function PasswordReset() {
       setLoading(true)
       setError(null)
 
-      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/reset-password`, {
+      const res = await fetch(`${url}/users/reset-password`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({email, password: newPassword})

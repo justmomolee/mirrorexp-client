@@ -53,7 +53,7 @@ function ChartSlide() {
   }, []);  
 
   return (
-    <div className="tradingview-widget-container backdrop-blur-md bg-white/10" ref={container}>
+    <div className="tradingview-widget-container" ref={container}>
       <div className="tradingview-widget-container__widget py-2"></div>
     </div>
   );

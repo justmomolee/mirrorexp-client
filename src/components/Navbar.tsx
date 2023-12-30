@@ -4,8 +4,9 @@ import { ChevronDownIcon, CursorArrowRaysIcon } from '@heroicons/react/20/solid'
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg'
-import { MenuGroup, menuItems, mobileMenuItems } from '@/lib/utils';
+import { MenuGroup, menuItems } from '@/lib/utils';
 import { PiUserLight } from "react-icons/pi";
+import { contextData } from '@/context/AuthContext';
 
 
 
@@ -25,7 +26,7 @@ function MenuList({ items }: { items: MenuGroup[]}) {
 
   
   return (
-    <div className={`lg:flex lg:items-center gap-3 max-lg:py-6`}>
+    <div className={`lg:flex lg:items-center gap-3`}>
       {items.map((listItem, i) => (
       <Popover className="relative" key={i}>
         {listItem.items.length > 0 ?
@@ -75,6 +76,16 @@ function MenuList({ items }: { items: MenuGroup[]}) {
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user } = contextData()
+
+  const dashboard = [
+    { name: 'Dashboard', items: [], href: '/dashboard' },
+  ]
+
+  const auth = [
+    { name: 'Login', items: [], href: '/login' },
+    { name: 'Register', items: [], href: '/register' },
+  ]
 
   return (
     <header className="fixed w-full top-0 left-0 z-40 backdrop-blur-md" id='navBar'>
@@ -101,7 +112,13 @@ export default function Navbar() {
           <MenuList items={menuItems} />
         </Popover.Group>
 
-        {/* Mobile Menu */}
+        {user ? 
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-6">
+          <Link to="/dashboard" className="border border-white/20 px-4 py-2 !rounded-lg text-sm font-medium text-gray-100 flex items-center gap-2">
+            Dashboard <span className="ml-3"><PiUserLight /></span>
+          </Link>
+        </div> :
+
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-6">
           <Link to="/register" className="border border-white/20 px-4 py-2 !rounded-lg text-sm font-medium text-gray-100 flex items-center gap-2">
             Register <span className="ml-3"><PiUserLight /></span>
@@ -111,6 +128,7 @@ export default function Navbar() {
             Log in <span className="ml-3" aria-hidden="true">&rarr;</span>
           </Link>
         </div>
+        }
       </nav>
 
       {/* Mobile Menu Dialog */}
@@ -119,7 +137,7 @@ export default function Navbar() {
         <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <Link to="/">
-              <img className="h-8 w-auto" src={logo} alt="logo" />
+              <img className="h-8 w-auto mb-5" src={logo} alt="logo" />
             </Link>
 
             <button
@@ -130,7 +148,9 @@ export default function Navbar() {
               <XMarkIcon className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
-          <MenuList items={mobileMenuItems}/>
+          <MenuList items={menuItems}/>
+          {user && <MenuList items={dashboard}/>}
+          {!user && <MenuList items={auth}/>}
         </Dialog.Panel>
       </Dialog>
     </header>

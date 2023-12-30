@@ -1,12 +1,13 @@
 import logo from "../../assets/logo2.svg"
 import s from "./Login.module.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ImSpinner8 } from "react-icons/im"
 import { Link, useNavigate } from "react-router-dom"
 import { MdVisibility } from "react-icons/md"
+import Otp from "@/components/Otp"
+import { contextData } from "@/context/AuthContext"
 
 export default function Login() {
-  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -14,7 +15,14 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [showButton, setShowButton] = useState(false)
-  
+  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;  
+  const { user } = contextData()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(user) return navigate('/dashboard')
+  }, [])
+
 
 
   const handleChange = (e:any) => {
@@ -38,20 +46,15 @@ export default function Login() {
   }
 
 
-
   const handleSubmit = async(e:any) => {
     e.preventDefault()
-    return
     setLoading(true)
     setError('')
     setSuccess(false)
 
-    localStorage.removeItem('retailerPH')
-    localStorage.removeItem('wholesalerPH')
-
     try{
       // send info to server
-      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/login`, {
+      const res = await fetch(`${url}/users/login`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ email, password })
@@ -60,8 +63,6 @@ export default function Login() {
 
       if (res.ok) {
         setSuccess(true)
-        localStorage.setItem('resendDetails', JSON.stringify({email, password}))
-        navigate(`/login/otp/`)
       }
       else throw new Error(data.message)
       setLoading(false)
@@ -71,9 +72,13 @@ export default function Login() {
     }
   }
 
+  if(success) {
+    return (
+    <Otp username={""} referredBy={""} email={email} password={password}/>
+    )
+  }
 
-
-  return (
+  return (!user &&
     <div className={s.ctn}>
       <div className={s.formWrp}>
           <Link to="/" className="w-full mb-6">

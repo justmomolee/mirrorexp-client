@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { Route, Routes } from 'react-router-dom';
 
 //importing pages
 import Home from './pages/Home';
@@ -26,62 +27,38 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import PasswordReset from './pages/passwordReset/PasswordReset';
 import PricingPage from './pages/Pricing';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense, lazy } from 'react';
 import PageLoader from './components/PageLoader';
-import DbLayout from './components/Layouts/DbLayout';
-import Dashboard from './pages/Dashboard';
+import { contextData } from './context/AuthContext'
+import UpdateProfile from './components/UpdateProfile';
+import routes from './routes';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Loader from './common/Loader';
+
+const DefaultLayout = lazy(() => import('./components/Layouts/DefaultLayout'));
 
 function App() {
   const [assetsLoaded, setAssetsLoaded] = useState(false);
+  const { fetching, user } = contextData();
+
 
 
   useEffect(() => {
     const images = document.querySelectorAll('img');
     const videos = document.querySelectorAll('video');
 
-    const checkAssetsLoaded = () => {
-      const areImagesLoaded = Array.from(images).every((image) => image.complete);
-      const areVideosLoaded = Array.from(videos).every((video) => video.readyState >= 3);
+    const areImagesLoaded = Array.from(images).every((image) => image.complete);
+    const areVideosLoaded = Array.from(videos).every((video) => video.readyState >= 3);
 
-      return areImagesLoaded && areVideosLoaded;
-    };
-
-    const handleLoad = () => {
-      if (checkAssetsLoaded()) {
-        setTimeout(() =>{
-          setAssetsLoaded(true);
-        }, 5000)
-      }
-    };
-
-    // Attach the load event listeners to each image
-    Array.from(images).forEach((image) => {
-      image.addEventListener('load', handleLoad);
-    });
-
-    // Attach the loadeddata event listeners to each video
-    Array.from(videos).forEach((video) => {
-      video.addEventListener('loadeddata', handleLoad);
-    });
-
-    // Check if assets are already loaded (e.g., cached assets)
-    if (checkAssetsLoaded()) {
-      setTimeout(() =>{
+    if (areImagesLoaded && areVideosLoaded && !fetching) {
+      setTimeout(() => {
         setAssetsLoaded(true);
-      }, 5000)
+        console.log(fetching, user)
+      }, 5000);
     }
+  }, [fetching])
 
-    // Cleanup event listeners on component unmount
-    return () => {
-      Array.from(images).forEach((image) => {
-        image.removeEventListener('load', handleLoad);
-      });
 
-      Array.from(videos).forEach((video) => {
-        video.removeEventListener('loadeddata', handleLoad);
-      });
-    };
-  }, [])
 
   if (!assetsLoaded) {
     return (
@@ -92,7 +69,11 @@ function App() {
   if (assetsLoaded) {
     return (
       <div className="App">
-        <Router>
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+          containerClassName="overflow-auto"
+        />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
@@ -117,15 +98,32 @@ function App() {
             <Route path="/more/spreads" element={<Spreads />} />
             <Route path="/more/hours" element={<Hours />} />
             <Route path="/more/swap" element={<Swap />} />
+
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/register/:ref" element={<Register />} />
             <Route path="/password-reset" element={<PasswordReset />} />
 
-            <Route path="/dashboard/" element={<DbLayout />}>
+            <Route path="/dashboard/" element={<DefaultLayout />}>
+              <Route index element={<Dashboard />} />
               <Route path="/dashboard/home" element={<Dashboard />} />
+              <Route path="/dashboard/updateProfile" element={<UpdateProfile />} />
+                {routes.map((routes, i) => {
+                  const { path, component: Component } = routes;
+                  return (
+                    <Route
+                      key={i}
+                      path={path}
+                      element={
+                        <Suspense fallback={<Loader />}>
+                          <Component />
+                        </Suspense>
+                      }
+                    />
+                  );
+                })}
             </Route>
           </Routes>
-        </Router>
       </div>
     );
   }
