@@ -1,13 +1,15 @@
-import { lazy } from 'react';
-const Trades = lazy(() => import('@/pages/Dashboard/Trades'));
-const LiveTrades = lazy(() => import('@/pages/Dashboard/LiveTrades'));
-const Profile = lazy(() => import('@/pages/Dashboard/Profile'));
-const Transactions = lazy(() => import('@/pages/Dashboard/Transactions'));
-const Ranking = lazy(() => import('@/pages/Dashboard/Ranking'));
-const MFA = lazy(() => import('@/pages/Dashboard/MFA'));
-const KYC = lazy(() => import('@/pages/Dashboard/KYC'));
-const Settings = lazy(() => import('@/pages/Dashboard/Settings'));
-const Bonus = lazy(() => import('@/pages/Dashboard/Bonus'));
+import Pricing from "@/components/pricing/Pricing";
+import Bonus from "@/pages/Dashboard/Bonus";
+import KYC from "@/pages/Dashboard/KYC";
+import LiveTrades from "@/pages/Dashboard/LiveTrades";
+import MFA from "@/pages/Dashboard/MFA";
+import Profile from "@/pages/Dashboard/Profile";
+import Ranking from "@/pages/Dashboard/Ranking";
+import Settings from "@/pages/Dashboard/Settings";
+import Trades from "@/pages/Dashboard/Trades";
+import Transactions from "@/pages/Dashboard/Transactions";
+import TransferToDeposit from "@/pages/Dashboard/TransferToDeposit";
+import TransferToTrade from "@/pages/Dashboard/TransferToTrade";
 
 const coreRoutes = [
   {
@@ -19,6 +21,21 @@ const coreRoutes = [
     path: '/dashboard/liveTrades',
     title: 'LiveTrades',
     component: LiveTrades,
+  },
+  {
+    path: '/dashboard/transfer',
+    title: 'Transfer',
+    component: TransferToTrade,
+  },
+  {
+    path: '/dashboard/transfer/trade',
+    title: 'Transfer',
+    component: TransferToTrade,
+  },
+  {
+    path: '/dashboard/transfer/deposit',
+    title: 'Transfer',
+    component: TransferToDeposit,
   },
   {
     path: '/dashboard/transactions',
@@ -34,6 +51,11 @@ const coreRoutes = [
     path: '/dashboard/ranking',
     title: 'Ranking',
     component: Ranking,
+  },
+  {
+    path: '/dashboard/pricing',
+    title: 'Pricing',
+    component: Pricing,
   },
   {
     path: '/dashboard/bonus',

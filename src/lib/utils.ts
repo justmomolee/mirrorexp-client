@@ -96,7 +96,7 @@ export const standardPlan = [
       max: 25
     },
     title: "STANDARD",
-    truepoints: ["Minimum:$3,000", "Maximum:$4,999", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩3,000", "Maximum: ﹩4,999", "10% Trade Commission", "24/7 active support"],
   },
   {
     pips: {
@@ -104,7 +104,7 @@ export const standardPlan = [
       max: 30
     },
     title: "MASTER",
-    truepoints: ["Minimum:$5,000", "Maximum:$9,999", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩5,000", "Maximum: ﹩9,999", "10% Trade Commission", "24/7 active support"],
   },
   {
     pips: {
@@ -112,7 +112,7 @@ export const standardPlan = [
       max: 35
     },
     title: "PREMIUM",
-    truepoints: ["Minimum:$10,000", "Maximum:$19,999", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩10,000", "Maximum: ﹩19,999", "10% Trade Commission", "24/7 active support"],
   },
   {
     title: "ULTIMATE",
@@ -120,7 +120,7 @@ export const standardPlan = [
       min: 35,
       max: 40
     },
-    truepoints: ["Minimum:$20,000", "Maximum:$49,999", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩20,000", "Maximum: ﹩49,999", "10% Trade Commission", "24/7 active support"],
   },
   {
     pips: {
@@ -128,7 +128,7 @@ export const standardPlan = [
       max: 45
     },
     title: "CORPORATE",
-    truepoints: ["Minimum:$50,000", "Maximum: Unlimited", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩50,000", "Maximum: Unlimited", "10% Trade Commission", "24/7 active support"],
   },
 ]
 
@@ -140,7 +140,7 @@ export const advancedPlan = [
       max: 40
     },
     title: "STANDARD",
-    truepoints: ["Minimum:$1,000", "Maximum:$9,999", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩1,000", "Maximum: ﹩9,999", "10% Trade Commission", "24/7 active support"],
   },
   {
     pips: {
@@ -148,7 +148,7 @@ export const advancedPlan = [
       max: 45
     },
     title: "MASTER PLUS",
-    truepoints: ["Minimum:$10,000", "Maximum:$19,999", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩10,000", "Maximum: ﹩19,999", "10% Trade Commission", "24/7 active support"],
   },
   {
     pips: {
@@ -156,7 +156,7 @@ export const advancedPlan = [
       max: 60
     },
     title: "PREMIUM",
-    truepoints: ["Minimum:$20,000", "Maximum:$49,999", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩20,000", "Maximum: ﹩49,999", "10% Trade Commission", "24/7 active support"],
   },
   {
     title: "ULTIMATE",
@@ -164,7 +164,7 @@ export const advancedPlan = [
       min: 60,
       max: 70
     },
-    truepoints: ["Minimum:$50,000", "Maximum:$99,999", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩50,000", "Maximum: ﹩99,999", "10% Trade Commission", "24/7 active support"],
   },
   {
     pips: {
@@ -172,7 +172,7 @@ export const advancedPlan = [
       max: 80
     },
     title: "CORPORATE",
-    truepoints: ["Minimum:$100,000", "Maximum: Unlimited", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩100,000", "Maximum: Unlimited", "10% Trade Commission", "24/7 active support"],
   },
 ]
 
@@ -184,7 +184,7 @@ export const NFP = [
       max: 124
     },
     title: "STARTER",
-    truepoints: ["Minimum:$50,000", "Maximum:$99,999", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩50,000", "Maximum: ﹩99,999", "10% Trade Commission", "24/7 active support"],
   },
   {
     pips: {
@@ -192,7 +192,7 @@ export const NFP = [
       max: undefined
     },
     title: "PREMIUM",
-    truepoints: ["Minimum:$100,000", "Maximum:$149,999", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩100,000", "Maximum: ﹩149,999", "10% Trade Commission", "24/7 active support"],
   },
   {
     pips: {
@@ -200,7 +200,7 @@ export const NFP = [
       max: undefined
     },
     title: "ULTIMATE",
-    truepoints: ["Minimum:$150,000", "Maximum: Unlimited", "10% Trade Commission", "24/7 active support"],
+    truepoints: ["Minimum: ﹩150,000", "Maximum: Unlimited", "10% Trade Commission", "24/7 active support"],
   },
 ]
 

@@ -27,15 +27,13 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import PasswordReset from './pages/passwordReset/PasswordReset';
 import PricingPage from './pages/Pricing';
-import { useEffect, useState, Suspense, lazy } from 'react';
+import { useEffect, useState, lazy } from 'react';
 import PageLoader from './components/PageLoader';
 import { contextData } from './context/AuthContext'
 import UpdateProfile from './components/UpdateProfile';
 import routes from './routes';
 import Dashboard from './pages/Dashboard/Dashboard';
-import Loader from './common/Loader';
-
-const DefaultLayout = lazy(() => import('./components/Layouts/DefaultLayout'));
+import DefaultLayout from './components/Layouts/DefaultLayout';
 
 function App() {
   const [assetsLoaded, setAssetsLoaded] = useState(false);
@@ -108,18 +106,11 @@ function App() {
               <Route index element={<Dashboard />} />
               <Route path="/dashboard/home" element={<Dashboard />} />
               <Route path="/dashboard/updateProfile" element={<UpdateProfile />} />
+
                 {routes.map((routes, i) => {
                   const { path, component: Component } = routes;
                   return (
-                    <Route
-                      key={i}
-                      path={path}
-                      element={
-                        <Suspense fallback={<Loader />}>
-                          <Component />
-                        </Suspense>
-                      }
-                    />
+                    <Route key={i} path={path} element={<Component />} />
                   );
                 })}
             </Route>

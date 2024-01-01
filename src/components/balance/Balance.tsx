@@ -1,8 +1,5 @@
 import s from './Balance.module.css'
-import logo from '../../assets/fav.svg';
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-// import Modal from '../modal/Modal'
 
 
 
@@ -19,14 +16,6 @@ interface BalanceProps {
 }
 
 export default function Balance({type, user}: BalanceProps) {
-  const [showModal, setShowModal] = useState(false)
-  const [modalType, setModalType] = useState('')
-
-
-
-  const handleModal = (e:boolean) => {
-    setShowModal(e)
-  }
 
     
   const handleCopy = async (textToCopy:string) => {
@@ -45,10 +34,10 @@ export default function Balance({type, user}: BalanceProps) {
         <div className={s.left}>
           <p className={s.title}>{type === "balance"? "Total Balance" : type}</p>
           <h1 className={s.bal}>{
-            type === "balance"? (user.deposit + user.interest + user.trade).toLocaleString('en-US')
-            : type === "trade"? user.trade.toLocaleString('en-US')
-              : type === "bonus"? user.bonus.toLocaleString('en-US')
-              : user.card}<span>$</span>
+            type === "balance"? (user?.deposit + user?.interest + user?.trade).toLocaleString('en-US')
+            : type === "trade"? user?.trade.toLocaleString('en-US')
+              : type === "bonus"? user?.bonus.toLocaleString('en-US')
+              : 0}<span>$</span>
           </h1>
 
           {type === "balance" ? 
@@ -71,21 +60,21 @@ export default function Balance({type, user}: BalanceProps) {
           <div className='flex gap-2'>
             <h3 className={s.miniBal}>
               <span className='text-[8px] text-gray-400 font-extralight'>Deposit</span>
-              <span>{user.deposit.toLocaleString('en-US')}<span className="font-[Courier] text-[8px]">$</span></span>
+              <span>{user?.deposit.toLocaleString('en-US')}<span className="font-[Courier] text-[8px]">$</span></span>
             </h3>
 
             <h3 className={s.miniBal}>
               <span className='text-[8px] text-gray-400 font-thin'>Interest</span>
-              <span>{user.interest.toLocaleString('en-US')}<span className="font-[Courier] text-[8px]">$</span></span>
+              <span>{user?.interest.toLocaleString('en-US')}<span className="font-[Courier] text-[8px]">$</span></span>
             </h3>
           </div>
 
-          <img src={logo} alt='logo' className="w-6" />
+          <img src="/fav.svg" alt='logo' className="w-6" />
 
           {type === "trade" ? (
-          <p className={s.btn} onClick={() => {setModalType('startTrade'); setShowModal(true)}}>
+          <Link to="/dashboard/pricing" className={s.btn}>
             Trade {">>"}
-          </p>
+          </Link>
           ) : type === "bonus" ? <div className={s.btn} onClick={() => handleCopy(user.username)}>Copy Referral Code</div> : 
           (
             <Link to="/dashboard/deposit" className={s.btn}>

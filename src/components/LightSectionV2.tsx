@@ -23,7 +23,7 @@ export default function LightSectionV2({ secData }: {secData: secProps}) {
           <div className=" w-full max-w-xl lg:mt-0">
             <div className="space-y-6 sm:space-y-8">
               <div className="space-y-2 md:space-y-4">
-                <h2 className="font-bold text-3xl lg:text-5xl text-gray-800 dark:text-gray-200">
+                <h2 className="font-bold text-3xl lg:text-5xl text-gray-500">
                   {secData.title}
 
                   {secData.span &&
