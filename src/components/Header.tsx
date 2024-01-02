@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Logo from '../../public/fav.svg';
+import Logo from '../assets/fav.svg';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import DropdownUser from './DropdownUser';
 
