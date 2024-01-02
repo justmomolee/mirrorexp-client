@@ -62,11 +62,10 @@ export default function Pricing() {
 
 
   return (
-    <>
     <section className="pt-14 relative">
       <div className="w-full max-w-[fit-content] m-auto flex flex-col justify-center gap-5">
         <h1 className={`text-3xl font-semibold text-gray-800   ${isDashboardRoute && "dark:text-gray-100"} text-center`}>Pricing</h1>
-        <div className="bg-gray-100 rounded-full flex flex-wrap gap-1 p-2 transition-all">
+        <div className="rounded-full flex flex-wrap gap-1 p-2 transition-all justify-center">
           <button onClick={showStandard} className={`${standard ? 'bg-green-300' : 'bg-white'} text-gray-800 rounded-full px-3 py-1 text-xs font-semibold`}>Standard</button>
           <button onClick={showAdvanced} className={`${advanced ? 'bg-green-300' : 'bg-white'} text-gray-800 rounded-full px-3 py-1 text-xs font-semibold`}>Advanced</button>
           <button onClick={showNFP} className={`${nfp ? 'bg-green-300' : 'bg-white'} text-gray-800 rounded-full px-3 py-1 text-xs font-semibold`}>NFP</button>
@@ -155,8 +154,5 @@ export default function Pricing() {
       }
     {showModal && <TradeModal tradeType={tradeType} toggleModal={toggleModal}/>}
     </section>
-
-
-    </>
   )
 }

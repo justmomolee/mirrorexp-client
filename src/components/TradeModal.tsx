@@ -10,6 +10,8 @@ export default function TradeModal({tradeType, toggleModal}:any) {
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
   const { user } = contextData()
 
+
+
   const startTrade = async (e: any) => {
     e.preventDefault()
     setError('')
@@ -34,7 +36,7 @@ export default function TradeModal({tradeType, toggleModal}:any) {
     setSuccess(false)
 
     try {
-      const res = await fetch(`${url}/trade`, {
+      const res = await fetch(`${url}/trades`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ id: user._id, amount, package: tradeType })
@@ -54,10 +56,10 @@ export default function TradeModal({tradeType, toggleModal}:any) {
 
 
   return (
-      <div className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+      <div className="w-screen h-screen fixed left-0 top-0 z-9999 flex items-center justify-center backdrop-blur px-2">
         <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
           <form className="space-y-6" action="#" onSubmit={startTrade}>
-            <h5 className="text-xl font-medium text-gray-900 dark:text-white capitalize">Start Your {tradeType} Trade</h5>
+            <h5 className="text-xl font-medium text-gray-900 dark:text-white capitalize">{tradeType} Trade</h5>
             <div>
               <label htmlFor="otp" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount</label>
               <input onChange={(e:any) => setAmount(e.target.value)} value={amount} type="number" id="otp" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Enter Transfer Amount" required/>

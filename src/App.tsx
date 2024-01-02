@@ -27,7 +27,7 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import PasswordReset from './pages/passwordReset/PasswordReset';
 import PricingPage from './pages/Pricing';
-import { useEffect, useState, lazy } from 'react';
+import { useEffect, useState } from 'react';
 import PageLoader from './components/PageLoader';
 import { contextData } from './context/AuthContext'
 import UpdateProfile from './components/UpdateProfile';

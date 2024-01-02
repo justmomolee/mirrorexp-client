@@ -1,5 +1,6 @@
 import Pricing from "@/components/pricing/Pricing";
 import Bonus from "@/pages/Dashboard/Bonus";
+import Deposit from "@/pages/Dashboard/Deposit";
 import KYC from "@/pages/Dashboard/KYC";
 import LiveTrades from "@/pages/Dashboard/LiveTrades";
 import MFA from "@/pages/Dashboard/MFA";
@@ -21,6 +22,11 @@ const coreRoutes = [
     path: '/dashboard/liveTrades',
     title: 'LiveTrades',
     component: LiveTrades,
+  },
+  {
+    path: '/dashboard/deposit',
+    title: 'Deposit',
+    component: Deposit,
   },
   {
     path: '/dashboard/transfer',
