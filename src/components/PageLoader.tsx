@@ -1,6 +1,13 @@
+import { useEffect } from 'react';
 import logo from '../assets/logo.svg';
 
 export default function PageLoader() {
+  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+
+  useEffect(() => {
+    console.log(url)
+  })
+
   return (
     <section className='flex items-center justify-center h-screen bg-gray-900'>
       <div className='flex flex-col gap-5'>
