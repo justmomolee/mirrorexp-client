@@ -22,7 +22,7 @@ import logo from '../assets/logo.svg'
                       type="email"
                       placeholder="Enter your email"
                       name="email"
-                      className="font-inter relative mt-4 w-full rounded-md border border-black bg-[#232323] px-6 py-4 text-base"
+                      className="font-inter relative mt-4 w-full rounded-md border border-black bg-[#0e0e0e] px-6 py-4 text-base"
                     />
                     <button type="submit" className="absolute right-[15px] top-[55px]">
                     <RiMailFill size={30} color={'#ffffff4e'}/>
