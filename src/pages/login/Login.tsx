@@ -11,10 +11,9 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState('')
+  const [error, setError] = useState<boolean|string>(false)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [showButton, setShowButton] = useState(false)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;  
   const { user } = contextData()
   const navigate = useNavigate()
@@ -23,24 +22,7 @@ export default function Login() {
     if(user) return navigate('/dashboard')
   }, [])
 
-
-
-  const handleChange = (e:any) => {
-    if(e.target.type === 'email') {
-      setEmail(e.target.value.toLowerCase())
-      if(e.target.value.length > 7 && e.target.value.includes('@') && password.length > 7)
-        setShowButton(true)
-      else setShowButton(false)
-    }
-
-    if(e.target.type === 'password' || e.target.type === 'text') {
-      setPassword(e.target.value)
-      if(email.length > 7 && email.includes('@') && e.target.value.length > 7)
-        setShowButton(true)
-      else setShowButton(false)
-    }
-  }
-
+    
   const handleShowPassword = () => {
     setShowPassword(!showPassword)
   }
@@ -48,8 +30,13 @@ export default function Login() {
 
   const handleSubmit = async(e:any) => {
     e.preventDefault()
+
+    if(email.length < 7) return setError("Your email must be at least 7 characters")
+    if(!email.includes('@')) return setError("Invalid Email")
+    if(password.length < 5) return setError("Your password must be at least 5 characters")
+
     setLoading(true)
-    setError('')
+    setError(false)
     setSuccess(false)
 
     try{
@@ -59,6 +46,7 @@ export default function Login() {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ email, password })
       })
+
       const data = await res.json()
 
       if (res.ok) {
@@ -90,17 +78,17 @@ export default function Login() {
             <Link to="/register">Sign <span>Up</span></Link>
           </div>
 
-          <input value={email} onChange={handleChange} className={s.formInput} type='email' placeholder='Email' autoComplete="off"/>
+          <input value={email} onChange={(e) => setEmail(e.target.value.toLowerCase())} className={s.formInput} type='email' placeholder='Email' autoComplete="off"/>
           <div className={s.inputWrp}>
             {
               showPassword ?
-              <input value={password} onChange={handleChange} className={s.formInput} type='text' placeholder='Password' autoComplete="new-password"/>
-            : <input value={password} onChange={handleChange} className={s.formInput} type='password' placeholder='Password' autoComplete="new-password"/>
+              <input value={password} onChange={(e) => setPassword(e.target.value)} className={s.formInput} type='text' placeholder='Password' autoComplete="new-password"/>
+            : <input value={password} onChange={(e) => setPassword(e.target.value)} className={s.formInput} type='password' placeholder='Password' autoComplete="new-password"/>
             }
             <MdVisibility onClick={handleShowPassword} className={s.visibility}/>
           </div>
 
-          {showButton && <button onClick={handleSubmit} className={`w-full ${s.slideAnim} bigBtn`}>{loading? <ImSpinner8 className="spin" /> : 'Sign In'}</button>}
+          <button onClick={handleSubmit} className={`w-full ${s.slideAnim} bigBtn`}>{loading? <ImSpinner8 className="spin" /> : 'Sign In'}</button>
 
           <div className={s.formLinks}> 
             <Link className="m-auto" to="/password-reset">Forgot <span>Password?</span></Link>

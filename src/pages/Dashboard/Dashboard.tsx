@@ -4,16 +4,22 @@ import ChartOne from "@/components/ChartOne";
 import ChartSlide from "@/components/ChartSlide";
 import ChartThree from "@/components/ChartThree";
 import MiniBals from "@/components/MiniBals";
+import NoDepositAlert from "@/components/NoDepositAlert";
 import UsdChart from "@/components/UsdChart";
 import { contextData } from "@/context/AuthContext";
 
 export default function Dashboard() {
   const { user } = contextData()
+  const combinedBalance = user.deposit + user.trade + user.interest + user.bonus
+  const balancePlusWithdraw = combinedBalance + user.withdraw
+
 
 
   return (
     <>
-      <div className="w-full flex gap-5 my-4 max-[900px]:flex-col">
+      {balancePlusWithdraw === 0 && <NoDepositAlert />}
+
+      <div className="w-full flex gap-5 my-5 max-[900px]:flex-col">
         <div className="flex-none">
           <Balance type="balance" user={user}/>
         </div>

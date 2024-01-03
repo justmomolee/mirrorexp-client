@@ -80,8 +80,8 @@ h3, p{
 /* button styling */
 .bigBtn{
   width: fit-content;
-  background: #081f00;
-  padding: 20px 40px;
+  background: #113505 !important;
+  padding: 19px 40px;
   border-radius: 10px;
   color: #ffffff;
   transition: all ease-out .3s;

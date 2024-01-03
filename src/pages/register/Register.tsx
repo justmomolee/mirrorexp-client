@@ -32,10 +32,10 @@ export default function Register() {
   const validateForm = (): boolean => {
     return (
       accountType !== 'none' &&
-      email.length > 7 &&
+      email.length > 5 &&
       email.includes('@') &&
-      username.length > 3 &&
-      password.length > 3
+      username.length > 1 &&
+      password.length > 1
     );
   };
 
