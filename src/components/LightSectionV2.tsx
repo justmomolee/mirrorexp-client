@@ -15,7 +15,7 @@ export default function LightSectionV2({ secData }: {secData: secProps}) {
   return (
     <section>
       <div className="max-ctn px-4 py-10 sm:px-6 lg:px-8 m-auto">
-        <div className={`flex flex-wrap lg:justify-between items-center ${secData.reverse && 'sm:flex-wrap-reverse'}`}>
+        <div className={`flex flex-wrap lg:justify-between items-center gap-y-12 ${secData.reverse && 'sm:flex-wrap-reverse'}`}>
           <div className="w-full max-w-lg">
             <img className="w-full" src={secData.imgUrl} alt="copyTrade" />
           </div>
@@ -23,7 +23,7 @@ export default function LightSectionV2({ secData }: {secData: secProps}) {
           <div className=" w-full max-w-xl lg:mt-0">
             <div className="space-y-6 sm:space-y-8">
               <div className="space-y-2 md:space-y-4">
-                <h2 className="font-bold text-3xl lg:text-5xl text-gray-500">
+                <h2 className="font-bold text-3xl lg:text-5xl text-gray-700 max-md:!text-2xl ">
                   {secData.title}
 
                   {secData.span &&

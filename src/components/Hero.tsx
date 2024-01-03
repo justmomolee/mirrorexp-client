@@ -7,12 +7,12 @@ const Hero:React.FC = () => {
 
   return (
     <section className="relative bg-no-repeat bg-center" id="heroSection">
-      <div className="max-ctn px-5 pad-y max-md:pt-40 md:px-10 grid grid-cols-1 items-center gap-12 sm:gap-20 md:grid-cols-2">
+      <div className="max-ctn pad-y px-5 max-md:pt-40 grid grid-cols-1 items-center gap-12 sm:gap-20 md:grid-cols-2">
         <div className="max-w-[720px] lg:max-w-[842px]">
-          <h1 className="hd-text text-white  mb-4 md:mb-10 lg:mb-12">
+          <h1 className="hd-text max-md:!text-2xl text-white  mb-4 md:mb-10 lg:mb-12">
             Super Fast, Secured, And Leading <span className="text-[#4ECB71]"> Copy Trading </span> platform
           </h1>
-          <p className="text-[#636262] desc">
+          <p className="text-[#636262] desc max-md:!text-lg">
             Scale Your Investments with Precision: Follow, Learn, and Earn with Our Copy Trading Platform.
           </p>
           <Link to="/login" className="primaryBtn mb-6" >
@@ -20,11 +20,11 @@ const Hero:React.FC = () => {
           </Link>
           <div className="relative mb-4 flex w-full max-w-xs items-center">
             {heroAvatarLinks.map((src, i) =>
-              <img key={i} src={src} alt="avatar" className={`relative avatar ${i > 0 ? '-ml-5' : ''} [box-shadow:#12006C_0px_6px]`} style={{top: 'auto', left: `0px`}}/>
+              <img key={i} src={src} alt="avatar" className={`relative avatar ${i > 0 ? '-ml-5' : ''} [box-shadow:#081f00_0px_6px]`} style={{top: 'auto', left: `0px`}}/>
             )}
-            <div className="relative left-[-40px] top-auto z-[1] rounded-[30px] bg-[#1353fe] py-2 pl-12 pr-3 text-center text-white [box-shadow:#12006C_0px_6px]">
+            <div className="relative left-[-40px] top-auto z-[1] rounded-[30px] bg-gray-900 py-2 pl-12 pr-3 text-center text-white [box-shadow:#345628_0px_6px]">
               <p className="text-[10px] leading-normal font-semibold">
-                <span className="font-bold">100k+ </span><br />Customers
+                <span className="font-bold">2000k+ </span><br />Clients
               </p>
             </div>
           </div>

@@ -7,8 +7,8 @@ export default function Hero2 () {
   return (
     <section className="relative bg-no-repeat bg-center" id="heroSection">
       <div className="max-ctn px-5 pt-32 flex flex-wrap items-center gap-7 sm:gap-20">
-        <div className="w-full max-w-xl">
-          <h2 className="text-white text-8xl font-bold mb-6">
+        <div className="w-full max-w-lg">
+          <h2 className="text-white text-[5rem] max-md:text-[2.8rem] font-bold mb-6">
           Copy <span className="text-blue-600">Trade</span>
           </h2>
           <p className="text-[#636262] my-5 text-lg">
@@ -22,7 +22,7 @@ export default function Hero2 () {
           </Link>
         </div>
 
-        <div className="w-full max-w-lg bg-cover bg-no-repeat bg-center"  style={{ backgroundImage: `url(${phoneBg})` }}>
+        <div className="w-full max-w-md bg-cover bg-no-repeat bg-center"  style={{ backgroundImage: `url(${phoneBg})` }}>
           <img src={copyTradeImg} alt="copy trade" className="h-full w-auto"/>
         </div>
       </div>

@@ -13,7 +13,7 @@ export default function LightSectionV3() {
           <div className="mt-5 sm:mt-10 lg:mt-0">
             <div className="space-y-6 sm:space-y-8">
               <div className="space-y-2 md:space-y-4">
-                <h2 className="font-bold text-3xl lg:text-5xl text-gray-800">
+                <h2 className="font-bold text-2xl lg:text-5xl text-gray-800">
                   Copy The Trades Of Other Traders
                 </h2>
                 <p className="text-gray-500">
