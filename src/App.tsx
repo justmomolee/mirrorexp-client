@@ -36,35 +36,29 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import DefaultLayout from './components/Layouts/DefaultLayout';
 
 function App() {
-  const [assetsLoaded, setAssetsLoaded] = useState(false);
+  const [userData, setUserData] = useState(false);
   const { fetching, user } = contextData();
 
 
 
   useEffect(() => {
-    const images = document.querySelectorAll('img');
-    const videos = document.querySelectorAll('video');
-
-    const areImagesLoaded = Array.from(images).every((image) => image.complete);
-    const areVideosLoaded = Array.from(videos).every((video) => video.readyState >= 3);
-
-    if (areImagesLoaded && areVideosLoaded && !fetching) {
+    if (!fetching) {
       setTimeout(() => {
-        setAssetsLoaded(true);
+        setUserData(true);
         console.log(fetching, user)
-      }, 5000);
+      }, 10000);
     }
   }, [fetching])
 
 
 
-  if (!assetsLoaded) {
+  if (!userData) {
     return (
       <PageLoader />
     );
   }
 
-  if (assetsLoaded) {
+  if (userData) {
     return (
       <div className="App">
         <Toaster
