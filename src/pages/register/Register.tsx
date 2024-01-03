@@ -131,7 +131,7 @@ export default function Register() {
 
         <div style={{ gap: '10px' }}>
           <input checked disabled style={{ width: '25px' }} type='checkbox' />
-          <p>Agree to Pharmedore <br /><Link to='#'><span>Terms & Condition | Privacy Policy</span></Link></p>
+          <p>MirrorExp <br /><Link to='#'><span>Terms & Condition | Privacy Policy</span></Link></p>
         </div>
 
         {validateForm() && (
