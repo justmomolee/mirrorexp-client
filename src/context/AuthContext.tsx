@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }:any) => {
 
   const logout = () => {
     localStorage.removeItem('user');
-    window.location.reload();
+    setUser(null);
   };
 
   useEffect(() => {
@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }:any) => {
       const fetchUser = async () => {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 20000);
-        console.log(url)
 
         try {
           const res = await fetch(`${url}/users/${user._id}`, {

@@ -4,47 +4,37 @@ import TradeCounter from "@/components/tradeCounter/TradeCounter";
 import { contextData } from "@/context/AuthContext"
 import { useEffect, useState } from "react";
 
-const demoTrades = [
-  {
-    _id: "1",
-    amount: 50.444,
-    date: Date.now(),
-    status: "pending",
-  },
-  {
-    _id: "2",
-    amount: 50.444,
-    date: Date.now(),
-    status: "success",
-  },
-  {
-    _id: "3",
-    amount: 50.444,
-    date: Date.now(),
-    status: "pending",
-  },
-]
-
 export default function Trades() {
-  const [transactions, setTransactions] = useState(null);
-  const { user } = contextData()
+  const [transactions, setTransactions] = useState<any>(null);
+  const [tradeData, setTradeData] = useState<any>(null);
+  const { user } = contextData();
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
   const fetchUserTransactions = async () => {
+    console.log("start fetching");
     try {
-      const res = await fetch(`${url}/transactions/user/${user.email}`)
-      const data = await res.json()
+      const res = await fetch(`${url}/transactions/user/${user.email}`);
+      const data = await res.json();
+      console.log(data);
 
-      if(res.ok) setTransactions(data) 
-      else throw new Error(data.message)
+      if (res.ok) setTransactions(data);
+      else throw new Error(data.message);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchUserTransactions()
-  }, [])
+    fetchUserTransactions();
+  }, []);
+
+  useEffect(() => {
+    if (transactions) {
+      const tradeTransactions = transactions.filter((transaction:any) => transaction.type === 'trade');
+
+      setTradeData(tradeTransactions.length > 0 ? tradeTransactions : null);
+    }
+  }, [transactions]);
 
   return (
     <>
@@ -57,9 +47,11 @@ export default function Trades() {
         </div>
       </div>
 
-      {!transactions &&
-      <TradeCounter trades={demoTrades}/>
-      }
+      {tradeData ? (
+        <TradeCounter trades={tradeData} />
+      ) : (
+        <p>No trade data yet.</p>
+      )}
     </>
-  )
+  );
 }

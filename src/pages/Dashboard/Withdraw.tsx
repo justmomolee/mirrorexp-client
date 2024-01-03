@@ -2,8 +2,6 @@ import { contextData } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import s from '../login/Login.module.css';
 import PageLoader from "@/components/PageLoader";
-import { IoCopy } from "react-icons/io5";
-import { GoInfo } from "react-icons/go";
 
 
 interface Coin{
@@ -18,11 +16,12 @@ export default function Withdraw() {
   const [convertedAmount, setConvertedAmount] = useState<string|number>(0)
   const [coins, setCoins] = useState([])
   const [coin, setCoin] = useState<Coin|undefined>()
+  const [address, setAddress] = useState("")
+  const [network, setNetwork] = useState("")
   const [fetching, setFetching] = useState(false)
   const [error, setError] = useState<any>(false)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [copySuccess, setCopySuccess] = useState(false)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL
   const { user } = contextData()
 
@@ -56,14 +55,16 @@ export default function Withdraw() {
     setError(null)
 
     if(amount < 1) return setError("The minimum transfer amount is $1")
+    if(address === "") return setError("The address must be specified")
+    if(network === "") return setError("The network must be specified")
     setLoading(true)
     setSuccess(false)
 
     try {
-      const res = await fetch(`${url}/deposits`, {
+      const res = await fetch(`${url}/withdrawals`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ id: user._id, amount, convertedAmount, coinName: coin?.name })
+        body: JSON.stringify({ id: user._id, amount, convertedAmount, coinName: coin?.name, address, network })
       })
 
       const data = await res.json()
@@ -99,22 +100,10 @@ export default function Withdraw() {
   }
 
 
-  const copyToClipBoard = async (copyMe:string) => {
-    await navigator.clipboard.writeText(copyMe);
-    setCopySuccess(true)
-    setTimeout(() => {
-      setCopySuccess(false)
-    }, 3000)
-  }
-
-
-
 
   if(fetching) return <PageLoader />
 
   return (coin &&
-    <>
-    {!success ?
     <div className="w-full flex  justify-center shadow-1 m-auto">
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
         <form className="space-y-6" action="#" onSubmit={sendWithdraw}>
@@ -130,7 +119,19 @@ export default function Withdraw() {
 
             <div className="flex-auto">
               <label htmlFor="amount" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount In USD</label>
-              <input onChange={handleAmountChange} value={amount} type="number" id="amount" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Enter Deposit Amount" required min={0}/>
+              <input onChange={handleAmountChange} value={amount} type="number" id="amount" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Enter Withdraw Amount" required min={0}/>
+            </div>
+          </div>
+
+          <div className="flex gap-5">
+            <div className="flex-auto">
+              <label htmlFor="amount" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Wallet Address</label>
+              <input onChange={(e) => setAddress(e.target.value)} value={address} type="text" id="amount" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Enter Wallet Address" required/>
+            </div>
+
+            <div className="flex-auto">
+              <label htmlFor="amount" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Network</label>
+              <input onChange={(e) => setNetwork(e.target.value)} value={network} type="text" id="amount" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Enter Wallet Network" required/>
             </div>
           </div>
 
@@ -142,56 +143,16 @@ export default function Withdraw() {
             </div>
 
             <div className="flex-auto">
-              <label htmlFor="minDeposit" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Minimum Deposit</label>
-              <input value="1" type="number" id="minDeposit" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" disabled required/>
+              <label htmlFor="minWithdraw" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Minimum Withdraw</label>
+              <input value="1" type="number" id="minWithdraw" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" disabled required/>
             </div>
           </div>
 
-          <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{loading? "Loading...": "Deposit"}</button>
+          <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{loading? "Loading...": "Withdraw"}</button>
           {error && <p className={s.formError}>{error}</p>}
+          {success && <p className={s.formSuccess}>{success}</p>}
         </form>
       </div>
-    </div>:
-
-    <div className="w-full flex  justify-center shadow-1 m-auto">
-      <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-      <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Deposit Confirmation</h4>
-      <h5 className="text-base font-normal text-gray-900 dark:text-white mb-3 capitalize">{coin?.name} Payment</h5>
-
-
-      <p className="text-sm font-light text-gray-900 dark:text-white mb-4">
-        Your deposit order of <span className="text-green-600 font-medium">{amount} USD</span> has been placed.
-      </p>
-
-      <p className="text-sm font-light text-gray-900 dark:text-white mb-4">
-        Please send <span className="text-green-600 font-medium uppercase">{convertedAmount} {coin?.name}</span> to the address below. The amount will appear in your account only after transaction is approved.
-      </p>
-
-      <h5 className="text-base font-semibold m-auto text-gray-900 dark:text-white mb-4">
-        Pay To The Wallet Address Below
-      </h5>
-
-      <p className="flex flex-col text-center mb-4">
-        <span className="text-sm font-medium">Send Amount</span>
-        <span className="text-green-600 font-bold uppercase text-base">{convertedAmount} {coin?.name}</span>
-      </p>
-
-      <p className="flex text-center gap-2 mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white">
-        <span className="flex-auto text-[12px]">
-          {coin.address.length > 30 ? `${coin.address.substring(0, 30)}...` : coin.address}
-          </span>
-        <span className="flex items-center gap-3 cursor-pointer w-20" onClick={() => copyToClipBoard(coin.address)}>
-          <IoCopy style={copySuccess ? {color: "#4ECB71"}: {}}/>
-           copy
-        </span>
-      </p>
-
-      <p className="flex text-[10px] gap-2 text-gray-800 dark:text-white leading-none">
-        <GoInfo className="text-xl"/> Kindly make sure to check that your are sending to above generated wallet address, to avoid loss of funds.
-      </p>
-      </div>
     </div>
-  }
-  </>
   )
 }

@@ -1,9 +1,10 @@
 import { BsCheck } from "react-icons/bs"
 import s from "./Pricing.module.css";
 import { useState } from "react"
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { BTC, NFP, advancedPlan, standardPlan } from "@/lib/utils";
 import TradeModal from "../TradeModal";
+import { contextData } from "@/context/AuthContext";
 
 
 export default function Pricing() {
@@ -15,6 +16,8 @@ export default function Pricing() {
   const isDashboardRoute = location.pathname.includes("dashboard");
   const [tradeType, setTradeType] = useState("")
   const [showModal, setShowModal] = useState(false)
+  const { user } = contextData()
+  const navigate = useNavigate()
 
 
     const toggleModal = (bool:boolean) => {
@@ -24,9 +27,11 @@ export default function Pricing() {
 
 
     const handleInvest = (plan:string) => {
-      console.log("working")
-      setTradeType(plan)  
-      toggleModal(true)
+      if(!user) navigate('/login')
+      else {
+        setTradeType(plan)  
+        toggleModal(true)
+      }
     }
 
     const showStandard = () => {
