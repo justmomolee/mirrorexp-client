@@ -5,7 +5,6 @@ const AuthContext = createContext<any>(null);
 export const AuthProvider = ({ children }:any) => {
   const [user, setUser] = useState(null);
   const [fetching, setFetching] = useState(true);
-  const [reload, setReload] = useState(false);
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
   const login = (userData:any) => {
@@ -15,7 +14,7 @@ export const AuthProvider = ({ children }:any) => {
   const logout = () => {
     localStorage.removeItem('user');
     setUser(null);
-    setReload(true)
+    window.location.href = '/login';
   };
 
   useEffect(() => {
@@ -54,7 +53,7 @@ export const AuthProvider = ({ children }:any) => {
       setUser(null);
       setFetching(false);
     }
-  }, [reload]);
+  }, []);
   
 
 

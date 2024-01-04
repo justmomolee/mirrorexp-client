@@ -3,6 +3,7 @@ import Header from '../Header';
 import Sidebar from '../Sidebar';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { contextData } from '@/context/AuthContext';
+import PageLoader from '../PageLoader';
 
 const DefaultLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -14,6 +15,8 @@ const DefaultLayout = () => {
 
     if(user && user.fullName === '') return navigate('/dashboard/updateProfile')
   }, [])
+
+  if(!user) return <PageLoader />
 
   return (user &&
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
