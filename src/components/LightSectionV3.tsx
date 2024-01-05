@@ -27,7 +27,7 @@ export default function LightSectionV3() {
                 </p>
               </div>
 
-              <ul role="list" className="space-y-2 sm:space-y-4">
+              <ul className="space-y-2 sm:space-y-4">
                 <li className="flex space-x-3">
                   <CheckList />
 

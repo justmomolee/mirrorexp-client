@@ -5,19 +5,75 @@ import gold from '../../assets/ranks/gold.png'
 import goldPro from '../../assets/ranks/goldPro.png'
 import diamond from '../../assets/ranks/diamond.png'
 import ambassador from '../../assets/ranks/ambassador.png'
-import UserRank from '@/components/userRank'
+import UserRank from '@/components/UserRank'
+
+const welcomeData = {
+  level: 1,
+  minimumDeposit: 0,
+  directReferral: 0,
+  referralDeposits: 0,
+  bonus: 0,
+}
+
+const silverData = {
+  level: 2,
+  minimumDeposit: 5000,
+  directReferral: 0,
+  referralDeposits: 0,
+  bonus: 200,
+}
+
+const silverProData = {
+  level: 3,
+  minimumDeposit: 25000,
+  directReferral: 0,
+  referralDeposits: 0,
+  bonus: 1000,
+}
+
+const goldData = {
+  level: 4,
+  minimumDeposit: 50000,
+  directReferral: 0,
+  referralDeposits: 0,
+  bonus: 2000,
+}
+
+const goldProData = {
+  level: 5,
+  minimumDeposit: 100000,
+  directReferral: 0,
+  referralDeposits: 0,
+  bonus: 3000,
+}
+
+const diamondData = {
+  level: 6,
+  minimumDeposit: 500000,
+  directReferral: 12,
+  referralDeposits: 2550000,
+  bonus: 20000,
+}
+
+const ambassadorData = {
+  level: 7,
+  minimumDeposit: 1000000,
+  directReferral: 12,
+  referralDeposits: 2550000,
+  bonus: 50000,
+}
 
 
 export default function Ranking() {
   return (
     <div className="flex items-center justify-center flex-wrap gap-14 p-5 mb-4 rounded-[40px] bg-gray-50 dark:bg-gray-800">
-      <UserRank imageSrc={welcome} rank="welcome" />
-      <UserRank imageSrc={silver} rank="silver" />
-      <UserRank imageSrc={silverPro} rank="silver pro" />
-      <UserRank imageSrc={gold} rank="gold" />
-      <UserRank imageSrc={goldPro} rank="gold pro" />
-      <UserRank imageSrc={diamond} rank="diamond" />
-      <UserRank imageSrc={ambassador} rank="ambassador" />
+      <UserRank imageSrc={welcome} rank="welcome" moreInfo={welcomeData}/>
+      <UserRank imageSrc={silver} rank="silver" moreInfo={silverData}/>
+      <UserRank imageSrc={silverPro} rank="silver pro" moreInfo={silverProData}/>
+      <UserRank imageSrc={gold} rank="gold" moreInfo={goldData}/>
+      <UserRank imageSrc={goldPro} rank="gold pro" moreInfo={goldProData}/>
+      <UserRank imageSrc={diamond} rank="diamond" moreInfo={diamondData}/>
+      <UserRank imageSrc={ambassador} rank="ambassador" moreInfo={ambassadorData}/>
     </div>
   )
 }

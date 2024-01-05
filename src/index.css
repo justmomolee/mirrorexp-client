@@ -116,6 +116,10 @@ h3, p{
   z-index: -1;
 }
 
+span.amount{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .bigBtn:hover:before,
 .bigBtn:focus:before{
   transform: scaleX(1);
