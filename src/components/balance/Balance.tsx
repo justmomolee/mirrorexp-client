@@ -27,6 +27,8 @@ export default function Balance({type, user}: BalanceProps) {
     }
   };
 
+  console.log((user?.deposit + user?.interest + user?.trade))
+
 
   return (
     <div className={s.ctn}>
@@ -34,9 +36,9 @@ export default function Balance({type, user}: BalanceProps) {
         <div className={s.left}>
           <p className={s.title}>{type === "balance"? "Total Balance" : type}</p>
           <h1 className={s.bal}>{
-            type === "balance"? (user?.deposit + user?.interest + user?.trade).toLocaleString('en-US')
-            : type === "trade"? user?.trade.toLocaleString('en-US')
-              : type === "bonus"? user?.bonus.toLocaleString('en-US')
+            type === "balance"? (user?.deposit + user?.interest + user?.trade)?.toLocaleString('en-US')
+            : type === "trade"? user?.trade?.toLocaleString('en-US')
+              : type === "bonus"? user?.bonus?.toLocaleString('en-US')
               : 0}<span>$</span>
           </h1>
 
@@ -60,12 +62,12 @@ export default function Balance({type, user}: BalanceProps) {
           <div className='flex gap-2'>
             <h3 className={s.miniBal}>
               <span className='text-[8px] text-gray-400 font-extralight'>Deposit</span>
-              <span>{user?.deposit.toLocaleString('en-US')}<span className="font-[Courier] text-[8px]">$</span></span>
+              <span>{user?.deposit?.toLocaleString('en-US')}<span className="font-[Courier] text-[8px]">$</span></span>
             </h3>
 
             <h3 className={s.miniBal}>
               <span className='text-[8px] text-gray-400 font-thin'>Interest</span>
-              <span>{user?.interest.toLocaleString('en-US')}<span className="font-[Courier] text-[8px]">$</span></span>
+              <span>{user?.interest?.toLocaleString('en-US')}<span className="font-[Courier] text-[8px]">$</span></span>
             </h3>
           </div>
 

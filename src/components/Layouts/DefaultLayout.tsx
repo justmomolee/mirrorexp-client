@@ -18,7 +18,7 @@ const DefaultLayout = () => {
 
   if(!user) return <PageLoader />
 
-  return (user &&
+  return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       <div className="flex h-screen overflow-hidden">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />

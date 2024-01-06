@@ -55,7 +55,7 @@ export default function UpdateProfile() {
       const data = await res.json()
 
       if (res.ok) {
-        login(data)
+        login(data.user)
         localStorage.setItem('user', JSON.stringify(data.user));
         navigate('/dashboard/home');
       }

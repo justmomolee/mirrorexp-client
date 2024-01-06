@@ -1,7 +1,6 @@
 import CheckList from "./CheckList";
 import image1 from "../assets/image-1.png"
 import image2 from "../assets/image-2.png"
-import marketing from "../assets/marketing.jpg"
 
 export default function CardOne() {
   return (
@@ -51,7 +50,7 @@ export default function CardOne() {
             </li>
           </ul>
 
-          <video autoPlay={true} loop={true} playsInline={true}className="w-full min-h-55 object-cover rounded-xl">
+          <video autoPlay={true} loop={true} playsInline={true} className="w-full min-h-55 object-cover rounded-xl">
             <source src="https://naga.com/images/new-main-page/benefits/video.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
