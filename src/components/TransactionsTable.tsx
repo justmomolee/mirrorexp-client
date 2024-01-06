@@ -1,9 +1,36 @@
+import { contextData } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
+
 
 export default function TransactionsTable() {
-  return (
+  const [transactions, setTransactions] = useState<any>(null);
+  const { user } = contextData();
+  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+
+  const fetchUserTransactions = async () => {
+    console.log("start fetching");
+    try {
+      const res = await fetch(`${url}/transactions/user/${user.email}`);
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) setTransactions(data);
+      else throw new Error(data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserTransactions();
+  }, []);
+
+
+
+  return (transactions ?
     <div className="relative overflow-x-auto rounded-[6px]">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700">
+            <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
                 <tr>
                     <th scope="col" className="px-6 py-3 rounded-s-lg">
                         Type
@@ -19,37 +46,61 @@ export default function TransactionsTable() {
                     </th>
                 </tr>
             </thead>
+
             <tbody>
-                <tr className="bg-white dark:bg-gray-800">
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Apple MacBook Pro 17"
-                    </th>
-                    <td className="px-6 py-4">
-                        1
-                    </td>
-                    <td className="px-6 py-4">
-                        $2999
-                    </td>
-                    <td className="px-6 py-4">
-                        $2999
-                    </td>
+              {transactions.map((transaction:ITransaction, i:number) =>
+                <tr className="bg-white dark:bg-gray-800" key={i}>
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      {transaction.type}
+                  </th>
+                  <td className="px-6 py-4">
+                      {transaction.date.slice(0, 10)}
+                  </td>
+                  <td className={`px-6 py-4 ${transaction.status} font-medium`}>
+                      {transaction.status}
+                  </td>
+                  <td className="px-6 py-4">
+                      {transaction.amount}
+                  </td>
                 </tr>
-                <tr className="bg-white dark:bg-gray-800">
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Apple MacBook Pro 17"
-                    </th>
-                    <td className="px-6 py-4">
-                        1
-                    </td>
-                    <td className="px-6 py-4">
-                        $2999
-                    </td>
-                    <td className="px-6 py-4">
-                        $2999
-                    </td>
-                </tr>
+              )}
             </tbody>
+
         </table>
-    </div>
+    </div>:
+    <p className="text-base font-semibold text-gray-900 dark:text-[#c7ffb3]">No transaction yet</p>
   )
+}
+
+
+
+
+
+
+interface User {
+  id?: string; 
+  email?: string;
+  name?: string;
+}
+
+interface WalletData {
+  address?: string;
+  network?: string;
+  coinName?: string;
+  convertedAmount?: number;
+}
+
+interface TradeData {
+  package?: string;
+  interest?: string;
+}
+
+interface ITransaction {
+  type: string;
+  user: User;
+  status: 'pending' | 'success' | 'failed';
+  amount: number;
+  date: string; 
+  walletData: WalletData;
+  tradeData: TradeData;
 }

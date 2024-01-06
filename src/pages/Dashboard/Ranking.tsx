@@ -5,7 +5,9 @@ import gold from '../../assets/ranks/gold.png'
 import goldPro from '../../assets/ranks/goldPro.png'
 import diamond from '../../assets/ranks/diamond.png'
 import ambassador from '../../assets/ranks/ambassador.png'
-import UserRank from '@/components/UserRank'
+import Rank from '@/components/Rank'
+
+
 
 const welcomeData = {
   level: 1,
@@ -67,13 +69,13 @@ const ambassadorData = {
 export default function Ranking() {
   return (
     <div className="flex items-center justify-center flex-wrap gap-14 p-5 mb-4 rounded-[40px] bg-gray-50 dark:bg-gray-800">
-      <UserRank imageSrc={welcome} rank="welcome" moreInfo={welcomeData}/>
-      <UserRank imageSrc={silver} rank="silver" moreInfo={silverData}/>
-      <UserRank imageSrc={silverPro} rank="silver pro" moreInfo={silverProData}/>
-      <UserRank imageSrc={gold} rank="gold" moreInfo={goldData}/>
-      <UserRank imageSrc={goldPro} rank="gold pro" moreInfo={goldProData}/>
-      <UserRank imageSrc={diamond} rank="diamond" moreInfo={diamondData}/>
-      <UserRank imageSrc={ambassador} rank="ambassador" moreInfo={ambassadorData}/>
+      <Rank imageSrc={welcome} rank="welcome" moreInfo={welcomeData}/>
+      <Rank imageSrc={silver} rank="silver" moreInfo={silverData}/>
+      <Rank imageSrc={silverPro} rank="silver pro" moreInfo={silverProData}/>
+      <Rank imageSrc={gold} rank="gold" moreInfo={goldData}/>
+      <Rank imageSrc={goldPro} rank="gold pro" moreInfo={goldProData}/>
+      <Rank imageSrc={diamond} rank="diamond" moreInfo={diamondData}/>
+      <Rank imageSrc={ambassador} rank="ambassador" moreInfo={ambassadorData}/>
     </div>
   )
 }

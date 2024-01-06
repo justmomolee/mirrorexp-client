@@ -27,8 +27,6 @@ export default function Balance({type, user}: BalanceProps) {
     }
   };
 
-  console.log((user?.deposit + user?.interest + user?.trade))
-
 
   return (
     <div className={s.ctn}>

@@ -88,8 +88,12 @@ export default function Deposit() {
 
 
   const handleCoinChange = (e:any) => {
-    const findCoin = coins.find((coin:Coin) => e.target.value === coin?.name)
+    const findCoin:Coin|any = JSON.parse(e.target.value);
     if(findCoin) setCoin(findCoin)
+
+    if(findCoin) {
+      setConvertedAmount(roundNumber(amount/findCoin.price))
+    }
   }
 
   const handleAmountChange = (e:any) => {
@@ -124,7 +128,7 @@ export default function Deposit() {
             <div className="flex-auto">
               <label htmlFor="coin" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Method</label>
               <select onChange={handleCoinChange} id="coin" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 capitalize">
-                {coins.map((c:Coin, i:number) => <option key={i} value={c.name}>{c.name} {c.network}</option>)}
+                {coins.map((c:Coin, i:number) => <option key={i} value={JSON.stringify(c)}>{c.name} {c.network}</option>)}
               </select>
             </div>
 
@@ -155,26 +159,22 @@ export default function Deposit() {
 
     <div className="w-full flex  justify-center shadow-1 m-auto">
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-      <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Deposit Confirmation</h4>
-      <h5 className="text-base font-normal text-gray-900 dark:text-white mb-3 capitalize">{coin?.name} Payment</h5>
+      <h4 className="text-lg font-semibold text-gray-900 dark:text-[#c7ffb3] mb-4">Deposit Confirmation</h4>
+      <h5 className="text-base font-semibold text-gray-900 dark:text-gray-300 mb-3 capitalize">{coin?.name} Payment</h5>
 
 
-      <p className="text-sm font-light text-gray-900 dark:text-white mb-4">
-        Your deposit order of <span className="text-green-600 font-medium">{amount} USD</span> has been placed.
+      <p className="text-sm font-light text-gray-900 dark:text-gray-300 mb-4">
+        Your deposit order of <span className="text-green-400 font-medium">{amount} USD</span> has been placed.
       </p>
 
-      <p className="text-sm font-light text-gray-900 dark:text-white mb-4">
-        Please send <span className="text-green-600 font-medium uppercase">{convertedAmount} {coin?.name}</span> to the address below. The amount will appear in your account only after transaction is approved.
+      <p className="text-sm font-light text-gray-900 dark:text-gray-300 mb-4">
+        Please send <span className="text-green-400 font-medium uppercase">{convertedAmount} {coin?.name} {coin?.network}</span> to the address below. The amount will appear in your account only after transaction is approved.
       </p>
 
-      <h5 className="text-base font-semibold m-auto text-gray-900 dark:text-white mb-4">
+      <h5 className="text-sm font-semibold m-auto text-gray-900 dark:text-gray-100 mb-4">
         Pay To The Wallet Address Below
       </h5>
 
-      <p className="flex flex-col text-center mb-4">
-        <span className="text-sm font-medium">Send Amount</span>
-        <span className="text-green-600 font-bold uppercase text-base">{convertedAmount} {coin?.name}</span>
-      </p>
 
       <p className="flex text-center gap-2 mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white">
         <span className="flex-auto text-[12px]">
@@ -186,7 +186,7 @@ export default function Deposit() {
         </span>
       </p>
 
-      <p className="flex text-[10px] gap-2 text-gray-800 dark:text-white leading-none">
+      <p className="flex text-[10px] gap-2 text-gray-800 dark:text-gray-400 leading-none">
         <GoInfo className="text-xl"/> Kindly make sure to check that your are sending to above generated wallet address, to avoid loss of funds.
       </p>
       </div>

@@ -1,13 +1,13 @@
 import { contextData } from '@/context/AuthContext';
 import React, { useState } from 'react';
 
-interface UserRankProps {
+interface RankProps {
   rank: string;
   imageSrc: string;
   moreInfo: {[key: string]: number}
 }
 
-const UserRank: React.FC<UserRankProps> = ({ rank, imageSrc, moreInfo }) => {
+const Rank: React.FC<RankProps> = ({ rank, imageSrc, moreInfo }) => {
   const { user } = contextData()
   const [tooltip, setTooltip] = useState(false)
 
@@ -53,4 +53,4 @@ const UserRank: React.FC<UserRankProps> = ({ rank, imageSrc, moreInfo }) => {
   );
 }
 
-export default UserRank;
+export default Rank;
