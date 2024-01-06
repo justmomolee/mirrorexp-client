@@ -1,5 +1,4 @@
-import { Toaster } from 'react-hot-toast';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate  } from 'react-router-dom';
 
 //importing pages
 import Home from './pages/Home';
@@ -27,7 +26,6 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import PasswordReset from './pages/passwordReset/PasswordReset';
 import PricingPage from './pages/Pricing';
-import { useEffect, useState } from 'react';
 import PageLoader from './components/PageLoader';
 import { contextData } from './context/AuthContext'
 import UpdateProfile from './components/UpdateProfile';
@@ -36,82 +34,77 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import DefaultLayout from './components/Layouts/DefaultLayout';
 
 function App() {
-  const [userData, setUserData] = useState(false);
   const { fetching, user } = contextData();
 
 
 
-  useEffect(() => {
-    if (!fetching) {
-      setTimeout(() => {
-        setUserData(true);
-        console.log(fetching, user)
-      }, 10000);
-    }
-  }, [fetching])
+  if (fetching) return ( <PageLoader /> )
+  
+
+  if (!fetching) return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/copytrade" element={<Copytrade />} />
+      <Route path="/company/why" element={<WhyMirrorExp />} />
+      <Route path="/company/regulations" element={<Regulations />} />
+      <Route path="/company/contact" element={<Contact />} />
+      <Route path="/company/traders" element={<Traders />} />
+      <Route path="/company/label" element={<Label />} />
+      <Route path="/company/insurance" element={<Insurance />} />
+      <Route path="/company/servers" element={<Server />} />
+      <Route path="/company/tools" element={<Tools />} />
+      <Route path="/products/forex" element={<Forex />} />
+      <Route path="/products/commodities" element={<Commodities />} />
+      <Route path="/products/indices" element={<Indices />} />
+      <Route path="/products/bonds" element={<Bonds />} />
+      <Route path="/products/crypto" element={<Crypto />} />
+      <Route path="/products/stocks" element={<Stocks />} />
+      <Route path="/products/futures" element={<Futures />} />
+      <Route path="/more/pricing" element={<PricingPage />} />
+      <Route path="/more/conditions" element={<Conditions />} />
+      <Route path="/more/spreads" element={<Spreads />} />
+      <Route path="/more/hours" element={<Hours />} />
+      <Route path="/more/swap" element={<Swap />} />
 
 
-
-  if (!userData) {
-    return (
-      <PageLoader />
-    );
-  }
-
-  if (userData) {
-    return (
-      <div className="App">
-        <Toaster
-          position="top-right"
-          reverseOrder={false}
-          containerClassName="overflow-auto"
-        />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/copytrade" element={<Copytrade />} />
-            <Route path="/company/why" element={<WhyMirrorExp />} />
-            <Route path="/company/regulations" element={<Regulations />} />
-            <Route path="/company/contact" element={<Contact />} />
-            <Route path="/company/traders" element={<Traders />} />
-            <Route path="/company/label" element={<Label />} />
-            <Route path="/company/insurance" element={<Insurance />} />
-            <Route path="/company/servers" element={<Server />} />
-            <Route path="/company/tools" element={<Tools />} />
-            <Route path="/products/forex" element={<Forex />} />
-            <Route path="/products/commodities" element={<Commodities />} />
-            <Route path="/products/indices" element={<Indices />} />
-            <Route path="/products/bonds" element={<Bonds />} />
-            <Route path="/products/crypto" element={<Crypto />} />
-            <Route path="/products/stocks" element={<Stocks />} />
-            <Route path="/products/futures" element={<Futures />} />
-            <Route path="/more/pricing" element={<PricingPage />} />
-            <Route path="/more/conditions" element={<Conditions />} />
-            <Route path="/more/spreads" element={<Spreads />} />
-            <Route path="/more/hours" element={<Hours />} />
-            <Route path="/more/swap" element={<Swap />} />
-
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/register/:ref" element={<Register />} />
-            <Route path="/password-reset" element={<PasswordReset />} />
-
-            <Route path="/dashboard/" element={<DefaultLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="/dashboard/home" element={<Dashboard />} />
+      {user ? (
+        <>
+          <Route path="/dashboard/" element={<DefaultLayout />}>
+            {user.fullName === "" ? (
               <Route path="/dashboard/updateProfile" element={<UpdateProfile />} />
+            ) : (
+              <Route path="/dashboard/home" element={<Dashboard />} />
+            )}
 
-                {routes.map((routes, i) => {
-                  const { path, component: Component } = routes;
-                  return (
-                    <Route key={i} path={path} element={<Component />} />
-                  );
-                })}
-            </Route>
-          </Routes>
-      </div>
-    );
-  }
+            <Route index element={<Dashboard />} />
+            <Route path="/dashboard/home" element={<Dashboard />} />
+            
+            {routes.map((route, i) => (
+              <Route key={i} path={route.path} element={<route.component />} />
+            ))}
+          </Route>
+
+          {/* Redirect users from login or register to dashboard */}
+          <Route path="/login" element={<Navigate to="/dashboard/home" />} />
+          <Route path="/register" element={<Navigate to="/dashboard/home" />} />
+          <Route path="/register/:ref" element={<Navigate to="/dashboard/home" />} />
+        </>
+      ) : (
+        <>
+
+          {/* Redirect users from dashboard to login */}
+          <Route path="/dashboard/*" element={<Navigate to="/login" />} />
+
+          {/* Routes for non-authenticated users continued */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/register/:ref" element={<Register />} />
+          <Route path="/password-reset" element={<PasswordReset />} />
+        </>
+      )}
+  </Routes>
+  );
 }
 
 export default App;

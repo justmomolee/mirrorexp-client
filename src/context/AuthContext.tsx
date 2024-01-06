@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }:any) => {
 
   const logout = () => {
     localStorage.removeItem('user');
-    window.location.href = '/';
+    setUser(null);
   };
 
   useEffect(() => {
@@ -43,14 +43,18 @@ export const AuthProvider = ({ children }:any) => {
           console.error(error.message);
         } finally {
           clearTimeout(timeoutId);
-          setFetching(false);
+          setTimeout(() => { 
+            setFetching(false);
+          }, 5000);
         }
       };
   
       fetchUser();
     } else {
-      setUser(null);
-      setFetching(false);
+      setTimeout(() => { 
+        setUser(null);
+        setFetching(false);
+      }, 5000);
     }
   }, []);
   

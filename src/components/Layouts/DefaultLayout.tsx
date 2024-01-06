@@ -1,22 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Header from '../Header';
 import Sidebar from '../Sidebar';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { contextData } from '@/context/AuthContext';
-import PageLoader from '../PageLoader';
+import { Outlet } from 'react-router-dom';
 
 const DefaultLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { user } = contextData()
-  const navigate = useNavigate()
 
-  useEffect(() => {
-    if(!user) return navigate('/login')
-
-    if(user && user.fullName === '') return navigate('/dashboard/updateProfile')
-  }, [])
-
-  if(!user) return <PageLoader />
 
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">

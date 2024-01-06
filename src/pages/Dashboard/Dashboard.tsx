@@ -5,13 +5,25 @@ import ChartSlide from "@/components/ChartSlide";
 import ChartThree from "@/components/ChartThree";
 import MiniBals from "@/components/MiniBals";
 import NoDepositAlert from "@/components/NoDepositAlert";
+import PageLoader from "@/components/PageLoader";
 import UsdChart from "@/components/UsdChart";
 import { contextData } from "@/context/AuthContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const { user } = contextData()
+  const navigate = useNavigate()
   const combinedBalance = user.deposit + user.trade + user.interest + user.bonus
   const balancePlusWithdraw = combinedBalance + user.withdraw
+
+  useEffect(() => {
+    if(!user) return navigate('/login')
+
+    if(user && user.fullName === '') return navigate('/dashboard/updateProfile')
+  }, [])
+
+  if(!user) return <PageLoader />
 
 
 
