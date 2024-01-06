@@ -51,6 +51,6 @@ const UserRank: React.FC<UserRankProps> = ({ rank, imageSrc, moreInfo }) => {
 
     </div>
   );
-};
+}
 
 export default UserRank;
