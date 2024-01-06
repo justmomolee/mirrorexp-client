@@ -13,8 +13,7 @@ export const AuthProvider = ({ children }:any) => {
 
   const logout = () => {
     localStorage.removeItem('user');
-    setUser(null);
-    window.location.href = '/login';
+    window.location.href = '/';
   };
 
   useEffect(() => {

@@ -53,14 +53,14 @@ export default function TransactionsTable() {
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       {transaction.type}
                   </th>
-                  <td className="px-6 py-4 max-sm:text-[10px]">
+                  <td className="px-6 py-4 max-sm:text-[10px] min-w-28">
                       {transaction.date.slice(0, 10)}
                   </td>
                   <td className={`px-6 py-4 max-sm:text-[12px] ${transaction.status} font-medium`}>
                       {transaction.status}
                   </td>
                   <td className="px-6 py-4">
-                      {transaction.amount}
+                      <span className="amount pr-[1px]">$</span>{transaction.amount}
                   </td>
                 </tr>
               )}

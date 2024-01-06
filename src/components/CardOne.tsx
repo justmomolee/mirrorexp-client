@@ -17,15 +17,15 @@ export default function CardOne() {
           <ul className="space-y-2 sm:space-y-4">
             <li className="flex space-x-3">
               <CheckList />
-              <span className="text-sm text-gray-800">4x more trades per user</span>
+              <span className="text-sm text-gray-800 font-medium">4x more trades per user</span>
             </li>
             <li className="flex space-x-3">
               <CheckList />
-              <span className="text-sm text-gray-800"> Highly engaging</span>
+              <span className="text-sm text-gray-800 font-medium"> Highly engaging</span>
             </li>
             <li className="flex space-x-3">
               <CheckList />
-              <span className="text-sm text-gray-800">Worldwide community</span>
+              <span className="text-sm text-gray-800 font-medium">Worldwide community</span>
             </li>
           </ul>
 
@@ -38,20 +38,20 @@ export default function CardOne() {
           <ul className="space-y-2 sm:space-y-4">
             <li className="flex space-x-3">
               <CheckList />
-              <span className="text-sm text-gray-800">Copy the trades of Lead Traders</span>
+              <span className="text-sm text-gray-800 font-medium">Copy the trades of Lead Traders</span>
             </li>
             <li className="flex space-x-3">
               <CheckList />
-              <span className="text-sm text-gray-800">Save time with copy trading</span>
+              <span className="text-sm text-gray-800 font-medium">Save time with copy trading</span>
             </li>
             <li className="flex space-x-3">
               <CheckList />
-              <span className="text-sm text-gray-800">Leaderboard with statistic</span>
+              <span className="text-sm text-gray-800 font-medium">Leaderboard with statistic</span>
             </li>
           </ul>
 
           <video autoPlay={true} loop={true} playsInline={true} className="w-full min-h-55 object-cover rounded-xl">
-            <source src="https://naga.com/images/new-main-page/benefits/video.mp4" type="video/mp4" />
+            <source src="https://naga.com/images/new-main-page/why-choose-naga/video-new.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
@@ -62,15 +62,15 @@ export default function CardOne() {
           <ul className="space-y-2 sm:space-y-4">
             <li className="flex space-x-3">
               <CheckList />
-              <span className="text-sm text-gray-800">CFD's on FX, Indices, Metals. Commodities</span>
+              <span className="text-sm text-gray-800 font-medium">CFD's on FX, Indices, Metals. Commodities</span>
             </li>
             <li className="flex space-x-3">
               <CheckList />
-              <span className="text-sm text-gray-800">Short & Long Trading</span>
+              <span className="text-sm text-gray-800 font-medium">Short & Long Trading</span>
             </li>
             <li className="flex space-x-3">
               <CheckList />
-              <span className="text-sm text-gray-800">Low and transparent fees</span>
+              <span className="text-sm text-gray-800 font-medium">Low and transparent fees</span>
             </li>
           </ul>
 

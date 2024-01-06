@@ -1,5 +1,5 @@
 import { contextData } from '@/context/AuthContext';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface RankProps {
   rank: string;
@@ -10,6 +10,23 @@ interface RankProps {
 const Rank: React.FC<RankProps> = ({ rank, imageSrc, moreInfo }) => {
   const { user } = contextData()
   const [tooltip, setTooltip] = useState(false)
+  const tooltipRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
+        setTooltip(false);
+      }
+    };
+
+    if (tooltip) {
+      document.addEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [tooltip]);
 
 
   return (
@@ -21,7 +38,7 @@ const Rank: React.FC<RankProps> = ({ rank, imageSrc, moreInfo }) => {
         {rank}
       </h3>
 
-      <div className={`${tooltip ? "opacity-1 visible" : "invisible opacity-0"}  absolute -left-16 top-[120px] z-10 inline-block w-64 text-sm text-white transition-opacity duration-300 bg-gray-600 border border-gray-600 rounded-lg shadow-sm  dark:text-gray-500 dark:border-gray-200 dark:bg-white`}>
+      <div ref={tooltipRef} onClick={() => setTooltip(true)} className={`${tooltip ? "opacity-1 visible" : "invisible opacity-0"}  absolute -left-16 top-[120px] z-10 inline-block w-64 text-sm text-white transition-opacity duration-300 bg-gray-600 border border-gray-600 rounded-lg shadow-sm  dark:text-gray-500 dark:border-gray-200 dark:bg-white`}>
         <div className="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
             <h3 className="font-semibold text-gray-900 dark:text-white">{rank}</h3>
         </div>
