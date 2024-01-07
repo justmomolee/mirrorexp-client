@@ -8,11 +8,9 @@ export default function TransactionsTable() {
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
   const fetchUserTransactions = async () => {
-    console.log("start fetching");
     try {
       const res = await fetch(`${url}/transactions/user/${user.email}`);
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) setTransactions(data);
       else throw new Error(data.message);
