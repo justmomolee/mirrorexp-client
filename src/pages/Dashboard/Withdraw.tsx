@@ -89,8 +89,12 @@ export default function Withdraw() {
 
 
   const handleCoinChange = (e:any) => {
-    const findCoin = coins.find((coin:Coin) => e.target.value === coin?.name)
+    const findCoin:Coin|any = JSON.parse(e.target.value);
     if(findCoin) setCoin(findCoin)
+
+    if(findCoin) {
+      setConvertedAmount(roundNumber(amount/findCoin.price))
+    }
   }
 
   const handleAmountChange = (e:any) => {
@@ -113,7 +117,7 @@ export default function Withdraw() {
             <div className="flex-auto">
               <label htmlFor="coin" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Method</label>
               <select onChange={handleCoinChange} id="coin" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 capitalize">
-                {coins.map((c:Coin, i:number) => <option key={i} value={c.name}>{c.name} {c.network}</option>)}
+                {coins.map((c:Coin, i:number) => <option key={i} value={JSON.stringify(c)}>{c.name}</option>)}
               </select>
             </div>
 

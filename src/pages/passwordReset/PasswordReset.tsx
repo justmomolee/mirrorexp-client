@@ -1,6 +1,6 @@
 import logo from "../../assets/logo2.svg"
 import s from './PasswordReset.module.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ImSpinner8 } from 'react-icons/im';
 
@@ -11,47 +11,31 @@ export default function PasswordReset() {
   const [success, setSuccess] = useState<string|null>(null);
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false)
   const { page } = useParams();
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
-  // handling reset
+
   const handleReset = async(e:any) => {
     e.preventDefault()
+    setError(null)
+    setSuccess(null)
 
     if(email === "" || !email.includes("@") || email.length < 5) return setError('Email is invalid');
 
-    // sending data to server
     try {
-      setLoading(true)
-      setError(null)
+      setLoading(true);
+      const res = await fetch(`${url}/users/reset-password/${email}`)
+      const data = await res.json();
 
-      if(isAdmin) {
-        const res = await fetch(`${url}/users/forgot-password/admin/${email}`)
-        const data = await res.json()
-        
-        if(res.ok) {
-          setLoading(false)
-          setSuccess("Check your email for a reset link")
-        } else throw new Error(data.message)
-      }
-
-      if(!isAdmin) {
-        const res = await fetch(`${url}/users/forgot-password/${email}`)
-        const data = await res.json()
-
-        if(res.ok) {
-          setLoading(false)
-          setSuccess("Check your email for a reset link")
-        } else throw new Error(data.message)
-      }
-
+      if(res.ok) setSuccess(data.message)
+      else throw new Error(data.message)
     } catch (error:any) {
-      setLoading(false)
       setError(error.message)
+      console.log("Custom Error", error.message)
+    } finally {
+      setLoading(false)
     }
   }
-
 
 
   // handling new password
@@ -61,7 +45,6 @@ export default function PasswordReset() {
     if(email === "" || !email.includes("@") || email.length < 7) return setError('Email is invalid');
     if(newPassword === "" || newPassword.length < 5) return setError('password is invalid');
 
-    // sending data to server
     try {
       setLoading(true)
       setError(null)
@@ -87,11 +70,6 @@ export default function PasswordReset() {
 
 
 
-  useEffect(() => {
-    if(page === 'admin') setIsAdmin(true)
-  }, [page])
-
-
 
 
 
@@ -113,7 +91,7 @@ export default function PasswordReset() {
           {error && <p className={s.formError}>{error}</p>}
           {success && <p className={s.formSuccess}>{success}</p>}     
           <div className={s.formLinks}> 
-            <Link style={{width: "100%"}} to={`${isAdmin ? '/admin-login' : '/login'}`} className={s.link}>Back to <span>Login?</span></Link>
+            <Link style={{width: "100%"}} to="/login" className={s.link}>Back to <span>Login?</span></Link>
           </div>
         </div>
       </form>
@@ -131,7 +109,7 @@ export default function PasswordReset() {
           {error && <p className={s.formError}>{error}</p>}
           {success && <p className={s.formSuccess}>{success}</p>}       
           <div className={s.formLinks}> 
-            <Link style={{width: "100%"}} to={`${isAdmin ? '/admin-login' : '/login'}`} className={s.link}>Back to <span>Login?</span></Link>
+            <Link style={{width: "100%"}} to="/login" className={s.link}>Back to <span>Login?</span></Link>
           </div>
         </div>
       </form>

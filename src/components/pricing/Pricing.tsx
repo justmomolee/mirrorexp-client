@@ -27,6 +27,7 @@ export default function Pricing() {
 
 
     const handleInvest = (plan:string) => {
+      return
       if(!user) navigate('/login')
       else {
         setTradeType(plan)  

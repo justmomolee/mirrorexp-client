@@ -72,7 +72,7 @@ export default function Balance({type, user}: BalanceProps) {
           <img src="/fav.svg" alt='logo' className="w-6" />
 
           {type === "trade" ? (
-          <Link to="/dashboard/pricing" className={s.btn}>
+          <Link to="#" className={s.btn}>
             Trade {">>"}
           </Link>
           ) : type === "bonus" ? <div className={s.btn} onClick={() => handleCopy(user.username)}>Copy Referral Code</div> : 

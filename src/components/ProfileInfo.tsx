@@ -26,7 +26,7 @@ export default function ProfileInfo() {
                 <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
                     <tr>
                         <th scope="col" className="px-6 py-3 rounded-s-lg">
-                            Profile Details
+                            Profile
                         </th>
                         <th scope="col" className="px-6 py-3 rounded-s-lg">
                             Data

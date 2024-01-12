@@ -1,23 +1,20 @@
+import DisplayActiveTrade from "@/components/DisplayActiveTrade";
 import UsdChart from "@/components/UsdChart"
 import Balance from "@/components/balance/Balance"
-import TradeCounter from "@/components/tradeCounter/TradeCounter";
 import { contextData } from "@/context/AuthContext"
 import { useEffect, useState } from "react";
 
 export default function Trades() {
-  const [transactions, setTransactions] = useState<any>(null);
   const [tradeData, setTradeData] = useState<any>(null);
   const { user } = contextData();
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
-  const fetchUserTransactions = async () => {
-    console.log("start fetching");
+  const fetchTrades = async () => {
     try {
-      const res = await fetch(`${url}/transactions/user/${user.email}`);
+      const res = await fetch(`${url}/trades`);
       const data = await res.json();
-      console.log(data);
 
-      if (res.ok) setTransactions(data);
+      if (res.ok) setTradeData(data);
       else throw new Error(data.message);
     } catch (error) {
       console.log(error);
@@ -25,16 +22,9 @@ export default function Trades() {
   };
 
   useEffect(() => {
-    fetchUserTransactions();
+    fetchTrades();
   }, []);
 
-  useEffect(() => {
-    if (transactions) {
-      const tradeTransactions = transactions.filter((transaction:any) => transaction.type === 'trade');
-
-      setTradeData(tradeTransactions.length > 0 ? tradeTransactions : null);
-    }
-  }, [transactions]);
 
   return (
     <>
@@ -47,8 +37,8 @@ export default function Trades() {
         </div>
       </div>
 
-      {tradeData ? (
-        <TradeCounter trades={tradeData} />
+      {tradeData && new Date(user.createdAt) > new Date(tradeData.date) ? (
+        <DisplayActiveTrade trades={tradeData} />
       ) : (
         <p>No trade data yet.</p>
       )}
