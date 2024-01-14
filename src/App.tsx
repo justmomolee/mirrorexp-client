@@ -43,6 +43,7 @@ import RejectedDeposits from './pages/Admin/RejectedDeposits';
 import ApprovedWithdrawals from './pages/Admin/ApprovedWithdrawals';
 import PendingWithdrawals from './pages/Admin/PendingWithdrawals';
 import RejectedWithdrawals from './pages/Admin/RejectedWithdrawals';
+import Settings from './pages/Admin/Settings';
 
 function App() {
   const { fetching, user } = contextData();
@@ -95,6 +96,7 @@ function App() {
                 <Route path="/admin/approved-withdrawals" element={<ApprovedWithdrawals />} />
                 <Route path="/admin/pending-withdrawals" element={<PendingWithdrawals />} />
                 <Route path="/admin/rejected-withdrawals" element={<RejectedWithdrawals />} />
+                <Route path="/admin/settings" element={<Settings />} />
               </Route>
 
               <Route path="/login" element={<Navigate to="/admin/" />} />

@@ -26,7 +26,7 @@ export default function CreateTradeModal({toggleModal}:any) {
       const res = await fetch(`${url}/trades`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ package: stock, interest })
+        body: JSON.stringify({ package: stock, interest: Number(interest/100) })
       })
       const data = await res.json()
 
