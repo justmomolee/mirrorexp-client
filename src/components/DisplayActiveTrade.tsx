@@ -24,8 +24,8 @@ export default function DisplayActiveTrade({trades}:any) {
                 <td className="px-6 py-4">
                     {trade.date.slice(0, 10)}
                 </td>
-                <td className={`px-6 py-4 ${trade.status}`}>
-                    {trade.status}
+                <td className={`px-6 py-4 font-medium ${trade.status}`}>
+                    {trade.status === "success" ? "Completed" : trade.status === "pending" ? "Active" : trade.status}
                 </td>
             </tr>
             )}
