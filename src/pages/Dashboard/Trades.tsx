@@ -5,7 +5,7 @@ import { contextData } from "@/context/AuthContext"
 import { useEffect, useState } from "react";
 
 export default function Trades() {
-  const [tradeData, setTradeData] = useState<any>(null);
+  const [tradeData, setTradeData] = useState<any>([]);
   const { user } = contextData();
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
@@ -23,7 +23,8 @@ export default function Trades() {
 
   useEffect(() => {
     fetchTrades();
-  }, []);
+    if(tradeData.length > 0) console.log(new Date(user.createdAt) > new Date(tradeData[0]?.date))
+  }, [tradeData.length]);
 
 
   return (
@@ -37,7 +38,7 @@ export default function Trades() {
         </div>
       </div>
 
-      {tradeData && new Date(user.createdAt) > new Date(tradeData.date) ? (
+      {tradeData && new Date(user.createdAt) > new Date(tradeData[0]?.date) ? (
         <DisplayActiveTrade trades={tradeData} />
       ) : (
         <p>No trade data yet.</p>
