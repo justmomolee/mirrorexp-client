@@ -13,17 +13,22 @@ export default function Trades() {
     try {
       const res = await fetch(`${url}/trades`);
       const data = await res.json();
-
-      if (res.ok) setTradeData(data);
-      else throw new Error(data.message);
+  
+      if (res.ok) {
+        const filteredTrades = data.filter((trade:any) => new Date(trade.date) > new Date(user.createdAt));
+        setTradeData(filteredTrades);
+      } else {
+        throw new Error(data.message);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
+  
 
   useEffect(() => {
     fetchTrades();
-    if(tradeData.length > 0) console.log(new Date(user.createdAt) > new Date(tradeData[0]?.date))
+    console.log(tradeData)
   }, [tradeData.length]);
 
 
@@ -38,7 +43,7 @@ export default function Trades() {
         </div>
       </div>
 
-      {tradeData && new Date(user.createdAt) > new Date(tradeData[0]?.date) ? (
+      {tradeData ? (
         <DisplayActiveTrade trades={tradeData} />
       ) : (
         <p>No trade data yet.</p>
