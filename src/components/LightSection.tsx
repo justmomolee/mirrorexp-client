@@ -2,6 +2,9 @@ type SecData = {
   title: string,
   desc: string,
   imgUrl: string,
+  url?: string,
+  btnLabel?: string,
+  pdf?: boolean
 }
 
 export default function LightSection({secData}: {secData: SecData}) {
@@ -15,7 +18,8 @@ export default function LightSection({secData}: {secData: SecData}) {
         <p className="desc mb-4 md:mb-10 lg:mb-6 font-normal max-md:!text-lg">
           {secData.desc}
         </p>
-        <button className="primaryBtn">Explore Copy Trading <span className="ml-3">&rarr;</span></button>
+        {!secData.pdf && <a href="#" className="primaryBtn">Explore Copy Trading <span className="ml-3">&rarr;</span></a>}
+        {secData.pdf && <a href={secData.url} target="_blank" rel="noopener noreferrer" className="primaryBtn">{secData.btnLabel} <span className="ml-3">&rarr;</span></a>}
       </div>
 
       <div className='w-full max-w-md'>

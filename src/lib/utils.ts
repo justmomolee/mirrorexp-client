@@ -4,6 +4,7 @@ import copyTradeDevice from '../assets/multibank-mt4.png'
 import secImg2 from '../assets/copy-trade3.png'
 import secImg3 from '../assets/copy-trade2.png'
 import secImg4 from '../assets/mobilePhones.png'
+import cert from '../assets/cert.png'
 
 
 
@@ -336,6 +337,17 @@ export const HomeSec2 = {
   title: "Copy Trading Simplified",
   desc: "Discover the power of copy trading with our transparent platform. Follow successful traders and replicate their strategies seamlessly.",
   imgUrl: secImg2,
+  url: "#"
+}
+
+//Home Section
+export const aboutSec2 = {
+  title: "Certification and Licensing",
+  desc: "Certification validates skills through assessments by organizations, while licensing grants legal permission to engage in specific activities. Both ensure standards, professionalism, and public safety in various industries.",
+  imgUrl: cert,
+  url: "/MirrorExperts.pdf",
+  btnLabel: "View Certificate",
+  pdf: true
 }
 
 //Home Section
