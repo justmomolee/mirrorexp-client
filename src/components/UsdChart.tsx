@@ -10,7 +10,7 @@ export default function UsdChart() {
     script.async = true
     
     const loadscript = {
-      "symbol": "BINANCE:BTCUSDT",
+      "symbol": "NASDAQ:TSLA",
       "width": "100%",
       "height": "100%",
       "locale": "en",

@@ -405,12 +405,12 @@ export const fxHero = {
 
 export const cmHero = {
   title: "Commodities",
-  subtitle: "Trade the most popular CFDs on Commodities from around the world, including energies, agriculture and metals. (BCT) combines tight pricing and flexible conditions to give you one powerful product.",
+  subtitle: "Trade the most popular CFDs on Commodities from around the world, including energies, agriculture and metals. MirrorExp combines tight pricing and flexible conditions to give you one powerful product.",
 }
 
 export const indicesHero = {
   title: "Indices",
-  subtitle: "Gain exposure to the basket of instruments making up the index in just one trade. The world’s most popular Indices are available on all (BCT) trading platforms.",
+  subtitle: "Gain exposure to the basket of instruments making up the index in just one trade. The world’s most popular Indices are available on all MirrorExp trading platforms.",
 }
 
 export const bondsHero = {
@@ -425,12 +425,12 @@ export const cryptoHero = {
 
 export const stocksHero = {
   title: "Stocks",
-  subtitle: "Trade over +2100 large-cap Stocks CFDs across the ASX, NYSE and NASDAQ stock exchanges with superior execution and tight pricing exclusively on the (BCT) MetaTrader 5 platform.",
+  subtitle: "Trade over +2100 large-cap Stocks CFDs across the ASX, NYSE and NASDAQ stock exchanges with superior execution and tight pricing exclusively on the MirrorExp MetaTrader 5 platform.",
 }
 
 export const futuresHero = {
   title: "Futures",
-  subtitle: "Futures are one of the most popular form of CFDs. (BCT) offer a range of Futures from around the world, including ICE Dollar Index and CBOE VIX Index. Online Futures based CFDs are offered exclusively on (BCT) ' MetaTrader 4 & 5 Platform.",
+  subtitle: "Futures are one of the most popular form of CFDs. MirrorExp offer a range of Futures from around the world, including ICE Dollar Index and CBOE VIX Index. Online Futures based CFDs are offered exclusively on MirrorExp ' MetaTrader 4 & 5 Platform.",
 }
 
 
@@ -446,7 +446,7 @@ export const whyHero = {
 
 export const regHero = {
   title: "Regulations",
-  subtitle: "(BCT) is authorised and regulated by multiple Regulators across the globe. Trade with peace of mind knowing that (BCT) is monitored by some of the strictest financial regulators’ bodies in the world.",
+  subtitle: "MirrorExp is authorised and regulated by multiple Regulators across the globe. Trade with peace of mind knowing that MirrorExp is monitored by some of the strictest financial regulators’ bodies in the world.",
 }
 
 export const contactHero = {
@@ -456,12 +456,12 @@ export const contactHero = {
 
 export const tradersHero = {
   title: "Expert Traders",
-  subtitle: "The (BCT) traders are one of the most competitive traders in the world. Making the most profit on BullCopytrade is an admirable title, getting it takes time, brains and patience. You can copy any of the traders at BullCopytrade.",
+  subtitle: "The MirrorExp traders are one of the most competitive traders in the world. Making the most profit on BullCopytrade is an admirable title, getting it takes time, brains and patience. You can copy any of the traders at BullCopytrade.",
 }
 
 export const labelHero = {
   title: "White Label",
-  subtitle: "(BCT) ' white label partnership program is a complete solution giving your clients access to our market-leading liquidity and technology.",
+  subtitle: "MirrorExp ' white label partnership program is a complete solution giving your clients access to our market-leading liquidity and technology.",
 }
 
 export const insuranceHero = {
@@ -471,7 +471,7 @@ export const insuranceHero = {
 
 export const serversHero = {
   title: "Servers",
-  subtitle: "Virtual Private Server (VPS) & Other Trading Servers allows traders to run automated trading strategies 24 hours a day 7 days a week with the fastest possible connectivity to the (BCT) trading servers.",
+  subtitle: "Virtual Private Server (VPS) & Other Trading Servers allows traders to run automated trading strategies 24 hours a day 7 days a week with the fastest possible connectivity to the MirrorExp trading servers.",
 }
 
 export const toolsHero = {
@@ -493,20 +493,20 @@ export const pricingHero = {
 
 export const condHero = {
   title: "Trading Conditions",
-  subtitle: "The (BCT) Trading environment offers the most aggressive pricing and flexible trading conditions globally. They are ideal for traders who demand the best execution quality and lowest spreads.",
+  subtitle: "The MirrorExp Trading environment offers the most aggressive pricing and flexible trading conditions globally. They are ideal for traders who demand the best execution quality and lowest spreads.",
 }
 
 export const spreadsHero = {
   title: "Spreads",
-  subtitle: "(BCT) ’ spreads are among the lowest across all major and minor currency pairs. In particular, our average EUR/USD spread* of 0.1 pips is one of the lowest in the world.",
+  subtitle: "MirrorExp ’ spreads are among the lowest across all major and minor currency pairs. In particular, our average EUR/USD spread* of 0.1 pips is one of the lowest in the world.",
 }
 
 export const hoursHero = {
   title: "Trading Hours",
-  subtitle: "At (BCT) there’s always a market for you to trade. Our dedicated specialists are available for you 24 hours a day, 5 days a week.",
+  subtitle: "At MirrorExp there’s always a market for you to trade. Our dedicated specialists are available for you 24 hours a day, 5 days a week.",
 }
 
 export const swapHero = {
   title: "Swap Rates",
-  subtitle: "(BCT) swap rates are amongst the most competitive in the world. Maximise your overnight swap earnings or reduce your swap costs across our wide range of products.",
+  subtitle: "MirrorExp swap rates are amongst the most competitive in the world. Maximise your overnight swap earnings or reduce your swap costs across our wide range of products.",
 }

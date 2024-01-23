@@ -14,6 +14,9 @@ function TradingViewWidget() {
         {
           "symbols": [
             [
+              "NASDAQ:TSLA|1D"
+            ],
+            [
               "Apple",
               "AAPL|1D"
             ],

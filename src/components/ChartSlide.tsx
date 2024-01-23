@@ -11,6 +11,10 @@ function ChartSlide() {
     script.innerHTML = `{
       "symbols": [
         {
+          "description": "Tesla",
+          "proName": "NASDAQ:TSLA"
+        },
+        {
           "proName": "FOREXCOM:SPXUSD",
           "title": "S&P 500"
         },
@@ -23,20 +27,28 @@ function ChartSlide() {
           "title": "EUR to USD"
         },
         {
-          "proName": "BITSTAMP:BTCUSD",
-          "title": "Bitcoin"
+          "description": "Microsoft",
+          "proName": "NASDAQ:MSFT"
         },
         {
-          "proName": "BITSTAMP:ETHUSD",
-          "title": "Ethereum"
+          "description": "Amazon",
+          "proName": "NASDAQ:AMZN"
         },
         {
-          "description": "Gold",
-          "proName": "OANDA:XAUUSD"
+          "description": "Meta",
+          "proName": "NASDAQ:META"
         },
         {
-          "description": "USDT",
-          "proName": "CRYPTOCAP:USDT.D"
+          "description": "Netflix",
+          "proName": "NASDAQ:NFLX"
+        },
+        {
+          "description": "Google",
+          "proName": "NASDAQ:GOOGL"
+        },
+        {
+          "description": "NVDA",
+          "proName": "NASDAQ:NVDA"
         }
       ],
       "showSymbolLogo": true,

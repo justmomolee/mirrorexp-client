@@ -9,8 +9,6 @@ import Ranking from "@/pages/Dashboard/Ranking";
 import Settings from "@/pages/Dashboard/Settings";
 import Trades from "@/pages/Dashboard/Trades";
 import Transactions from "@/pages/Dashboard/Transactions";
-import TransferToDeposit from "@/pages/Dashboard/TransferToDeposit";
-import TransferToTrade from "@/pages/Dashboard/TransferToTrade";
 import Withdraw from "@/pages/Dashboard/Withdraw";
 
 const coreRoutes = [
@@ -33,21 +31,6 @@ const coreRoutes = [
     path: '/dashboard/withdrawal',
     title: 'Withdrawal',
     component: Withdraw,
-  },
-  {
-    path: '/dashboard/transfer',
-    title: 'Transfer',
-    component: TransferToTrade,
-  },
-  {
-    path: '/dashboard/transfer/trade',
-    title: 'Transfer',
-    component: TransferToTrade,
-  },
-  {
-    path: '/dashboard/transfer/deposit',
-    title: 'Transfer',
-    component: TransferToDeposit,
   },
   {
     path: '/dashboard/transactions',

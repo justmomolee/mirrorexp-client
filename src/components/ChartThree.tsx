@@ -2,9 +2,6 @@ import { ApexOptions } from 'apexcharts';
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 
-// interface ChartThreeState {
-//   series: number[];
-// }
 
 const options: ApexOptions = {
   chart: {
@@ -20,7 +17,7 @@ const options: ApexOptions = {
   plotOptions: {
     pie: {
       donut: {
-        size: '70%',
+        size: '60%',
         background: 'transparent',
       },
     },
@@ -33,7 +30,7 @@ const options: ApexOptions = {
       breakpoint: 2600,
       options: {
         chart: {
-          width: 380,
+          width: 370,
         },
       },
     },
@@ -95,7 +92,7 @@ const ChartThree: React.FC = () => {
         </div>
       </div>
 
-      <div id="chartThree" className="w-fit flex justify-center mb-7">
+      <div id="chartThree" className="w-[200px] flex justify-center my-5">
         <ReactApexChart
           options={options}
           series={state.series}

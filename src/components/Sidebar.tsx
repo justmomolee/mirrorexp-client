@@ -1,5 +1,5 @@
 import  { useEffect, useRef } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.svg'
 import { LuLayoutDashboard } from "react-icons/lu";
 import { RiTokenSwapLine } from "react-icons/ri";
@@ -96,12 +96,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
           <div>
-
             {user.fullName !== "" &&
             <>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              MENU
-            </h3>
+            <div className="flex gap-5 pb-8 pt-3">
+              <Link to="/dashboard/deposit" className="w-full text-white bg-[#2a8f47] hover:bg-[#4ECB71] font-medium rounded-lg text-sm px-5 py-2.5 text-center">Deposit</Link>
+              <Link to="/dashboard/withdrawal" className="w-full text-red-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center border border-red-500">Withdrawal</Link>
+            </div>
+
               <ul className="mb-6 flex flex-col gap-1.5">
                 <NavLink
                     to="/dashboard"

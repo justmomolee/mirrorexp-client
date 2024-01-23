@@ -32,28 +32,14 @@ export default function Balance({type, user}: BalanceProps) {
     <div className={s.ctn}>
       <div className={s.wrp}>
         <div className={s.left}>
-          <p className={s.title}>{type === "balance"? "Total Balance" : type}</p>
+          <p className={s.title}>Total Balance</p>
           <h1 className={s.bal}>{
             type === "balance"? (user?.deposit + user?.interest + user?.trade)?.toLocaleString('en-US')
-            : type === "trade"? user?.trade?.toLocaleString('en-US')
-              : type === "bonus"? user?.bonus?.toLocaleString('en-US')
-              : 0}<span>$</span>
+            : type === "trade"? (user?.deposit + user?.interest + user?.trade)?.toLocaleString('en-US')
+              : type === "bonus"? user?.bonus?.toLocaleString('en-US') : 0}<span>$</span>
           </h1>
 
-          {type === "balance" ? 
-          <div className={s.btns}>
-            <Link to="/dashboard/transfer" className={s.btn}> Transfer </Link>
-            <Link to="/dashboard/withdrawal" className={s.btn}> Withdraw </Link>
-          </div>
-          : type === "trade" ?
-          <div className={s.btns}>
-            <Link to="/dashboard/transfer/deposit" className={s.btn}>Transfer</Link>
-          </div>
-          :
-          <div className={s.btns}>
-            <p className={s.name}>{user.username}</p>
-          </div>
-          }
+          <Link to="/dashboard/withdrawal" className={s.btn}> Withdraw </Link>
 
         </div>
         <div className={s.right}>
@@ -71,20 +57,13 @@ export default function Balance({type, user}: BalanceProps) {
 
           <img src="/fav.svg" alt='logo' className="w-6" />
 
-          {type === "trade" ? (
-          <Link to="#" className={s.btn}>
-            Trade {">>"}
-          </Link>
-          ) : type === "bonus" ? <div className={s.btn} onClick={() => handleCopy(user.username)}>Copy Referral Code</div> : 
-          (
-            <Link to="/dashboard/deposit" className={s.btn}>
-              + Add Fund
-            </Link>
-          )}
+          {type === "bonus" ? 
+          <div className={s.btn} onClick={() => handleCopy(user.username)}>Copy Referral Code</div> : 
+          <Link to="/dashboard/deposit" className={s.btn}>+ Add Fund </Link>
+          }
         </div>
       </div>
 
-      {/* {showModal && <Modal type={modalType} user={user} handleModal={handleModal}/>} */}
     </div>
   )
 }
