@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { ImSpinner8 } from "react-icons/im"
 import { Link, useNavigate } from "react-router-dom"
 import { MdVisibility } from "react-icons/md"
-import Otp from "@/components/Otp"
 import { contextData } from "@/context/AuthContext"
 
 export default function Login() {
@@ -13,9 +12,8 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<boolean|string>(false)
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;  
-  const { user } = contextData()
+  const { user, login } = contextData()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -37,7 +35,6 @@ export default function Login() {
 
     setLoading(true)
     setError(false)
-    setSuccess(false)
 
     try{
       // send info to server
@@ -50,7 +47,9 @@ export default function Login() {
       const data = await res.json()
 
       if (res.ok) {
-        setSuccess(true)
+        login(data.user)
+        localStorage.setItem('user', JSON.stringify(data.user))
+        navigate('/dashboard/')
       }
       else throw new Error(data.message)
       setLoading(false)
@@ -58,12 +57,6 @@ export default function Login() {
       setError(err.message)
       setLoading(false)
     }
-  }
-
-  if(success) {
-    return (
-    <Otp username={""} referredBy={""} email={email} password={password}/>
-    )
   }
 
   return (!user &&
@@ -94,7 +87,6 @@ export default function Login() {
             <Link className="m-auto" to="/password-reset">Forgot <span>Password?</span></Link>
           </div>
           {error && <p className={s.formError}>{error}</p>}
-          {success && <p className={s.formSuccess}>A Verification Mail Was Sent To Your Mail</p>}
       </div>
     </div>
   )
