@@ -6,7 +6,7 @@ import { RiTokenSwapLine } from "react-icons/ri";
 import { FiUser } from "react-icons/fi";
 import { PiPresentationChart } from "react-icons/pi";
 import { TbTransform } from "react-icons/tb";
-import { LiaUserShieldSolid } from "react-icons/lia";
+// import { LiaUserShieldSolid } from "react-icons/lia";
 import { BsShieldPlus } from "react-icons/bs";
 import { SlBadge } from "react-icons/sl";
 import { HiOutlineKey } from "react-icons/hi2";
@@ -198,7 +198,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               OTHERS
             </h3>
               <ul className="mb-6 flex flex-col gap-1.5">
-                <li>
+                {/* <li>
                   <NavLink
                     to="/dashboard/kyc"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -208,7 +208,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <LiaUserShieldSolid className='text-xl'/>
                     KYC
                   </NavLink>
-                </li>
+                </li> */}
                 
                 <li>
                   <NavLink
@@ -224,7 +224,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
                 <li>
                   <NavLink
-                    to="/dashboard/settings"
+                    to="/password-reset"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                       pathname.includes('settings') && 'bg-graydark dark:bg-meta-4'
                     }`}

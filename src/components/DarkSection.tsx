@@ -1,4 +1,5 @@
 import React from 'react';
+import phone from '../assets/hand-with-phone.png'
 
 const DarkSection: React.FC = () => {
   return (
@@ -13,8 +14,8 @@ const DarkSection: React.FC = () => {
           <button className="primaryBtn">Explore Copy Trading</button>
         </div>
 
-        <div className="w-full max-w-lg">
-          <img className='w-full rounded-md' src='https://images.unsplash.com/photo-1613575998061-0f59337425f2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDZ8fHxlbnwwfHx8fHw%3D' alt='trade'/>
+        <div className="w-full max-w-100">
+          <img className='w-full' src={phone} alt='trade'/>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import copyTradeDevice from '../assets/multibank-mt4.png'
 
 import secImg2 from '../assets/copy-trade3.png'
 import secImg3 from '../assets/copy-trade2.png'
-import secImg4 from '../assets/mobilePhones.png'
+import secImg4 from '../assets/cfd_stocks.png'
 import cert from '../assets/cert.png'
 
 

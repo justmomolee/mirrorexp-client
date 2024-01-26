@@ -2,6 +2,7 @@ import { heroAvatarLinks } from "@/lib/utils";
 import phoneBg from "../assets/phoneBg.png"
 import ChartSlide from "./ChartSlide";
 import { Link } from "react-router-dom";
+import phone from '../assets/iphone.png'
 
 const Hero:React.FC = () => {
 
@@ -30,12 +31,8 @@ const Hero:React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-cover bg-no-repeat bg-center md:w-[95%] lg:w-full"  style={{ backgroundImage: `url(${phoneBg})` }}>
-          <video className="mx-auto block rounded-[3rem] object-cover" loop autoPlay muted playsInline width="280" height="550" poster="https://www.okx.com/cdn/assets/imgs/237/95265F65A5BC22A1.png?x-oss-process=image/format,webp">
-            <source src="https://www.okx.com/cdn/assets/files/2311/0C78C09B341B6543.webm" type="video/webm" />
-            <source src="https://www.okx.com/cdn/assets/files/237/218B8A2E8CF37E47.mp4" type="video/mp4" />
-            <track kind="captions" />
-          </video>
+        <div className="bg-cover bg-no-repeat bg-right"  style={{ backgroundImage: `url(${phoneBg})` }}>
+          <img className='w-80 m-auto' src={phone} alt='trade'/>
         </div>
       </div>
       <ChartSlide />

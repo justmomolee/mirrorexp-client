@@ -78,6 +78,8 @@ function App() {
           <Route path="/more/spreads" element={<Spreads />} />
           <Route path="/more/hours" element={<Hours />} />
           <Route path="/more/swap" element={<Swap />} />
+          <Route path="/password-reset" element={<PasswordReset />} />
+          <Route path="/password-reset/:page" element={<PasswordReset />} />
 
 
         {user ? (
@@ -142,6 +144,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/register/:ref" element={<Register />} />
             <Route path="/password-reset" element={<PasswordReset />} />
+            <Route path="/password-reset/:page" element={<PasswordReset />} />
           </>
         )}
   </Routes>

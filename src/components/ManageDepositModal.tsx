@@ -1,13 +1,20 @@
 import { useState } from "react";
 import s from "../pages/login/Login.module.css"
 import { GrClose } from "react-icons/gr";
+import EditTransaction from "./EditTransaction";
 
 export default function ManageDepositModal({toggleModal, deposit}: {toggleModal: (e:boolean) => void, deposit: null|ITransaction}) {
   const [error, setError] = useState<null|string>(null)
   const [successLoading, setSuccessLoading] = useState(false)
   const [failedLoading, setFailedLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [edit, setEdit] = useState(false)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+
+  
+  const ToggleModal = (e:boolean) => {
+    setEdit(e)
+  }
 
   const convertDate = (date: string) => {
     return new Date(date).toLocaleString();
@@ -42,8 +49,14 @@ export default function ManageDepositModal({toggleModal, deposit}: {toggleModal:
   }
 
 
+  const refetch = (e:boolean) => {
+    toggleModal(e)
+  }
+
+
   return (deposit &&
     <div className="w-screen h-screen fixed left-0 top-0 z-9999 flex items-center justify-center backdrop-blur px-2">
+      {!edit &&
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
         <form className="space-y-6">
           <div className="flex items-center justify-between mb-10 pb-4 border-b rounded-t dark:border-gray-600">
@@ -112,16 +125,24 @@ export default function ManageDepositModal({toggleModal, deposit}: {toggleModal:
          </div>
 
           {deposit.status === "pending" && 
-          <div className="flex gap-5">
-            <a href="#" onClick={() => startUpdate("success")} className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{successLoading ? "Loading...": "Approve"}</a>
+          <div className="flex gap-5 max-xsm:gap-2">
+            <a href="#" onClick={() => startUpdate("success")} className="w-full text-white bg-[#2a8f47] hover:bg-[#3cd266] font-medium rounded-lg text-sm px-5 py-2.5 text-center">{successLoading ? "Loading...": "Approve"}</a>
 
-            <a href="#" onClick={() => startUpdate("failed")} className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">{failedLoading ? "Loading...": "Reject"}</a>
+            <a href="#" onClick={() => setEdit(true)} className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit</a>
+
+            <a href="#" onClick={() => startUpdate("failed")} className="w-full text-white bg-red-600 hover:bg-red-700 focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">{failedLoading ? "Loading...": "Reject"}</a>
           </div>
           }
           {error && <p className={s.formError}>{error}</p>}
           {success && <p className={s.formSuccess}>{success}</p>}
         </form>
-      </div>  
+      </div>
+      }
+
+      {edit && <EditTransaction amountInUSD={deposit.amount} 
+      amountInCRYPTO={deposit.walletData.convertedAmount} 
+      coinName={deposit.walletData.coinName} id={deposit._id}
+      ToggleModal={ToggleModal} refetch={refetch}/>}
     </div> 
   )
 }

@@ -49,7 +49,7 @@ export default function PasswordReset() {
       setLoading(true)
       setError(null)
 
-      const res = await fetch(`${url}/users/reset-password`, {
+      const res = await fetch(`${url}/users/new-password`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({email, password: newPassword})
