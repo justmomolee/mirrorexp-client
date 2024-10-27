@@ -34,8 +34,8 @@ export default function Balance({type, user}: BalanceProps) {
         <div className={s.left}>
           <p className={s.title}>Total Balance</p>
           <h1 className={s.bal}>{
-            type === "balance"? (user?.deposit + user?.interest + user?.trade)?.toLocaleString('en-US')
-            : type === "trade"? (user?.deposit + user?.interest + user?.trade)?.toLocaleString('en-US')
+            type === "balance"? (user?.deposit + user?.interest)?.toLocaleString('en-US')
+            : type === "trade"? (user?.deposit + user?.interest)?.toLocaleString('en-US')
               : type === "bonus"? user?.bonus?.toLocaleString('en-US') : 0}<span>$</span>
           </h1>
 

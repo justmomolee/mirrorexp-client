@@ -15,7 +15,6 @@ import { testimonies, HomeSec1, HomeSec2, HomeSec3, HomeSec4 } from "@/lib/utils
 import LightSectionV2 from "@/components/LightSectionV2";
 import Testimonials from "@/components/Testimonials";
 import DarkSection from "@/components/DarkSection";
-import StockSlide from "@/components/stockSlide/StockSlide";
 import StockHeatmap from "@/components/StockHeatmap";
 import WideCard from "@/components/WideCard";
 import CardOne from "@/components/CardOne";
@@ -30,7 +29,6 @@ export default function Home() {
       <LightSectionV2 secData={HomeSec4}/>
       <AutoCount />
       <Features />
-      <StockSlide />
       <LightSectionV2 secData={HomeSec1}/>
       <CryptoCarousel />
       <DarkSection />
