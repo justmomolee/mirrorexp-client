@@ -99,7 +99,7 @@ const DropdownUser = () => {
 
           {user?.isAdmin &&
             <Link
-              to="/admin/users/active"
+              to="/admin/active-users"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <FiUser className="text-xl"/>
@@ -110,7 +110,7 @@ const DropdownUser = () => {
 
           <li>
             <Link
-              to={`${user?.isAdmin ? "admin/settings" : "/dashboard/settings"}`}
+              to={`${user?.isAdmin ? "/admin/settings" : "/dashboard/settings"}`}
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <IoSettingsOutline className="text-2xl" />
