@@ -18,6 +18,7 @@ import DarkSection from "@/components/DarkSection";
 import StockHeatmap from "@/components/StockHeatmap";
 import WideCard from "@/components/WideCard";
 import CardOne from "@/components/CardOne";
+import Contact from "./Contact";
 
 export default function Home() {
   return (
@@ -43,6 +44,7 @@ export default function Home() {
       <LiquiditySlides />
       <FAQ />
       <Footer />
+      <Contact />
     </>
   )
 }
