@@ -34,7 +34,7 @@ const StockHeatmap: FC = () => {
   }, []);
 
   return (
-    <section className='h-screen min-h-[600px]'>
+    <section className='h-[600px]'>
       <div className="tradingview-widget-container m-auto max-ctn rounded-xl overflow-hidden" ref={container}>
         <div className="tradingview-widget-container__widget"></div>
       </div>

@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate  } from 'react-router-dom';
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 
 //importing pages
 import Home from './pages/Home';
@@ -27,7 +27,7 @@ import Register from './pages/register/Register';
 import PasswordReset from './pages/passwordReset/PasswordReset';
 import PricingPage from './pages/Pricing';
 import PageLoader from './components/PageLoader';
-import { contextData } from './context/AuthContext'
+import { contextData } from './context/AuthContext';
 import UpdateProfile from './components/UpdateProfile';
 import routes from './routes';
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -45,17 +45,36 @@ import PendingWithdrawals from './pages/Admin/PendingWithdrawals';
 import RejectedWithdrawals from './pages/Admin/RejectedWithdrawals';
 import KYC from './pages/Dashboard/KYC';
 import Settings from './pages/Admin/Settings';
+import { Helmet } from 'react-helmet';
 
 function App() {
+  const location = useLocation();
+  const isPublicRoute =
+    location.pathname.includes('/dashboard') ||
+    location.pathname.includes('/admin') ||
+    location.pathname.includes('/login') ||
+    location.pathname.includes('/register') ||
+    location.pathname.includes('/password-reset');
   const { fetching, user } = contextData();
 
+  console.log(isPublicRoute);
 
+  if (fetching) return <PageLoader />;
 
-  if (fetching) return ( <PageLoader /> )
-  
-
-  if (!fetching) return (
-    <Routes>
+  if (!fetching)
+    return (
+      <>
+        <Helmet>
+          {isPublicRoute ? (
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+            />
+          ) : (
+            <meta name="viewport" content="width=1280, user-scalable=yes" />
+          )}
+        </Helmet>
+        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/copytrade" element={<Copytrade />} />
@@ -82,75 +101,123 @@ function App() {
           <Route path="/password-reset" element={<PasswordReset />} />
           <Route path="/password-reset/:page" element={<PasswordReset />} />
 
+          {user ? (
+            <>
+              {user.isAdmin ? (
+                <>
+                  <Route path="/admin/" element={<AdminLayout />}>
+                    <Route index element={<Admin />} />
+                    <Route path="/admin/home" element={<Admin />} />
+                    <Route
+                      path="/admin/active-users"
+                      element={<ActiveUsers />}
+                    />
+                    <Route path="/admin/trades" element={<ManageTrades />} />
+                    <Route
+                      path="/admin/banned-users"
+                      element={<BannedUsers />}
+                    />
+                    <Route
+                      path="/admin/approved-deposits"
+                      element={<ApprovedDeposits />}
+                    />
+                    <Route
+                      path="/admin/pending-deposits"
+                      element={<PendingDeposits />}
+                    />
+                    <Route
+                      path="/admin/rejected-deposits"
+                      element={<RejectedDeposits />}
+                    />
+                    <Route
+                      path="/admin/approved-withdrawals"
+                      element={<ApprovedWithdrawals />}
+                    />
+                    <Route
+                      path="/admin/pending-withdrawals"
+                      element={<PendingWithdrawals />}
+                    />
+                    <Route
+                      path="/admin/rejected-withdrawals"
+                      element={<RejectedWithdrawals />}
+                    />
+                    <Route path="/admin/settings" element={<Settings />} />
+                    <Route path="/admin/kyc" element={<KYC />} />
+                  </Route>
 
-        {user ? (
-          <>
-            {user.isAdmin ? (
-              <>
-              <Route path="/admin/" element={<AdminLayout />}>
-                <Route index element={<Admin />} />
-                <Route path="/admin/home" element={<Admin />} />
-                <Route path="/admin/active-users" element={<ActiveUsers />} />
-                <Route path="/admin/trades" element={<ManageTrades />} />
-                <Route path="/admin/banned-users" element={<BannedUsers />} />
-                <Route path="/admin/approved-deposits" element={<ApprovedDeposits />} />
-                <Route path="/admin/pending-deposits" element={<PendingDeposits />} />
-                <Route path="/admin/rejected-deposits" element={<RejectedDeposits />} />
-                <Route path="/admin/approved-withdrawals" element={<ApprovedWithdrawals />} />
-                <Route path="/admin/pending-withdrawals" element={<PendingWithdrawals />} />
-                <Route path="/admin/rejected-withdrawals" element={<RejectedWithdrawals />} />
-                <Route path="/admin/settings" element={<Settings />} />
-                <Route path="/admin/kyc" element={<KYC />} />
-              </Route>
+                  <Route path="/login" element={<Navigate to="/admin/" />} />
+                  <Route path="/register" element={<Navigate to="/admin/" />} />
+                  <Route
+                    path="/register/:ref"
+                    element={<Navigate to="/admin/" />}
+                  />
+                </>
+              ) : (
+                <Route
+                  path="/admin/*"
+                  element={<Navigate to="/dashboard/" />}
+                />
+              )}
 
-              <Route path="/login" element={<Navigate to="/admin/" />} />
-              <Route path="/register" element={<Navigate to="/admin/" />} />
-              <Route path="/register/:ref" element={<Navigate to="/admin/" />} />
-              </>
-            ) : (
-              <Route path="/admin/*" element={<Navigate to="/dashboard/"/>}/>
-            )}
+              {!user.isAdmin ? (
+                <>
+                  <Route path="/dashboard/" element={<DefaultLayout />}>
+                    {user.fullName === '' ? (
+                      <Route
+                        path="/dashboard/updateProfile"
+                        element={<UpdateProfile />}
+                      />
+                    ) : (
+                      <Route path="/dashboard/home" element={<Dashboard />} />
+                    )}
 
-
-            {!user.isAdmin ? (
-              <>
-                <Route path="/dashboard/" element={<DefaultLayout />}>
-                  {user.fullName === "" ? (
-                    <Route path="/dashboard/updateProfile" element={<UpdateProfile />} />
-                  ) : (
+                    <Route index element={<Dashboard />} />
                     <Route path="/dashboard/home" element={<Dashboard />} />
-                  )}
 
-                  <Route index element={<Dashboard />} />
-                  <Route path="/dashboard/home" element={<Dashboard />} />
-                  
-                  {routes.map((route, i) => 
-                    <Route key={i} path={route.path} element={<route.component />} />
-                  )}
-                </Route>
+                    {routes.map((route, i) => (
+                      <Route
+                        key={i}
+                        path={route.path}
+                        element={<route.component />}
+                      />
+                    ))}
+                  </Route>
 
-                <Route path="/login" element={<Navigate to="/dashboard/" />} />
-                <Route path="/register" element={<Navigate to="/dashboard/" />} />
-                <Route path="/register/:ref" element={<Navigate to="/dashboard/" />} />
-              </>
-            ) : (
-              <Route path="/dashboard/*" element={<Navigate to="/admin/"/>}/>
-            )}
-          </>
-        ): (
-          <>
-            <Route path="/dashboard/*" element={<Navigate to="/login" />} />
-            <Route path="/admin/*" element={<Navigate to="/login" />} />
+                  <Route
+                    path="/login"
+                    element={<Navigate to="/dashboard/" />}
+                  />
+                  <Route
+                    path="/register"
+                    element={<Navigate to="/dashboard/" />}
+                  />
+                  <Route
+                    path="/register/:ref"
+                    element={<Navigate to="/dashboard/" />}
+                  />
+                </>
+              ) : (
+                <Route
+                  path="/dashboard/*"
+                  element={<Navigate to="/admin/" />}
+                />
+              )}
+            </>
+          ) : (
+            <>
+              <Route path="/dashboard/*" element={<Navigate to="/login" />} />
+              <Route path="/admin/*" element={<Navigate to="/login" />} />
 
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/register/:ref" element={<Register />} />
-            <Route path="/password-reset" element={<PasswordReset />} />
-            <Route path="/password-reset/:page" element={<PasswordReset />} />
-          </>
-        )}
-  </Routes>
-  )
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/register/:ref" element={<Register />} />
+              <Route path="/password-reset" element={<PasswordReset />} />
+              <Route path="/password-reset/:page" element={<PasswordReset />} />
+            </>
+          )}
+        </Routes>
+      </>
+    );
 }
 
 export default App;
