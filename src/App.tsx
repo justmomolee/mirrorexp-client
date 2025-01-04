@@ -46,6 +46,7 @@ import RejectedWithdrawals from './pages/Admin/RejectedWithdrawals';
 import KYC from './pages/Dashboard/KYC';
 import Settings from './pages/Admin/Settings';
 import { Helmet } from 'react-helmet';
+import SendMail from './pages/Admin/SendMail';
 
 function App() {
   const location = useLocation();
@@ -141,6 +142,7 @@ function App() {
                       path="/admin/rejected-withdrawals"
                       element={<RejectedWithdrawals />}
                     />
+                    <Route path="/admin/sendmail" element={<SendMail />} />
                     <Route path="/admin/settings" element={<Settings />} />
                     <Route path="/admin/kyc" element={<KYC />} />
                   </Route>
