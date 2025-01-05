@@ -32,7 +32,7 @@ export default function SendMailModal({ emails, onClose }: any) {
 
       if (res.ok) {
         setSuccess(data.message);
-        setTimeout(() => onClose(), 300);
+        setTimeout(() => onClose(), 2000);
       } else {
         setError(data.message);
         throw new Error(data.message);
