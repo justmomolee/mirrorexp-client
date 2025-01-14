@@ -156,7 +156,7 @@ export default function Register() {
           <p>MirrorExp <br /><Link to='#'><span>Terms & Condition | Privacy Policy</span></Link></p>
         </div>
 
-        <div className="mt-4">
+        <div style={{margin: "10px 0"}}>
           <ReCAPTCHA
             ref={recaptchaRef}
             sitekey={`${siteKey}`}

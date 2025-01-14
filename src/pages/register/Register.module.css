@@ -86,7 +86,6 @@
 .formWrp div{
   width: 100%;
   display: flex;
-  margin-bottom: 20px;
 }
 
 .formTitle{
@@ -110,7 +109,7 @@
   padding: 18px;
   border-radius: 10px;
   border: 1px solid rgba(35, 35, 36, 0.6);
-  margin-bottom: 15px;
+  margin-bottom: 14px;
   font-size: .9rem;
   font-weight: 500;
   color: rgba(35, 35, 36, 0.8);
@@ -133,6 +132,7 @@
 .formLinks{
   width: 100%;
   display: flex;
+  margin-bottom: 20px;
 }
 
 .formLinks a, .formLinks p{
