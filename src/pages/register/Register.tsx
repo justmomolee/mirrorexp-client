@@ -87,7 +87,6 @@ export default function Register() {
           username,
           password,
           referredBy,
-          recaptchaToken: captchaToken
         }),
       });
 
@@ -157,7 +156,7 @@ export default function Register() {
           <p>MirrorExp <br /><Link to='#'><span>Terms & Condition | Privacy Policy</span></Link></p>
         </div>
 
-        <div className="my-4">
+        <div className="mt-4">
           <ReCAPTCHA
             ref={recaptchaRef}
             sitekey={`${siteKey}`}
