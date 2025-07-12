@@ -24,7 +24,7 @@ import DarkSection from '@/components/DarkSection';
 import StockHeatmap from '@/components/StockHeatmap';
 import WideCard from '@/components/WideCard';
 import CardOne from '@/components/CardOne';
-import WhatsAppBtn from '@/components/WhatsAppBtn';
+// import WhatsAppBtn from '@/components/WhatsAppBtn';
 
 export default function Home() {
   return (
@@ -50,7 +50,6 @@ export default function Home() {
       <LiquiditySlides />
       <FAQ />
       <Footer />
-      <WhatsAppBtn />
     </>
   );
 }
