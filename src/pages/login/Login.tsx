@@ -5,6 +5,11 @@ import { ImSpinner8 } from "react-icons/im"
 import { Link, useNavigate } from "react-router-dom"
 import { MdVisibility } from "react-icons/md"
 import { contextData } from "@/context/AuthContext"
+import {
+  sanitizeEmail,
+  validateEmail,
+  getFriendlyErrorMessage
+} from "@/utils/validation"
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -12,7 +17,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<boolean|string>(false)
   const [loading, setLoading] = useState(false)
-  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;  
+  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
   const { user, login } = contextData()
   const navigate = useNavigate()
 
@@ -20,7 +25,7 @@ export default function Login() {
     if(user) return navigate('/dashboard')
   }, [])
 
-    
+
   const handleShowPassword = () => {
     setShowPassword(!showPassword)
   }
@@ -28,20 +33,32 @@ export default function Login() {
 
   const handleSubmit = async(e:any) => {
     e.preventDefault()
-
-    if(email.length < 7) return setError("Your email must be at least 7 characters")
-    if(!email.includes('@')) return setError("Invalid Email")
-    if(password.length < 5) return setError("Your password must be at least 5 characters")
-
-    setLoading(true)
     setError(false)
 
+    // Validate email
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.isValid) {
+      return setError(emailValidation.error || 'Invalid email');
+    }
+
+    // Validate password
+    if(password.length < 5) {
+      return setError("Password must be at least 5 characters")
+    }
+
+    setLoading(true)
+
     try{
-      // send info to server
+      // Sanitize and send info to server
+      const sanitizedEmail = sanitizeEmail(email);
+
       const res = await fetch(`${url}/users/login`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({
+          email: sanitizedEmail,
+          password
+        })
       })
 
       const data = await res.json()
@@ -52,9 +69,10 @@ export default function Login() {
         navigate('/dashboard/')
       }
       else throw new Error(data.message)
-      setLoading(false)
     } catch(err:any) {
-      setError(err.message)
+      const friendlyError = getFriendlyErrorMessage(err);
+      setError(friendlyError)
+    } finally {
       setLoading(false)
     }
   }
@@ -71,12 +89,12 @@ export default function Login() {
             <Link to="/register">Sign <span>Up</span></Link>
           </div>
 
-          <input value={email} onChange={(e) => setEmail(e.target.value.toLowerCase())} className={s.formInput} type='email' placeholder='Email' autoComplete="off"/>
+          <input value={email} onChange={(e) => { setEmail(e.target.value); setError(false); }} className={s.formInput} type='email' placeholder='Email' autoComplete="off"/>
           <div className={s.inputWrp}>
             {
               showPassword ?
-              <input value={password} onChange={(e) => setPassword(e.target.value)} className={s.formInput} type='text' placeholder='Password' autoComplete="new-password"/>
-            : <input value={password} onChange={(e) => setPassword(e.target.value)} className={s.formInput} type='password' placeholder='Password' autoComplete="new-password"/>
+              <input value={password} onChange={(e) => { setPassword(e.target.value); setError(false); }} className={s.formInput} type='text' placeholder='Password' autoComplete="new-password"/>
+            : <input value={password} onChange={(e) => { setPassword(e.target.value); setError(false); }} className={s.formInput} type='password' placeholder='Password' autoComplete="new-password"/>
             }
             <MdVisibility onClick={handleShowPassword} className={s.visibility}/>
           </div>

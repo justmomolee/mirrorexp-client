@@ -3,8 +3,9 @@ import { ImSpinner8 } from "react-icons/im"
 import { useNavigate } from "react-router-dom"
 import { contextData } from "../context/AuthContext"
 import s from '../pages/register/Register.module.css'
+import { validateOtp, getFriendlyErrorMessage } from "@/utils/validation"
 
-export default function Otp({ email, password, username, referredBy }: 
+export default function Otp({ email, password, username, referredBy }:
   {email: string, password: string, username: string, referredBy: string}) {
 
   const navigate = useNavigate()
@@ -14,11 +15,16 @@ export default function Otp({ email, password, username, referredBy }:
   const [loading, setLoading] = useState(false)
   const { login } = contextData()
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
-  
+
 
 
   const handleChange = (e:any) => {
-    setOtp(e.target.value)
+    const value = e.target.value;
+    // Only allow numbers and limit to 6 digits
+    if (/^\d{0,6}$/.test(value)) {
+      setOtp(value);
+      setError(''); // Clear error on input
+    }
   }
 
   const handleResendOtp = async(e:any) => {
@@ -35,41 +41,63 @@ export default function Otp({ email, password, username, referredBy }:
 
       const data = await res.json()
 
-      if (res.ok) setSuccess("Successfully Sent!")
-      else throw new Error(data.message)
-    } catch(err:any) { setError(err.message) }
+      if (res.ok) {
+        setSuccess("A new verification code has been sent to your email!")
+      } else {
+        throw new Error(data.message)
+      }
+    } catch(err:any) {
+      const friendlyError = getFriendlyErrorMessage(err);
+      setError(friendlyError);
+    }
 
     setTimeout(() =>{
       setSuccess(null)
-    }, 3000)
+    }, 5000)
   }
 
 
 
   const handleSubmit = async(e:any) => {
     e.preventDefault()
-    setLoading(true)
     setError('')
+
+    // Validate OTP before submission
+    const otpValidation = validateOtp(otp);
+    if (!otpValidation.isValid) {
+      setError(otpValidation.error || 'Invalid OTP');
+      return;
+    }
+
+    setLoading(true)
 
     try{
       const res = await fetch(`${url}/users/otp/`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ code: otp, email, password, username, referredBy})
+        body: JSON.stringify({
+          code: otp.trim(),
+          email,
+          password,
+          username,
+          referredBy
+        })
       })
 
       const data = await res.json()
 
       if (res.ok) {
+        // Store user data and login
         login(data.user)
         localStorage.setItem('user', JSON.stringify(data.user))
         navigate('/dashboard/')
       } else {
         throw new Error(data.message)
       }
-      
+
     } catch(err: any) {
-      setError(err.message)
+      const friendlyError = getFriendlyErrorMessage(err);
+      setError(friendlyError);
     } finally {
       setLoading(false)
     }

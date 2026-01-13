@@ -2,6 +2,16 @@ import { contextData } from "@/context/AuthContext";
 import { countries } from "@/lib/countries"
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom"
+import {
+  sanitizeInput,
+  validateName,
+  validateFullName,
+  validatePhone,
+  validateAddress,
+  validateCombinedAddress,
+  validateZipCode,
+  getFriendlyErrorMessage
+} from "@/utils/validation";
 
 
 export default function UpdateProfile() {
@@ -17,7 +27,7 @@ export default function UpdateProfile() {
   const [error, setError] = useState<string|null>(null);
   const [loading, setLoading] = useState(false)
   const formRef = useRef<HTMLFormElement | null>(null);
-  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;  
+  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
   const { login, user } = contextData()
   const navigate = useNavigate()
 
@@ -26,24 +36,92 @@ export default function UpdateProfile() {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     setError(null);
+
+    // Comprehensive validation with user-friendly messages
+    const firstNameValidation = validateName(firstName, 'First name');
+    if (!firstNameValidation.isValid) {
+      setError(firstNameValidation.error!);
+      return;
+    }
+
+    const lastNameValidation = validateName(lastName, 'Last name');
+    if (!lastNameValidation.isValid) {
+      setError(lastNameValidation.error!);
+      return;
+    }
+
+    // Validate combined full name doesn't exceed model limit (20 chars)
+    const fullNameValidation = validateFullName(firstName, lastName);
+    if (!fullNameValidation.isValid) {
+      setError(fullNameValidation.error!);
+      return;
+    }
+
+    if (selectedCountry === 'none' || selectedCountry === '') {
+      setError("Please select your country");
+      return;
+    }
+
+    const phoneValidation = validatePhone(phoneNumber);
+    if (!phoneValidation.isValid) {
+      setError(phoneValidation.error!);
+      return;
+    }
+
+    const streetValidation = validateAddress(streetAddress, 'Street address');
+    if (!streetValidation.isValid) {
+      setError(streetValidation.error!);
+      return;
+    }
+
+    // Validate combined address doesn't exceed model limit (50 chars)
+    const combinedAddressValidation = validateCombinedAddress(streetAddress, optionalAddress);
+    if (!combinedAddressValidation.isValid) {
+      setError(combinedAddressValidation.error!);
+      return;
+    }
+
+    const stateValidation = validateAddress(state, 'State');
+    if (!stateValidation.isValid) {
+      setError(stateValidation.error!);
+      return;
+    }
+
+    const cityValidation = validateAddress(city, 'City');
+    if (!cityValidation.isValid) {
+      setError(cityValidation.error!);
+      return;
+    }
+
+    const zipValidation = validateZipCode(zipCode);
+    if (!zipValidation.isValid) {
+      setError(zipValidation.error!);
+      return;
+    }
+
     setLoading(true);
 
-    if(firstName.length < 3) return setError("First name must be at least 3 characters");
-    if(lastName.length < 3) return setError("Last name must be at least 3 characters");
-    if(selectedCountry === 'none' || selectedCountry === '') return setError("No country was selected");
-    if(phoneNumber.length < 3) return setError("Invalid phone number");
-    if(streetAddress.length < 3) return setError("Street Address must be at least 3 characters");
-    if(state.length < 3) return setError("State must be at least 3 characters");
-    if(city.length < 3) return setError("City must be at least 3 characters");
-    if(zipCode.length < 3) return setError("Zip Code must be at least 3 characters");
+    // Sanitize all inputs before sending
+    const sanitizedFirstName = sanitizeInput(firstName);
+    const sanitizedLastName = sanitizeInput(lastName);
+    const sanitizedPhone = sanitizeInput(phoneNumber);
+    const sanitizedStreetAddress = sanitizeInput(streetAddress);
+    const sanitizedOptionalAddress = sanitizeInput(optionalAddress);
+    const sanitizedState = sanitizeInput(state);
+    const sanitizedCity = sanitizeInput(city);
+    const sanitizedZipCode = sanitizeInput(zipCode);
 
     const profileData = {
       email: user.email,
-      fullName: `${firstName} ${lastName}`,
+      fullName: `${sanitizedFirstName} ${sanitizedLastName}`,
       country: selectedCountry,
-      phone: phoneNumber,
-      address: `${streetAddress} ${optionalAddress}`,
-      state, city, zipCode,
+      phone: sanitizedPhone,
+      address: sanitizedOptionalAddress
+        ? `${sanitizedStreetAddress} ${sanitizedOptionalAddress}`
+        : sanitizedStreetAddress,
+      state: sanitizedState,
+      city: sanitizedCity,
+      zipCode: sanitizedZipCode,
     }
 
     try {
@@ -55,16 +133,17 @@ export default function UpdateProfile() {
       const data = await res.json()
 
       if (res.ok) {
+        // Update user context and localStorage
         login(data.user)
         localStorage.setItem('user', JSON.stringify(data.user));
         navigate('/dashboard/home');
+      } else {
+        throw new Error(data.message)
       }
-      else throw new Error(data.message)
     } catch (error: any) {
-      setError(error.message)
-    } finally {
+      const friendlyError = getFriendlyErrorMessage(error);
+      setError(friendlyError);
       setLoading(false);
-      formRef.current?.reset();
     }
   }
 
