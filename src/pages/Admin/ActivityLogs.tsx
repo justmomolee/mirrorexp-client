@@ -82,7 +82,16 @@ const ActivityLogs = () => {
       log.location.region,
       log.location.country,
     ].filter(Boolean);
-    return parts.join(', ') || 'Unknown location';
+    const coords =
+      log.location.lat && log.location.lng
+        ? ` (${log.location.lat}, ${log.location.lng})`
+        : '';
+    return parts.join(', ') + coords || 'Unknown location';
+  };
+
+  const renderMetadata = (metadata?: Record<string, any>) => {
+    if (!metadata || Object.keys(metadata).length === 0) return '-';
+    return JSON.stringify(metadata, null, 2);
   };
 
   return (
@@ -207,6 +216,12 @@ const ActivityLogs = () => {
                   {log.targetCollection || '-'} {log.targetId || ''}
                 </span>
               </p>
+              <p className="text-xs">
+                <span className="text-slate-500 dark:text-slate-400">
+                  Actor Role:
+                </span>{' '}
+                {log.actorRole || '-'}
+              </p>
               <p className="flex flex-wrap gap-1">
                 <span className="text-slate-500 dark:text-slate-400">IP:</span>
                 <span className="font-mono text-xs bg-slate-100 px-2 py-1 rounded-md dark:bg-slate-800 dark:text-slate-200">
@@ -232,7 +247,7 @@ const ActivityLogs = () => {
                 Metadata
               </p>
               <div className="rounded-lg bg-slate-100 border border-slate-200 p-3 text-xs max-h-32 overflow-y-auto whitespace-pre-wrap break-words dark:bg-slate-800 dark:border-slate-700">
-                {log.metadata ? JSON.stringify(log.metadata, null, 2) : '-'}
+                {renderMetadata(log.metadata)}
               </div>
             </div>
           </div>
