@@ -19,6 +19,7 @@ export default function EditUserModal({userData, handleUserData}:any) {
   const [bonus, setBonus] = useState(0);
   const [error, setError] = useState<string|null>(null);
   const [loading, setLoading] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const { login } = contextData()
   const navigate = useNavigate()
@@ -36,6 +37,7 @@ export default function EditUserModal({userData, handleUserData}:any) {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     setError(null);
+    setSuccess(false)
 
     if(fullName.length < 3) return setError("Full name must be at least 3 characters");
     if(email.length < 7) return setError("Email must be at least 7 characters");
@@ -70,6 +72,29 @@ export default function EditUserModal({userData, handleUserData}:any) {
       setError(error.message)
     } finally {
       setLoading(false);
+    }
+  }
+
+  const handleDeleteUser = async () => {
+    setError(null)
+    setSuccess(false)
+
+    try {
+      setDeleteLoading(true)
+      const res = await fetch(`${url}/users`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userIds: [userData._id] })
+      })
+      const data = await res.json()
+
+      if(!res.ok) throw new Error(data.message || data.error || "Failed to delete user")
+
+      handleUserData(null)
+    } catch (err:any) {
+      setError(err.message || "Unable to delete user")
+    } finally {
+      setDeleteLoading(false)
     }
   }
 
@@ -173,7 +198,11 @@ export default function EditUserModal({userData, handleUserData}:any) {
 
                 {/* <!-- Modal footer --> */}
                 <div className="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{loading ? "Saving..." : "Save all"}</button>
+                    <button disabled={loading || deleteLoading} type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-60">{loading ? "Saving..." : "Save all"}</button>
+
+                    <button type="button" onClick={handleDeleteUser} disabled={loading || deleteLoading} className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-900 disabled:opacity-60">
+                      {deleteLoading ? "Deleting..." : "Delete user"}
+                    </button>
 
                     <a href="#" onClick={loginAsUser} className="text-white bg-gray-900 hover:bg-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-white dark:hover:bg-gray-200 dark:text-gray-800">Login as user</a>
                 </div>
