@@ -23,7 +23,7 @@ export default function Withdraw() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL
-  const { user, authHeaders } = contextData()
+  const { authHeaders } = contextData()
 
 
   const fetchCoins = async () => {

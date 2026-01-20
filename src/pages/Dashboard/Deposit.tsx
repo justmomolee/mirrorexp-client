@@ -24,7 +24,7 @@ export default function Deposit() {
   const [success, setSuccess] = useState(false)
   const [copySuccess, setCopySuccess] = useState(false)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL
-  const { user, authHeaders } = contextData()
+  const { authHeaders } = contextData()
 
 
   const fetchCoins = async () => {
