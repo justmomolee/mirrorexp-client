@@ -24,13 +24,13 @@ export default function Deposit() {
   const [success, setSuccess] = useState(false)
   const [copySuccess, setCopySuccess] = useState(false)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL
-  const { user } = contextData()
+  const { user, authHeaders } = contextData()
 
 
   const fetchCoins = async () => {
     setFetching(true)
     try {
-      const res = await fetch(`${url}/utils`)
+      const res = await fetch(`${url}/utils`, { headers: authHeaders() })
       const data = await res.json()
 
       if(res.ok) {
@@ -62,8 +62,8 @@ export default function Deposit() {
     try {
       const res = await fetch(`${url}/deposits`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ id: user._id, amount, convertedAmount, coinName: coin?.name })
+        headers: authHeaders({'Content-Type': 'application/json'}),
+        body: JSON.stringify({ amount, convertedAmount, coinName: coin?.name })
       })
 
       const data = await res.json()

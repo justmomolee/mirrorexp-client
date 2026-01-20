@@ -1,5 +1,6 @@
 import { useState } from "react";
 import s from "../pages/login/Login.module.css"
+import { contextData } from "@/context/AuthContext";
 
 export default function CreateTradeModal({toggleModal}:any) {
   const [stock, setStock] = useState('')
@@ -8,6 +9,7 @@ export default function CreateTradeModal({toggleModal}:any) {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+  const { authHeaders } = contextData();
 
 
 
@@ -25,7 +27,7 @@ export default function CreateTradeModal({toggleModal}:any) {
     try {
       const res = await fetch(`${url}/trades`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: authHeaders({'Content-Type': 'application/json'}),
         body: JSON.stringify({ package: stock, interest: Number(interest/100) })
       })
       const data = await res.json()

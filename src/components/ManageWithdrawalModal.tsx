@@ -1,6 +1,7 @@
 import { useState } from "react";
 import s from "../pages/login/Login.module.css"
 import { GrClose } from "react-icons/gr";
+import { contextData } from "@/context/AuthContext";
 
 export default function ManageWithdrawalModal({toggleModal, withdrawal}: {toggleModal: (e:boolean) => void, withdrawal: null|ITransaction}) {
   const [error, setError] = useState<null|string>(null)
@@ -8,6 +9,7 @@ export default function ManageWithdrawalModal({toggleModal, withdrawal}: {toggle
   const [failedLoading, setFailedLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+  const { authHeaders } = contextData();
 
   const convertDate = (date: string) => {
     return new Date(date).toLocaleString();
@@ -24,7 +26,7 @@ export default function ManageWithdrawalModal({toggleModal, withdrawal}: {toggle
     try {
       const res = await fetch(`${url}/withdrawals/${withdrawal?._id}`, {
         method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
+        headers: authHeaders({'Content-Type': 'application/json'}),
         body: JSON.stringify({ status, email: withdrawal?.user.email, amount: withdrawal?.amount })
       })
 

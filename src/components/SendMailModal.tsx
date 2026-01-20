@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react';
 import s from '../pages/login/Login.module.css';
+import { contextData } from '@/context/AuthContext';
 
 export default function SendMailModal({ emails, onClose }: any) {
   const [message, setMessage] = useState('');
@@ -8,6 +9,7 @@ export default function SendMailModal({ emails, onClose }: any) {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+  const { authHeaders } = contextData();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -18,9 +20,9 @@ export default function SendMailModal({ emails, onClose }: any) {
     try {
       const res = await fetch(`${url}/utils/send-mail`, {
         method: 'POST',
-        headers: {
+        headers: authHeaders({
           'Content-Type': 'application/json',
-        },
+        }),
         body: JSON.stringify({
           emails,
           subject,

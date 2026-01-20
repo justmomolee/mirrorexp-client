@@ -1,6 +1,7 @@
 import CreateTradeModal from "@/components/CreateTradeModal";
 import { useEffect, useState } from "react";
 import s from "../../pages/login/Login.module.css"
+import { contextData } from "@/context/AuthContext";
 
 export default function ManageTrades() {
   const [trades, setTrades] = useState<ITransaction[]>([])
@@ -9,6 +10,7 @@ export default function ManageTrades() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<null|string>(null);
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+  const { authHeaders } = contextData();
 
 
   const toggleModal = (e:boolean) => {
@@ -17,7 +19,7 @@ export default function ManageTrades() {
   
   const fetchTrades = async () => {
     try {
-      const res = await fetch(`${url}/trades`);
+      const res = await fetch(`${url}/trades`, { headers: authHeaders() });
       const data = await res.json();
 
       if (res.ok) setTrades(data)
@@ -39,7 +41,7 @@ export default function ManageTrades() {
       setLoading(true)
       const res = await fetch(`${url}/trades/${e._id}`, {
         method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
+        headers: authHeaders({'Content-Type': 'application/json'}),
       })
 
       const data = await res.json()

@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 
 export default function Trades() {
   const [tradeData, setTradeData] = useState<any>([]);
-  const { user } = contextData();
+  const { user, authHeaders } = contextData();
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
   const fetchTrades = async () => {
     try {
-      const res = await fetch(`${url}/trades`);
+      const res = await fetch(`${url}/trades`, { headers: authHeaders() });
       const data = await res.json();
   
       if (res.ok) {

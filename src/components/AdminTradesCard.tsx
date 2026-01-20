@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PiChartBarHorizontalThin } from "react-icons/pi";
+import { contextData } from "@/context/AuthContext";
 
 export default function AdminTradeCards() {
   const [transactions, setTransactions] = useState<any>(null)
@@ -7,10 +8,13 @@ export default function AdminTradeCards() {
   const [totalInterest, setTotalInterest] = useState(0)
   const [pendingTrades, setPendingTrades] = useState(0)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+  const { authHeaders } = contextData();
 
   const fetchTradeTransactions = async () => {
     try {
-      const res = await fetch(`${url}/transactions`);
+      const res = await fetch(`${url}/transactions`, {
+        headers: authHeaders(),
+      });
       const data = await res.json();
 
       if (res.ok) setTransactions(data);
@@ -22,25 +26,26 @@ export default function AdminTradeCards() {
 
   useEffect(() => {
     fetchTradeTransactions();
-    
-    if (transactions) {
-      const tradesTransactions = transactions.filter(
-        (transaction: any) => transaction.type === "trade" 
-      );
+  }, [authHeaders]);
 
-      const tradesSum = tradesTransactions
+  useEffect(() => {
+    if (!transactions) return;
+
+    const tradesTransactions = transactions.filter(
+      (transaction: any) => transaction.type === "trade"
+    );
+
+    const tradesSum = tradesTransactions
       .filter((transaction: any) => transaction.status === "success")
       .reduce((sum: number, transaction: any) => sum + transaction.amount, 0);
-      
-      const pendingSum = tradesTransactions
-        .filter((transaction: any) => transaction.status === "pending").length
 
+    const pendingSum = tradesTransactions
+      .filter((transaction: any) => transaction.status === "pending").length;
 
-        setTotalTrades(tradesSum)
-        setPendingTrades(pendingSum)
-        setTotalInterest(tradesSum)
-    }
-  }, []);
+    setTotalTrades(tradesSum);
+    setPendingTrades(pendingSum);
+    setTotalInterest(tradesSum);
+  }, [transactions]);
 
 
 

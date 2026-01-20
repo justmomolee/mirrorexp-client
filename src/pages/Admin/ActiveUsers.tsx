@@ -5,24 +5,30 @@ import { useEffect, useState } from "react";
 import { TfiSearch } from "react-icons/tfi";
 
 const tableTitles = ["User", "Phone", "Country", "Balance", "Action"]
+const USERS_PER_PAGE = 10;
 
 export default function ActiveUsers() {
-  const { user:admin } = contextData()
+  const { user:admin, authHeaders } = contextData()
   const [users, setUsers] = useState<any>(null)
   const [filteredUsers, setFilteredUsers] = useState<any>(null)
   const [userData, setUserData] = useState(null)
   const [fetching, setFetching] = useState(true)
   const [reFetch, setReFetch] = useState(true)
+  const [page, setPage] = useState(1);
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch(`${url}/users`);
+      const res = await fetch(`${url}/users`, {
+        headers: authHeaders(),
+      });
       const data = await res.json();
 
       if (res.ok) {
-        setUsers(data.filter((user:any) => user._id !== admin._id))
-        setFilteredUsers(data.filter((user:any) => user._id !== admin._id))
+        const cleaned = data.filter((user:any) => user._id !== admin._id);
+        setUsers(cleaned);
+        setFilteredUsers(cleaned);
+        setPage(1);
       }
       else throw new Error(data.message);
     } catch (error) {
@@ -48,7 +54,21 @@ export default function ActiveUsers() {
       user.fullName.toLowerCase().includes(search)
     )
     setFilteredUsers(filtered)
+    setPage(1)
   }
+
+  const paginatedUsers = filteredUsers
+    ? filteredUsers.slice((page - 1) * USERS_PER_PAGE, page * USERS_PER_PAGE)
+    : [];
+
+  const totalPages = filteredUsers ? Math.max(1, Math.ceil(filteredUsers.length / USERS_PER_PAGE)) : 1;
+  const canPrev = page > 1;
+  const canNext = page < totalPages;
+
+  const goToPage = (nextPage: number) => {
+    if (nextPage < 1 || nextPage > totalPages) return;
+    setPage(nextPage);
+  };
 
 
 
@@ -77,7 +97,7 @@ export default function ActiveUsers() {
         </thead>
 
         <tbody>
-            {filteredUsers && filteredUsers.map((user:any) => 
+            {paginatedUsers && paginatedUsers.map((user:any) => 
             <tr key={user._id} className="min-w-[150px] bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th scope="row" className="flex items-center px-5 py-3 text-gray-900 whitespace-nowrap dark:text-white">
                   <img className="w-10 h-10 rounded-full bg-[#E2FFD7]/10" src={`https://robohash.org/${user?._id}`} alt="Avatar" />
@@ -116,6 +136,30 @@ export default function ActiveUsers() {
               )}
         </tbody>
     </table>
+
+      {filteredUsers && filteredUsers.length > USERS_PER_PAGE && (
+        <div className="flex items-center justify-between mt-4 text-xs text-gray-700 dark:text-gray-300">
+          <span>
+            Page {page} of {totalPages}
+          </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => goToPage(page - 1)}
+              disabled={!canPrev}
+              className="px-3 py-1 border rounded disabled:opacity-50 dark:border-gray-600"
+            >
+              Prev
+            </button>
+            <button
+              onClick={() => goToPage(page + 1)}
+              disabled={!canNext}
+              className="px-3 py-1 border rounded disabled:opacity-50 dark:border-gray-600"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
 
       {userData && <EditUserModal userData={userData} handleUserData={handleUserData}/>}
   </div>

@@ -28,7 +28,7 @@ export default function UpdateProfile() {
   const [loading, setLoading] = useState(false)
   const formRef = useRef<HTMLFormElement | null>(null);
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
-  const { login, user } = contextData()
+  const { login, user, authHeaders } = contextData()
   const navigate = useNavigate()
 
 
@@ -127,7 +127,7 @@ export default function UpdateProfile() {
     try {
       const res = await fetch(`${url}/users/update-profile`, {
         method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
+        headers: authHeaders({'Content-Type': 'application/json'}),
         body: JSON.stringify(profileData)
       })
       const data = await res.json()

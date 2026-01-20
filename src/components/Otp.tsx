@@ -88,8 +88,7 @@ export default function Otp({ email, password, username, referredBy }:
 
       if (res.ok) {
         // Store user data and login
-        login(data.user)
-        localStorage.setItem('user', JSON.stringify(data.user))
+        login(data.user, data.token)
         navigate('/dashboard/')
       } else {
         throw new Error(data.message)

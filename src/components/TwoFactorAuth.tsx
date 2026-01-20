@@ -12,11 +12,11 @@ export default function TwoFactorAuth() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
-  const { user } = contextData()
+  const { user, authHeaders } = contextData()
 
   const fetchQrCode = async () => {
     try {
-      const res = await fetch(`${url}/users/getQrCode`)
+      const res = await fetch(`${url}/users/getQrCode`, { headers: authHeaders() })
       const data = await res.json()
 
       if(res.ok) {
@@ -39,7 +39,7 @@ export default function TwoFactorAuth() {
     try {
       const res = await fetch(`${url}/users/verifyToken`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: authHeaders({'Content-Type': 'application/json'}),
         body: JSON.stringify({ email: user.email, token, secret })
       })
       const data = await res.json()
@@ -88,4 +88,3 @@ useEffect(() => {
     </div>
   )
 }
-

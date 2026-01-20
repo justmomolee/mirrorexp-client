@@ -21,7 +21,7 @@ export default function EditUserModal({userData, handleUserData}:any) {
   const [loading, setLoading] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const { login } = contextData()
+  const { login, authHeaders } = contextData()
   const navigate = useNavigate()
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;  
 
@@ -61,8 +61,8 @@ export default function EditUserModal({userData, handleUserData}:any) {
       setLoading(true);
       const res = await fetch(`${url}/users/update-profile`, {
         method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(profileData)
+        headers: authHeaders({'Content-Type': 'application/json'}),
+        body: JSON.stringify({...profileData, userId: userData._id})
       })
       const data = await res.json()
 
@@ -83,7 +83,7 @@ export default function EditUserModal({userData, handleUserData}:any) {
       setDeleteLoading(true)
       const res = await fetch(`${url}/users`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({ userIds: [userData._id] })
       })
       const data = await res.json()

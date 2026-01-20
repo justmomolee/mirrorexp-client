@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 
 export default function TransactionsTable() {
   const [transactions, setTransactions] = useState<any>(null);
-  const { user } = contextData();
+  const { user, authHeaders } = contextData();
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
   const fetchUserTransactions = async () => {
     try {
-      const res = await fetch(`${url}/transactions/user/${user.email}`);
+      const res = await fetch(`${url}/transactions/user/${user.email}`, {
+        headers: authHeaders(),
+      });
       const data = await res.json();
 
       if (res.ok) setTransactions(data);

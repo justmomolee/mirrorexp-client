@@ -23,7 +23,7 @@ interface ActivityLog {
 }
 
 const ActivityLogs = () => {
-  const { user } = contextData();
+  const { user, authHeaders } = contextData();
   const [logs, setLogs] = useState<ActivityLog[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -41,6 +41,7 @@ const ActivityLogs = () => {
       if (actionFilter) params.append('action', actionFilter);
       const res = await fetch(
         `${serverUrl}/activity-logs?${params.toString()}`,
+        { headers: authHeaders() },
       );
       const data = await res.json();
       if (!res.ok)

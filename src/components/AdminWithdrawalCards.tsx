@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { CiSaveUp2 } from "react-icons/ci";
+import { contextData } from "@/context/AuthContext";
 
 export default function AdminWithdrawalCards() {
   const [transactions, setTransactions] = useState<any>(null);
@@ -7,10 +8,13 @@ export default function AdminWithdrawalCards() {
   const [pendingWithdrawals, setPendingWithdrawals] = useState(0)
   const [rejectedWithdrawal, setRejectedWithdrawals] = useState(0)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+  const { authHeaders } = contextData();
 
   const fetchUserTransactions = async () => {
     try {
-      const res = await fetch(`${url}/transactions`);
+      const res = await fetch(`${url}/transactions`, {
+        headers: authHeaders(),
+      });
       const data = await res.json();
 
       if (res.ok) setTransactions(data);
@@ -22,27 +26,29 @@ export default function AdminWithdrawalCards() {
 
   useEffect(() => {
     fetchUserTransactions();
-    
-    if (transactions) {
-      const withdrawalsTransactions = transactions.filter(
-        (transaction: any) => transaction.status === "withdrawal" 
-      );
+  }, [authHeaders]);
 
-      const withdrawalSum = withdrawalsTransactions
+  useEffect(() => {
+    if (!transactions) return;
+
+    const withdrawalsTransactions = transactions.filter(
+      (transaction: any) => transaction.type === "withdrawal"
+    );
+
+    const withdrawalSum = withdrawalsTransactions
       .filter((transaction: any) => transaction.status === "success")
       .reduce((sum: number, transaction: any) => sum + transaction.amount, 0);
-      
-      const pendingSum = withdrawalsTransactions
-        .filter((transaction: any) => transaction.status === "pending").length
 
-      const failedSum = withdrawalsTransactions
-        .filter((transaction: any) => transaction.status === "failed").length
+    const pendingSum = withdrawalsTransactions
+      .filter((transaction: any) => transaction.status === "pending").length;
 
-      setTotalWithdrawal(withdrawalSum);
-      setPendingWithdrawals(pendingSum);
-      setRejectedWithdrawals(failedSum);
-    }
-  }, []);
+    const failedSum = withdrawalsTransactions
+      .filter((transaction: any) => transaction.status === "failed").length;
+
+    setTotalWithdrawal(withdrawalSum);
+    setPendingWithdrawals(pendingSum);
+    setRejectedWithdrawals(failedSum);
+  }, [transactions]);
 
 
 

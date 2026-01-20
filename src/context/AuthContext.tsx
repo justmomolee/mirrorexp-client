@@ -5,27 +5,50 @@ const AuthContext = createContext<any>(null);
 
 export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState<string | null>(null);
   const [fetching, setFetching] = useState(true);
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
   const location = useLocation();
 
-  const login = (userData: any) => {
+  const authHeaders = (headers: HeadersInit = {}) => {
+    return token
+      ? { ...headers, Authorization: `Bearer ${token}` }
+      : headers;
+  };
+
+  const login = (userData: any, authToken?: string) => {
     setUser(userData);
+    if (authToken) {
+      setToken(authToken);
+      localStorage.setItem('token', authToken);
+    }
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
   const logout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     setUser(null);
+    setToken(null);
   };
 
-  const fetchUser = async (userId: string) => {
+  const fetchUser = async (overrideToken?: string) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 20000);
 
+    const activeToken = overrideToken || token;
+
+    if (!activeToken) {
+      setFetching(false);
+      return;
+    }
+
     try {
-      const res = await fetch(`${url}/users/${userId}`, {
+      const res = await fetch(`${url}/users/me`, {
         signal: controller.signal,
+        headers: {
+          Authorization: `Bearer ${activeToken}`,
+        },
       });
       const data = await res.json();
 
@@ -33,6 +56,7 @@ export const AuthProvider = ({ children }: any) => {
         setUser(data.user);
         localStorage.setItem('user', JSON.stringify(data.user));
       } else {
+        if (res.status === 401) logout();
         throw new Error(data.message);
       }
     } catch (error: any) {
@@ -45,22 +69,23 @@ export const AuthProvider = ({ children }: any) => {
 
   useEffect(() => {
     setFetching(true);
+    const storedToken = localStorage.getItem('token');
     const storageData = localStorage.getItem('user');
 
-    if (storageData) {
-      try {
-        const user = JSON.parse(storageData);
-        if (user && user._id) {
-          fetchUser(user._id);
-        } else {
-          setUser(null);
-          setFetching(false);
+    if (storedToken) {
+      setToken(storedToken);
+    }
+
+    if (storedToken) {
+      if (storageData) {
+        try {
+          const parsedUser = JSON.parse(storageData);
+          if (parsedUser) setUser(parsedUser);
+        } catch (err) {
+          console.error("Failed to parse stored user", err);
         }
-      } catch (error) {
-        console.error('Parse error:', error);
-        setUser(null);
-        setFetching(false);
       }
+      fetchUser(storedToken);
     } else {
       setUser(null);
       setFetching(false);
@@ -68,21 +93,13 @@ export const AuthProvider = ({ children }: any) => {
   }, []);
 
   useEffect(() => {
-    const storageData = localStorage.getItem('user');
-    if (storageData) {
-      try {
-        const user = JSON.parse(storageData);
-        if (user && location.pathname.includes('/dashboard')) {
-          fetchUser(user._id);
-        }
-      } catch (error) {
-        console.error('Parse error on pathname change:', error);
-      }
+    if (token && location.pathname.includes('/dashboard')) {
+      fetchUser();
     }
-  }, [location.pathname]);
+  }, [location.pathname, token]);
 
   return (
-    <AuthContext.Provider value={{ user, fetching, login, logout }}>
+    <AuthContext.Provider value={{ user, token, fetching, login, logout, authHeaders }}>
       {children}
     </AuthContext.Provider>
   );

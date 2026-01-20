@@ -64,8 +64,7 @@ export default function Login() {
       const data = await res.json()
 
       if (res.ok) {
-        login(data.user)
-        localStorage.setItem('user', JSON.stringify(data.user))
+        login(data.user, data.token)
         navigate('/dashboard/')
       }
       else throw new Error(data.message)

@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { PiUsersThreeThin } from "react-icons/pi";
+import { contextData } from "@/context/AuthContext";
 
 export default function AdminUserCards() {
   const [users, setUsers] = useState<any>(0);
   const [activeUsers, setActiveUsers] = useState(0)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+  const { authHeaders } = contextData();
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch(`${url}/users`);
+      const res = await fetch(`${url}/users`, { headers: authHeaders() });
       const data = await res.json();
 
       if (res.ok) {

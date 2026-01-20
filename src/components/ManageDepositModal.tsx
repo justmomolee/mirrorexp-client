@@ -2,6 +2,7 @@ import { useState } from "react";
 import s from "../pages/login/Login.module.css"
 import { GrClose } from "react-icons/gr";
 import EditTransaction from "./EditTransaction";
+import { contextData } from "@/context/AuthContext";
 
 export default function ManageDepositModal({toggleModal, deposit}: {toggleModal: (e:boolean) => void, deposit: null|ITransaction}) {
   const [error, setError] = useState<null|string>(null)
@@ -10,6 +11,7 @@ export default function ManageDepositModal({toggleModal, deposit}: {toggleModal:
   const [success, setSuccess] = useState(false)
   const [edit, setEdit] = useState(false)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+  const { authHeaders } = contextData();
 
   
   const ToggleModal = (e:boolean) => {
@@ -31,7 +33,7 @@ export default function ManageDepositModal({toggleModal, deposit}: {toggleModal:
     try {
       const res = await fetch(`${url}/deposits/${deposit?._id}`, {
         method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
+        headers: authHeaders({'Content-Type': 'application/json'}),
         body: JSON.stringify({ status, email: deposit?.user.email, amount: deposit?.amount })
       })
 

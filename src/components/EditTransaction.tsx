@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import s from '../pages/login/Login.module.css'
+import { contextData } from "@/context/AuthContext"
 
 interface ITransactionData {
   amountInUSD: number, 
@@ -19,6 +20,7 @@ export default function EditTransaction({amountInUSD, amountInCRYPTO, coinName, 
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+  const { authHeaders } = contextData();
 
   useEffect(() => {
     setAmount(amountInUSD)
@@ -36,7 +38,7 @@ export default function EditTransaction({amountInUSD, amountInCRYPTO, coinName, 
       setLoading(true)
       const res = await fetch(`${url}/transactions/${id}`, {
         method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
+        headers: authHeaders({'Content-Type': 'application/json'}),
         body: JSON.stringify({ amount, convertedAmount: amountInCrypto})
       })
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import s from '../login/Login.module.css';
+import { contextData } from '@/context/AuthContext';
 
 export default function Settings() {
   const [coins, setCoins] = useState([
@@ -10,10 +11,13 @@ export default function Settings() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
+  const { authHeaders } = contextData();
 
   const fetchUtils = async () => {
     try {
-      const res = await fetch(`${url}/utils`);
+      const res = await fetch(`${url}/utils`, {
+        headers: authHeaders(),
+      });
       const data = await res.json();
 
       if (res.ok) {
@@ -41,7 +45,7 @@ export default function Settings() {
       setLoading(true);
       const res = await fetch(`${url}/utils/update/${utilId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: authHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ coins }),
       });
       const data = await res.json();
