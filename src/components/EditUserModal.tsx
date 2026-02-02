@@ -173,22 +173,22 @@ export default function EditUserModal({userData, handleUserData}:any) {
 
                         <div className="col-span-3 sm:col-span-2">
                             <label htmlFor="deposit" className="editUserLabel">Deposit</label>
-                            <input value={deposit} onChange={(e) => setDeposit(Number(e.target.value))} type="number" id="deposit" className="editUserInput" placeholder={userData.deposit} required min={0}/>
+                            <input value={deposit} onChange={(e) => setDeposit(Number(e.target.value))} type="number" id="deposit" className="editUserInput" placeholder={userData.deposit} required min={0} step="0.01"/>
                         </div>
 
                         <div className="col-span-3 sm:col-span-2">
                             <label htmlFor="interest" className="editUserLabel">Interest</label>
-                            <input value={interest} onChange={(e) => setInterest(Number(e.target.value))} type="number" id="interest" className="editUserInput" placeholder={userData.interest} required min={0}/>
+                            <input value={interest} onChange={(e) => setInterest(Number(e.target.value))} type="number" id="interest" className="editUserInput" placeholder={userData.interest} required min={0} step="0.01"/>
                         </div>
 
                         <div className="col-span-3 sm:col-span-2">
                             <label htmlFor="trade" className="editUserLabel">Trade</label>
-                            <input value={trade} onChange={(e) => setTrade(Number(e.target.value))} type="number" id="trade" className="editUserInput" placeholder={userData.trade} required min={0}/>
+                            <input value={trade} onChange={(e) => setTrade(Number(e.target.value))} type="number" id="trade" className="editUserInput" placeholder={userData.trade} required min={0} step="0.01"/>
                         </div>
 
                         <div className="col-span-3 sm:col-span-2">
                             <label htmlFor="bonus" className="editUserLabel">Bonus</label>
-                            <input value={bonus} onChange={(e) => setBonus(Number(e.target.value))} type="number" id="bonus" className="editUserInput" placeholder={userData.bonus} required min={0}/>
+                            <input value={bonus} onChange={(e) => setBonus(Number(e.target.value))} type="number" id="bonus" className="editUserInput" placeholder={userData.bonus} required min={0} step="0.01"/>
                         </div>
 
                     </div>

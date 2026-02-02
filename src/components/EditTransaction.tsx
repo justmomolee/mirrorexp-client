@@ -66,7 +66,7 @@ export default function EditTransaction({amountInUSD, amountInCRYPTO, coinName, 
         <div className="flex flex-col gap-5">
           <div className="flex-auto">
             <label htmlFor="amount" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount In USD</label>
-            <input onChange={(e) => setAmount(Number(e.target.value))} value={amount} type="number" id="amount" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Enter Deposit Amount" required min={0}/>
+            <input onChange={(e) => setAmount(Number(e.target.value))} value={amount} type="number" id="amount" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Enter Deposit Amount" required min={0} step="0.01"/>
           </div>
 
           <div className="flex-auto">
