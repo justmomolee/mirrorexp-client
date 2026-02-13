@@ -26,6 +26,7 @@ export default function Register() {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
+  const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
   const siteKey = import.meta.env.VITE_REACT_APP_CAPTCHA_SITE_KEY
   const isDevelopment = import.meta.env.DEV;
   const [captchaToken, setCaptchaToken] = useState<string | null>(isDevelopment ? 'dev-bypass-token' : null);
@@ -65,6 +66,12 @@ export default function Register() {
     const passwordValidation = validatePassword(password);
     if (!passwordValidation.isValid) {
       setError(passwordValidation.error || 'Invalid password');
+      return false;
+    }
+
+    // Validate terms acceptance
+    if (!termsAccepted) {
+      setError('Please accept the Terms & Conditions to continue');
       return false;
     }
 
@@ -211,7 +218,15 @@ export default function Register() {
         </div>
 
         <div style={{ gap: '10px' }}>
-          <input checked disabled style={{ width: '25px' }} type='checkbox' />
+          <input
+            checked={termsAccepted}
+            onChange={(e) => {
+              setTermsAccepted(e.target.checked);
+              setError('');
+            }}
+            style={{ width: '25px' }}
+            type='checkbox'
+          />
           <p>MirrorExp <br /><Link to='#'><span>Terms & Condition | Privacy Policy</span></Link></p>
         </div>
 
