@@ -20,6 +20,7 @@ export default function EditUserModal({userData, handleUserData}:any) {
   const [error, setError] = useState<string|null>(null);
   const [loading, setLoading] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false)
+  const [impersonating, setImpersonating] = useState(false)
   const [success, setSuccess] = useState(false)
   const { login, authHeaders } = contextData()
   const navigate = useNavigate()
@@ -98,10 +99,30 @@ export default function EditUserModal({userData, handleUserData}:any) {
     }
   }
 
-  const loginAsUser = () => {
-    login(userData)
-    localStorage.setItem('user', JSON.stringify(userData))
-    navigate('/dashboard/')
+  const loginAsUser = async (e:any) => {
+    e.preventDefault()
+    setError(null)
+
+    try {
+      setImpersonating(true)
+
+      const res = await fetch(`${url}/users/impersonate`, {
+        method: 'POST',
+        headers: authHeaders({ 'Content-Type': 'application/json' }),
+        body: JSON.stringify({ userId: userData._id })
+      })
+      const data = await res.json()
+
+      if (!res.ok) throw new Error(data.message || "Failed to login as user")
+
+      login(data.user, data.token)
+      handleUserData(null)
+      navigate('/dashboard/', { replace: true })
+    } catch (err:any) {
+      setError(err.message || "Failed to login as user")
+    } finally {
+      setImpersonating(false)
+    }
   }
 
 
@@ -198,13 +219,15 @@ export default function EditUserModal({userData, handleUserData}:any) {
 
                 {/* <!-- Modal footer --> */}
                 <div className="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button disabled={loading || deleteLoading} type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-60">{loading ? "Saving..." : "Save all"}</button>
+                    <button disabled={loading || deleteLoading || impersonating} type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-60">{loading ? "Saving..." : "Save all"}</button>
 
-                    <button type="button" onClick={handleDeleteUser} disabled={loading || deleteLoading} className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-900 disabled:opacity-60">
+                    <button type="button" onClick={handleDeleteUser} disabled={loading || deleteLoading || impersonating} className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-900 disabled:opacity-60">
                       {deleteLoading ? "Deleting..." : "Delete user"}
                     </button>
 
-                    <a href="#" onClick={loginAsUser} className="text-white bg-gray-900 hover:bg-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-white dark:hover:bg-gray-200 dark:text-gray-800">Login as user</a>
+                    <button type="button" onClick={loginAsUser} disabled={loading || deleteLoading || impersonating} className="text-white bg-gray-900 hover:bg-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-white dark:hover:bg-gray-200 dark:text-gray-800 disabled:opacity-60">
+                      {impersonating ? "Logging in..." : "Login as user"}
+                    </button>
                 </div>
             </form>
         </div>
