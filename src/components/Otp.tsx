@@ -2,6 +2,7 @@ import { useState } from "react"
 import { ImSpinner8 } from "react-icons/im"
 import { useNavigate } from "react-router-dom"
 import { contextData } from "../context/AuthContext"
+import { buildApiUrl } from "@/lib/api"
 import s from '../pages/register/Register.module.css'
 import { validateOtp, getFriendlyErrorMessage } from "@/utils/validation"
 
@@ -14,7 +15,6 @@ export default function Otp({ email, password, username, referredBy }:
   const [success, setSuccess] = useState<string|null>(null)
   const [loading, setLoading] = useState(false)
   const { login } = contextData()
-  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
 
 
@@ -33,7 +33,7 @@ export default function Otp({ email, password, username, referredBy }:
     setError(null)
 
     try{
-      const res = await fetch(`${url}/users/resend-otp`, {
+      const res = await fetch(buildApiUrl('/users/resend-otp'), {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ email })
@@ -72,7 +72,7 @@ export default function Otp({ email, password, username, referredBy }:
     setLoading(true)
 
     try{
-      const res = await fetch(`${url}/users/otp/`, {
+      const res = await fetch(buildApiUrl('/users/otp/'), {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({

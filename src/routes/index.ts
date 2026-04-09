@@ -1,5 +1,6 @@
 import Pricing from "@/components/pricing/Pricing";
 import Bonus from "@/pages/Dashboard/Bonus";
+import CopyTraders from "@/pages/Dashboard/CopyTraders";
 import Deposit from "@/pages/Dashboard/Deposit";
 import KYC from "@/pages/Dashboard/KYC";
 import LiveTrades from "@/pages/Dashboard/LiveTrades";
@@ -7,68 +8,67 @@ import MFA from "@/pages/Dashboard/MFA";
 import Profile from "@/pages/Dashboard/Profile";
 import Ranking from "@/pages/Dashboard/Ranking";
 import Settings from "@/pages/Dashboard/Settings";
-import Trades from "@/pages/Dashboard/Trades";
 import Transactions from "@/pages/Dashboard/Transactions";
 import Withdraw from "@/pages/Dashboard/Withdraw";
 
 const coreRoutes = [
   {
-    path: '/dashboard/trades',
-    title: 'Trades',
-    component: Trades,
+    path: 'copy-traders',
+    title: 'Copy Traders',
+    component: CopyTraders,
   },
   {
-    path: '/dashboard/liveTrades',
+    path: 'liveTrades',
     title: 'LiveTrades',
     component: LiveTrades,
   },
   {
-    path: '/dashboard/deposit',
+    path: 'deposit',
     title: 'Deposit',
     component: Deposit,
   },
   {
-    path: '/dashboard/withdrawal',
+    path: 'withdrawal',
     title: 'Withdrawal',
     component: Withdraw,
   },
   {
-    path: '/dashboard/transactions',
+    path: 'transactions',
     title: 'Transactions',
     component: Transactions,
   },
   {
-    path: '/dashboard/profile',
+    path: 'profile',
     title: 'Profile',
     component: Profile,
   },
   {
-    path: '/dashboard/ranking',
+    path: 'ranking',
     title: 'Ranking',
     component: Ranking,
   },
   {
-    path: '/dashboard/pricing',
+    path: 'pricing',
     title: 'Pricing',
     component: Pricing,
   },
   {
-    path: '/dashboard/bonus',
+    path: 'bonus',
     title: 'Bonus',
     component: Bonus,
   },
   {
-    path: '/dashboard/2fa',
+    path: '2fa',
     title: '2FA',
     component: MFA,
   },
   {
-    path: '/dashboard/kyc',
+    path: 'kyc',
     title: 'KYC',
     component: KYC,
   },
   {
-    path: '/dashboard/settings',
+    path: 'settings',
     title: 'Settings',
     component: Settings,
   },

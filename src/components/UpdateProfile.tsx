@@ -1,5 +1,6 @@
 import { contextData } from "@/context/AuthContext";
 import { countries } from "@/lib/countries"
+import { buildApiUrl } from "@/lib/api";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import {
@@ -27,7 +28,6 @@ export default function UpdateProfile() {
   const [error, setError] = useState<string|null>(null);
   const [loading, setLoading] = useState(false)
   const formRef = useRef<HTMLFormElement | null>(null);
-  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
   const { login, user, authHeaders } = contextData()
   const navigate = useNavigate()
 
@@ -125,7 +125,7 @@ export default function UpdateProfile() {
     }
 
     try {
-      const res = await fetch(`${url}/users/update-profile`, {
+      const res = await fetch(buildApiUrl('/users/update-profile'), {
         method: 'PUT',
         headers: authHeaders({'Content-Type': 'application/json'}),
         body: JSON.stringify(profileData)

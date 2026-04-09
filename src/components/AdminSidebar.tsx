@@ -1,33 +1,41 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import logo from '../assets/logo.svg';
-import { CiGrid42 } from 'react-icons/ci';
-import { PiUsersFourLight } from 'react-icons/pi';
-import { CiCreditCard2 } from 'react-icons/ci';
-import { PiPresentationChart } from 'react-icons/pi';
-import { CiCreditCardOff } from 'react-icons/ci';
+import { CiGrid42, CiCreditCard2, CiCreditCardOff, CiLogout, CiMail } from 'react-icons/ci';
+import { PiPresentationChart, PiUsersFourLight } from 'react-icons/pi';
 import { BsShieldPlus } from 'react-icons/bs';
-import { RxChevronDown } from 'react-icons/rx';
 import { HiOutlineKey } from 'react-icons/hi2';
-import { CiLogout } from 'react-icons/ci';
+import { RxChevronDown } from 'react-icons/rx';
 import { contextData } from '@/context/AuthContext';
-import SidebarLinkGroup from './SidebarLinkGroup';
-import { CiMail } from 'react-icons/ci';
 
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
 }
 
+const itemClass = ({ isActive }: { isActive: boolean }) =>
+  `text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+    isActive ? 'bg-graydark dark:bg-meta-4' : ''
+  }`;
+
+const subItemClass = ({ isActive }: { isActive: boolean }) =>
+  `group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+    isActive ? '!text-white' : ''
+  }`;
+
+const groupButtonClass = (active: boolean) =>
+  `text-sm group relative flex w-full items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+    active ? 'bg-graydark dark:bg-meta-4' : ''
+  }`;
+
 const AdminSidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
-  const location = useLocation();
-  const { pathname } = location;
   const { logout } = contextData();
-  const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
+  const [usersOpen, setUsersOpen] = useState(true);
+  const [depositsOpen, setDepositsOpen] = useState(true);
+  const [withdrawalsOpen, setWithdrawalsOpen] = useState(true);
 
-  // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!sidebar.current || !trigger.current) return;
@@ -35,20 +43,22 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         !sidebarOpen ||
         sidebar.current.contains(target) ||
         trigger.current.contains(target)
-      )
+      ) {
         return;
+      }
       setSidebarOpen(false);
     };
+
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
   });
 
-  // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }: KeyboardEvent) => {
       if (!sidebarOpen || keyCode !== 27) return;
       setSidebarOpen(false);
     };
+
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
   });
@@ -56,12 +66,11 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`text-sm absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black text-sm duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
       onClick={() => setSidebarOpen(false)}
     >
-      {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <NavLink to="/">
           <img src={logo} alt="Logo" />
@@ -91,314 +100,151 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       </div>
 
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
-        <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
-          <div>
-            <>
-              <ul className="mb-6 flex flex-col gap-1.5">
-                <li>
-                  <NavLink
-                    to="/admin"
-                    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      (pathname === '/' || pathname.includes('admin')) &&
-                      'bg-graydark dark:bg-meta-4'
-                    }`}
-                  >
-                    <CiGrid42 className="text-xl" />
-                    Dashboard
-                  </NavLink>
-                </li>
+        <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
+          <ul className="mb-6 flex flex-col gap-1.5">
+            <li>
+              <NavLink to="/admin" end className={itemClass}>
+                <CiGrid42 className="text-xl" />
+                Dashboard
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/traders" className={itemClass}>
+                <PiUsersFourLight className="text-xl" />
+                Manage Traders
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/live-trades" className={itemClass}>
+                <PiPresentationChart className="text-xl" />
+                Live Trades
+              </NavLink>
+            </li>
 
-                <li>
-                  <NavLink
-                    to="/admin/trades"
-                    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4${
-                      (pathname === '/' || pathname.includes('admin/trades')) &&
-                      'bg-graydark dark:bg-meta-4'
-                    }`}
-                  >
-                    <PiPresentationChart className="text-xl" />
-                    Manage Trades
-                  </NavLink>
-                </li>
-
-                <SidebarLinkGroup
-                  activeCondition={
-                    pathname === '/' || pathname.includes('dashboard')
-                  }
-                >
-                  {(handleClick, open) => {
-                    return (
-                      <>
-                        <NavLink
-                          to="#"
-                          className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                            (pathname === '/' ||
-                              pathname.includes('admin/users/active')) &&
-                            'bg-graydark dark:bg-meta-4'
-                          }`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            sidebarExpanded
-                              ? handleClick()
-                              : setSidebarExpanded(true);
-                          }}
-                        >
-                          <PiUsersFourLight className="text-xl" />
-                          Manage Users
-                          <RxChevronDown />
-                        </NavLink>
-                        <div
-                          className={`text-sm translate transform overflow-hidden ${
-                            !open && 'hidden'
-                          }`}
-                        >
-                          <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                            <li>
-                              <NavLink
-                                to="/admin/active-users"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Active Users
-                              </NavLink>
-                            </li>
-
-                            <li>
-                              <NavLink
-                                to="/admin/banned-users"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Banned Users
-                              </NavLink>
-                            </li>
-                          </ul>
-                        </div>
-                      </>
-                    );
-                  }}
-                </SidebarLinkGroup>
-
-                <SidebarLinkGroup
-                  activeCondition={
-                    pathname === '/' || pathname.includes('dashboard')
-                  }
-                >
-                  {(handleClick, open) => {
-                    return (
-                      <>
-                        <NavLink
-                          to="#"
-                          className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                            (pathname === '/' ||
-                              pathname.includes('dashboard')) &&
-                            'bg-graydark dark:bg-meta-4'
-                          }`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            sidebarExpanded
-                              ? handleClick()
-                              : setSidebarExpanded(true);
-                          }}
-                        >
-                          <CiCreditCard2 className="text-xl" />
-                          Manage Deposits
-                          <RxChevronDown />
-                        </NavLink>
-                        <div
-                          className={`text-sm translate transform overflow-hidden ${
-                            !open && 'hidden'
-                          }`}
-                        >
-                          <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                            <li>
-                              <NavLink
-                                to="/admin/approved-deposits"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Approved Deposits
-                              </NavLink>
-                            </li>
-
-                            <li>
-                              <NavLink
-                                to="/admin/pending-deposits"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Pending Deposits
-                              </NavLink>
-                            </li>
-
-                            <li>
-                              <NavLink
-                                to="/admin/rejected-deposits"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Rejected Deposits
-                              </NavLink>
-                            </li>
-                          </ul>
-                        </div>
-                      </>
-                    );
-                  }}
-                </SidebarLinkGroup>
-
-                <SidebarLinkGroup
-                  activeCondition={
-                    pathname === '/' || pathname.includes('dashboard')
-                  }
-                >
-                  {(handleClick, open) => {
-                    return (
-                      <>
-                        <NavLink
-                          to="#"
-                          className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                            (pathname === '/' ||
-                              pathname.includes('dashboard')) &&
-                            'bg-graydark dark:bg-meta-4'
-                          }`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            sidebarExpanded
-                              ? handleClick()
-                              : setSidebarExpanded(true);
-                          }}
-                        >
-                          <CiCreditCardOff className="text-xl" />
-                          Manage Withdrawals
-                          <RxChevronDown />
-                        </NavLink>
-                        <div
-                          className={`text-sm translate transform overflow-hidden ${
-                            !open && 'hidden'
-                          }`}
-                        >
-                          <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                            <li>
-                              <NavLink
-                                to="/admin/pending-withdrawals"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Pending Withdrawals
-                              </NavLink>
-                            </li>
-
-                            <li>
-                              <NavLink
-                                to="/admin/approved-withdrawals"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Approved Withdrawals
-                              </NavLink>
-                            </li>
-
-                            <li>
-                              <NavLink
-                                to="/admin/rejected-withdrawals"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Rejected Withdrawals
-                              </NavLink>
-                            </li>
-                          </ul>
-                        </div>
-                      </>
-                    );
-                  }}
-                </SidebarLinkGroup>
-              </ul>
-            </>
-          </div>
-          <div>
-            {
-              <>
-                <ul className="mb-6 flex flex-col gap-1.5">
+            <li>
+              <button
+                type="button"
+                onClick={() => setUsersOpen((current) => !current)}
+                className={groupButtonClass(usersOpen)}
+              >
+                <PiUsersFourLight className="text-xl" />
+                Manage Users
+                <RxChevronDown className={`ml-auto transition-transform ${usersOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {usersOpen && (
+                <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                   <li>
-                    <NavLink
-                      to="/admin/sendmail"
-                      className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                        pathname.includes('sendmail') &&
-                        'bg-graydark dark:bg-meta-4'
-                      }`}
-                    >
-                      <CiMail className="text-xl" />
-                      Send Mail
+                    <NavLink to="/admin/active-users" className={subItemClass}>
+                      Active Users
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink
-                      to="/admin/activity"
-                      className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                        pathname.includes('activity') &&
-                        'bg-graydark dark:bg-meta-4'
-                      }`}
-                    >
-                      <PiPresentationChart className="text-xl" />
-                      Activity Logs
-                    </NavLink>
-                  </li>
-
-                  <li>
-                    <NavLink
-                      to="/admin/kyc"
-                      className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                        pathname.includes('kyc') && 'bg-graydark dark:bg-meta-4'
-                      }`}
-                    >
-                      <BsShieldPlus className="text-xl" />
-                      Manage Kyc
-                    </NavLink>
-                  </li>
-
-                  <li>
-                    <NavLink
-                      to="/admin/settings"
-                      className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                        pathname.includes('settings') &&
-                        'bg-graydark dark:bg-meta-4'
-                      }`}
-                    >
-                      <HiOutlineKey className="text-xl" />
-                      Settings
+                    <NavLink to="/admin/banned-users" className={subItemClass}>
+                      Banned Users
                     </NavLink>
                   </li>
                 </ul>
-              </>
-            }
+              )}
+            </li>
 
-            <NavLink
-              to="#"
-              className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4`}
-              onClick={() => logout()}
-            >
-              <CiLogout className="text-xl" />
-              Sign out
-            </NavLink>
-          </div>
+            <li>
+              <button
+                type="button"
+                onClick={() => setDepositsOpen((current) => !current)}
+                className={groupButtonClass(depositsOpen)}
+              >
+                <CiCreditCard2 className="text-xl" />
+                Manage Deposits
+                <RxChevronDown className={`ml-auto transition-transform ${depositsOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {depositsOpen && (
+                <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                  <li>
+                    <NavLink to="/admin/approved-deposits" className={subItemClass}>
+                      Approved Deposits
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/admin/pending-deposits" className={subItemClass}>
+                      Pending Deposits
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/admin/rejected-deposits" className={subItemClass}>
+                      Rejected Deposits
+                    </NavLink>
+                  </li>
+                </ul>
+              )}
+            </li>
+
+            <li>
+              <button
+                type="button"
+                onClick={() => setWithdrawalsOpen((current) => !current)}
+                className={groupButtonClass(withdrawalsOpen)}
+              >
+                <CiCreditCardOff className="text-xl" />
+                Manage Withdrawals
+                <RxChevronDown className={`ml-auto transition-transform ${withdrawalsOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {withdrawalsOpen && (
+                <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                  <li>
+                    <NavLink to="/admin/pending-withdrawals" className={subItemClass}>
+                      Pending Withdrawals
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/admin/approved-withdrawals" className={subItemClass}>
+                      Approved Withdrawals
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/admin/rejected-withdrawals" className={subItemClass}>
+                      Rejected Withdrawals
+                    </NavLink>
+                  </li>
+                </ul>
+              )}
+            </li>
+          </ul>
+
+          <ul className="mb-6 flex flex-col gap-1.5">
+            <li>
+              <NavLink to="/admin/sendmail" className={itemClass}>
+                <CiMail className="text-xl" />
+                Send Mail
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/activity" className={itemClass}>
+                <PiPresentationChart className="text-xl" />
+                Activity Logs
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/kyc" className={itemClass}>
+                <BsShieldPlus className="text-xl" />
+                Manage Kyc
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/settings" className={itemClass}>
+                <HiOutlineKey className="text-xl" />
+                Settings
+              </NavLink>
+            </li>
+          </ul>
+
+          <NavLink
+            to="#"
+            className="text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+            onClick={() => logout()}
+          >
+            <CiLogout className="text-xl" />
+            Sign out
+          </NavLink>
         </nav>
       </div>
     </aside>

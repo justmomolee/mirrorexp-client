@@ -1,6 +1,5 @@
-import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
-//importing pages
 import Home from './pages/Home';
 import Copytrade from './pages/Copytrade';
 import WhyMirrorExp from './pages/WhyMirrorExp';
@@ -9,7 +8,7 @@ import Contact from './pages/Contact';
 import Traders from './pages/Traders';
 import Label from './pages/Label';
 import Insurance from './pages/Insurance';
-import { Server } from 'lucide-react';
+import Servers from './pages/Servers';
 import Tools from './pages/Tools';
 import Forex from './pages/Forex';
 import Commodities from './pages/Commodities';
@@ -35,7 +34,6 @@ import DefaultLayout from './components/Layouts/DefaultLayout';
 import Admin from './pages/Admin/Admin';
 import AdminLayout from './components/Layouts/AdminLayout';
 import ActiveUsers from './pages/Admin/ActiveUsers';
-import ManageTrades from './pages/Admin/ManageTrades';
 import BannedUsers from './pages/Admin/BannedUsers';
 import ApprovedDeposits from './pages/Admin/ApprovedDeposits';
 import PendingDeposits from './pages/Admin/PendingDeposits';
@@ -48,180 +46,149 @@ import Settings from './pages/Admin/Settings';
 import { Helmet } from 'react-helmet';
 import SendMail from './pages/Admin/SendMail';
 import ActivityLogs from './pages/Admin/ActivityLogs';
+import ManageTraders from './pages/Admin/ManageTraders';
+import CreateTrader from './pages/Admin/CreateTrader';
+import EditTrader from './pages/Admin/EditTrader';
+import DeleteTrader from './pages/Admin/DeleteTrader';
+import AdminLiveTrades from './pages/Admin/LiveTrades';
 
 function App() {
   const location = useLocation();
   const isPublicRoute =
-    location.pathname.includes('/dashboard') ||
-    location.pathname.includes('/admin') ||
-    location.pathname.includes('/login') ||
-    location.pathname.includes('/register') ||
-    location.pathname.includes('/password-reset');
+    location.pathname.startsWith('/dashboard') ||
+    location.pathname.startsWith('/admin') ||
+    location.pathname.startsWith('/login') ||
+    location.pathname.startsWith('/register') ||
+    location.pathname.startsWith('/password-reset');
   const { fetching, user } = contextData();
-
-  console.log(isPublicRoute);
 
   if (fetching) return <PageLoader />;
 
-  if (!fetching)
-    return (
-      <>
-        <Helmet>
-          {isPublicRoute ? (
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-            />
-          ) : (
-            <meta name="viewport" content="width=1280, user-scalable=yes" />
-          )}
-        </Helmet>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/copytrade" element={<Copytrade />} />
-          <Route path="/company/why" element={<WhyMirrorExp />} />
-          <Route path="/company/regulations" element={<Regulations />} />
-          <Route path="/company/contact" element={<Contact />} />
-          <Route path="/company/traders" element={<Traders />} />
-          <Route path="/company/label" element={<Label />} />
-          <Route path="/company/insurance" element={<Insurance />} />
-          <Route path="/company/servers" element={<Server />} />
-          <Route path="/company/tools" element={<Tools />} />
-          <Route path="/products/forex" element={<Forex />} />
-          <Route path="/products/commodities" element={<Commodities />} />
-          <Route path="/products/indices" element={<Indices />} />
-          <Route path="/products/bonds" element={<Bonds />} />
-          <Route path="/products/crypto" element={<Crypto />} />
-          <Route path="/products/stocks" element={<Stocks />} />
-          <Route path="/products/futures" element={<Futures />} />
-          <Route path="/more/pricing" element={<PricingPage />} />
-          <Route path="/more/conditions" element={<Conditions />} />
-          <Route path="/more/spreads" element={<Spreads />} />
-          <Route path="/more/hours" element={<Hours />} />
-          <Route path="/more/swap" element={<Swap />} />
-          <Route path="/password-reset" element={<PasswordReset />} />
-          <Route path="/password-reset/:page" element={<PasswordReset />} />
+  return (
+    <>
+      <Helmet>
+        {isPublicRoute ? (
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+          />
+        ) : (
+          <meta name="viewport" content="width=1280, user-scalable=yes" />
+        )}
+      </Helmet>
 
-          {user ? (
-            <>
-              {user.isAdmin ? (
-                <>
-                  <Route path="/admin/" element={<AdminLayout />}>
-                    <Route index element={<Admin />} />
-                    <Route path="/admin/home" element={<Admin />} />
-                    <Route
-                      path="/admin/active-users"
-                      element={<ActiveUsers />}
-                    />
-                    <Route path="/admin/trades" element={<ManageTrades />} />
-                    <Route
-                      path="/admin/banned-users"
-                      element={<BannedUsers />}
-                    />
-                    <Route
-                      path="/admin/approved-deposits"
-                      element={<ApprovedDeposits />}
-                    />
-                    <Route
-                      path="/admin/pending-deposits"
-                      element={<PendingDeposits />}
-                    />
-                    <Route
-                      path="/admin/rejected-deposits"
-                      element={<RejectedDeposits />}
-                    />
-                    <Route
-                      path="/admin/approved-withdrawals"
-                      element={<ApprovedWithdrawals />}
-                    />
-                    <Route
-                      path="/admin/pending-withdrawals"
-                      element={<PendingWithdrawals />}
-                    />
-                    <Route
-                      path="/admin/rejected-withdrawals"
-                      element={<RejectedWithdrawals />}
-                    />
-                    <Route path="/admin/sendmail" element={<SendMail />} />
-                    <Route path="/admin/activity" element={<ActivityLogs />} />
-                    <Route path="/admin/settings" element={<Settings />} />
-                    <Route path="/admin/kyc" element={<KYC />} />
-                  </Route>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/copytrade" element={<Copytrade />} />
+        <Route path="/company/why" element={<WhyMirrorExp />} />
+        <Route path="/company/regulations" element={<Regulations />} />
+        <Route path="/company/contact" element={<Contact />} />
+        <Route path="/company/traders" element={<Traders />} />
+        <Route path="/company/label" element={<Label />} />
+        <Route path="/company/insurance" element={<Insurance />} />
+        <Route path="/company/servers" element={<Servers />} />
+        <Route path="/company/tools" element={<Tools />} />
+        <Route path="/products/forex" element={<Forex />} />
+        <Route path="/products/commodities" element={<Commodities />} />
+        <Route path="/products/indices" element={<Indices />} />
+        <Route path="/products/bonds" element={<Bonds />} />
+        <Route path="/products/crypto" element={<Crypto />} />
+        <Route path="/products/stocks" element={<Stocks />} />
+        <Route path="/products/futures" element={<Futures />} />
+        <Route path="/more/pricing" element={<PricingPage />} />
+        <Route path="/more/conditions" element={<Conditions />} />
+        <Route path="/more/spreads" element={<Spreads />} />
+        <Route path="/more/hours" element={<Hours />} />
+        <Route path="/more/swap" element={<Swap />} />
+        <Route path="/password-reset" element={<PasswordReset />} />
+        <Route path="/password-reset/:page" element={<PasswordReset />} />
 
-                  <Route path="/login" element={<Navigate to="/admin/" />} />
-                  <Route path="/register" element={<Navigate to="/admin/" />} />
-                  <Route
-                    path="/register/:ref"
-                    element={<Navigate to="/admin/" />}
-                  />
-                </>
-              ) : (
+        {user ? (
+          <>
+            {user.isAdmin ? (
+              <>
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<Admin />} />
+                  <Route path="home" element={<Navigate to="/admin" replace />} />
+                  <Route path="active-users" element={<ActiveUsers />} />
+                  <Route path="traders" element={<ManageTraders />} />
+                  <Route path="traders/new" element={<CreateTrader />} />
+                  <Route path="traders/:id/edit" element={<EditTrader />} />
+                  <Route path="traders/:id/delete" element={<DeleteTrader />} />
+                  <Route path="live-trades" element={<AdminLiveTrades />} />
+                  <Route path="banned-users" element={<BannedUsers />} />
+                  <Route path="approved-deposits" element={<ApprovedDeposits />} />
+                  <Route path="pending-deposits" element={<PendingDeposits />} />
+                  <Route path="rejected-deposits" element={<RejectedDeposits />} />
+                  <Route path="approved-withdrawals" element={<ApprovedWithdrawals />} />
+                  <Route path="pending-withdrawals" element={<PendingWithdrawals />} />
+                  <Route path="rejected-withdrawals" element={<RejectedWithdrawals />} />
+                  <Route path="sendmail" element={<SendMail />} />
+                  <Route path="activity" element={<ActivityLogs />} />
+                  <Route path="settings" element={<Settings />} />
+                  <Route path="kyc" element={<KYC />} />
+                </Route>
+
+                <Route path="/login" element={<Navigate to="/admin" replace />} />
+                <Route path="/register" element={<Navigate to="/admin" replace />} />
                 <Route
-                  path="/admin/*"
-                  element={<Navigate to="/dashboard/" />}
+                  path="/register/:ref"
+                  element={<Navigate to="/admin" replace />}
                 />
-              )}
+              </>
+            ) : (
+              <Route path="/admin/*" element={<Navigate to="/dashboard" replace />} />
+            )}
 
-              {!user.isAdmin ? (
-                <>
-                  <Route path="/dashboard/" element={<DefaultLayout />}>
-                    {user.fullName === '' ? (
-                      <Route
-                        path="/dashboard/updateProfile"
-                        element={<UpdateProfile />}
-                      />
-                    ) : (
-                      <Route path="/dashboard/home" element={<Dashboard />} />
-                    )}
-
-                    <Route index element={<Dashboard />} />
-                    <Route path="/dashboard/home" element={<Dashboard />} />
-
-                    {routes.map((route, i) => (
-                      <Route
-                        key={i}
-                        path={route.path}
-                        element={<route.component />}
-                      />
-                    ))}
-                  </Route>
-
+            {!user.isAdmin ? (
+              <>
+                <Route path="/dashboard" element={<DefaultLayout />}>
                   <Route
-                    path="/login"
-                    element={<Navigate to="/dashboard/" />}
+                    index
+                    element={
+                      user.fullName === '' ? (
+                        <Navigate to="updateProfile" replace />
+                      ) : (
+                        <Dashboard />
+                      )
+                    }
                   />
-                  <Route
-                    path="/register"
-                    element={<Navigate to="/dashboard/" />}
-                  />
-                  <Route
-                    path="/register/:ref"
-                    element={<Navigate to="/dashboard/" />}
-                  />
-                </>
-              ) : (
+                  <Route path="home" element={<Navigate to="/dashboard" replace />} />
+                  <Route path="updateProfile" element={<UpdateProfile />} />
+                  {routes.map((route, index) => (
+                    <Route
+                      key={`${route.path}-${index}`}
+                      path={route.path}
+                      element={<route.component />}
+                    />
+                  ))}
+                </Route>
+
+                <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+                <Route path="/register" element={<Navigate to="/dashboard" replace />} />
                 <Route
-                  path="/dashboard/*"
-                  element={<Navigate to="/admin/" />}
+                  path="/register/:ref"
+                  element={<Navigate to="/dashboard" replace />}
                 />
-              )}
-            </>
-          ) : (
-            <>
-              <Route path="/dashboard/*" element={<Navigate to="/login" />} />
-              <Route path="/admin/*" element={<Navigate to="/login" />} />
+              </>
+            ) : (
+              <Route path="/dashboard/*" element={<Navigate to="/admin" replace />} />
+            )}
+          </>
+        ) : (
+          <>
+            <Route path="/dashboard/*" element={<Navigate to="/login" replace />} />
+            <Route path="/admin/*" element={<Navigate to="/login" replace />} />
 
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/register/:ref" element={<Register />} />
-              <Route path="/password-reset" element={<PasswordReset />} />
-              <Route path="/password-reset/:page" element={<PasswordReset />} />
-            </>
-          )}
-        </Routes>
-      </>
-    );
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/register/:ref" element={<Register />} />
+          </>
+        )}
+      </Routes>
+    </>
+  );
 }
 
 export default App;

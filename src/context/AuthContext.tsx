@@ -1,13 +1,14 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { buildApiUrl } from '@/lib/api';
 
 const AuthContext = createContext<any>(null);
+const AUTH_USER_ID_KEY = 'instantglobal.auth.userId';
 
 export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState<string | null>(null);
   const [fetching, setFetching] = useState(true);
-  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
   const location = useLocation();
 
   const authHeaders = (headers: HeadersInit = {}) => {
@@ -22,12 +23,18 @@ export const AuthProvider = ({ children }: any) => {
       setToken(authToken);
       localStorage.setItem('token', authToken);
     }
+    if (userData?._id) {
+      localStorage.setItem(AUTH_USER_ID_KEY, userData._id);
+    } else {
+      localStorage.removeItem(AUTH_USER_ID_KEY);
+    }
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
   const logout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    localStorage.removeItem(AUTH_USER_ID_KEY);
     setUser(null);
     setToken(null);
   };
@@ -44,7 +51,7 @@ export const AuthProvider = ({ children }: any) => {
     }
 
     try {
-      const res = await fetch(`${url}/users/me`, {
+      const res = await fetch(buildApiUrl('/users/me'), {
         signal: controller.signal,
         headers: {
           Authorization: `Bearer ${activeToken}`,
@@ -54,6 +61,9 @@ export const AuthProvider = ({ children }: any) => {
 
       if (res.ok) {
         setUser(data.user);
+        if (data.user?._id) {
+          localStorage.setItem(AUTH_USER_ID_KEY, data.user._id);
+        }
         localStorage.setItem('user', JSON.stringify(data.user));
       } else {
         if (res.status === 401) logout();
@@ -99,7 +109,7 @@ export const AuthProvider = ({ children }: any) => {
   }, [location.pathname, token]);
 
   return (
-    <AuthContext.Provider value={{ user, token, fetching, login, logout, authHeaders }}>
+    <AuthContext.Provider value={{ user, token, fetching, login, logout, authHeaders, refreshUser: fetchUser }}>
       {children}
     </AuthContext.Provider>
   );

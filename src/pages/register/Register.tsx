@@ -7,6 +7,7 @@ import logo from "../../assets/logo2.svg";
 import s from './Register.module.css';
 import Otp from "@/components/Otp";
 import { contextData } from "@/context/AuthContext";
+import { buildApiUrl } from "@/lib/api";
 import {
   sanitizeInput,
   sanitizeEmail,
@@ -30,8 +31,6 @@ export default function Register() {
   const siteKey = import.meta.env.VITE_REACT_APP_CAPTCHA_SITE_KEY
   const isDevelopment = import.meta.env.DEV;
   const [captchaToken, setCaptchaToken] = useState<string | null>(isDevelopment ? 'dev-bypass-token' : null);
-
-  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const { user } = contextData();
   const navigate = useNavigate();
@@ -134,7 +133,7 @@ export default function Register() {
       const sanitizedUsername = sanitizeInput(username);
       const sanitizedReferredBy = referredBy ? sanitizeInput(referredBy) : '';
 
-      const res = await fetch(`${url}/users/signup`, {
+      const res = await fetch(buildApiUrl('/users/signup'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -5,6 +5,7 @@ import { ImSpinner8 } from "react-icons/im"
 import { Link, useNavigate } from "react-router-dom"
 import { MdVisibility } from "react-icons/md"
 import { contextData } from "@/context/AuthContext"
+import { buildApiUrl } from "@/lib/api"
 import {
   sanitizeEmail,
   validateEmail,
@@ -17,7 +18,6 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<boolean|string>(false)
   const [loading, setLoading] = useState(false)
-  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
   const { user, login } = contextData()
   const navigate = useNavigate()
 
@@ -52,7 +52,7 @@ export default function Login() {
       // Sanitize and send info to server
       const sanitizedEmail = sanitizeEmail(email);
 
-      const res = await fetch(`${url}/users/login`, {
+      const res = await fetch(buildApiUrl('/users/login'), {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({

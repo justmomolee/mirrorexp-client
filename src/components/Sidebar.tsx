@@ -1,17 +1,15 @@
-import  { useEffect, useRef } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import logo from '../assets/logo.svg'
-import { LuLayoutDashboard } from "react-icons/lu";
-import { RiTokenSwapLine } from "react-icons/ri";
-import { FiUser } from "react-icons/fi";
-import { PiPresentationChart } from "react-icons/pi";
-import { TbTransform } from "react-icons/tb";
-// import { LiaUserShieldSolid } from "react-icons/lia";
-import { BsShieldPlus } from "react-icons/bs";
-import { SlBadge } from "react-icons/sl";
-import { HiOutlineKey } from "react-icons/hi2";
-import { CiLogout } from "react-icons/ci";
-import { TfiGift } from "react-icons/tfi";
+import { useEffect, useRef } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import logo from '../assets/logo.svg';
+import { LuLayoutDashboard } from 'react-icons/lu';
+import { FiUser } from 'react-icons/fi';
+import { PiPresentationChart, PiUsersThreeThin } from 'react-icons/pi';
+import { TbTransform } from 'react-icons/tb';
+import { BsShieldPlus } from 'react-icons/bs';
+import { SlBadge } from 'react-icons/sl';
+import { HiOutlineKey } from 'react-icons/hi2';
+import { CiLogout } from 'react-icons/ci';
+import { TfiGift } from 'react-icons/tfi';
 import { contextData } from '@/context/AuthContext';
 
 interface SidebarProps {
@@ -19,16 +17,16 @@ interface SidebarProps {
   setSidebarOpen: (arg: boolean) => void;
 }
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
-  const location = useLocation();
-  const { pathname } = location;
-  const { user, logout } = contextData()
+const itemClass = ({ isActive }: { isActive: boolean }) =>
+  `group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+    isActive ? 'bg-graydark dark:bg-meta-4' : ''
+  }`;
 
+const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+  const { user, logout } = contextData();
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
 
-
-  // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!sidebar.current || !trigger.current) return;
@@ -36,25 +34,25 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         !sidebarOpen ||
         sidebar.current.contains(target) ||
         trigger.current.contains(target)
-      )
+      ) {
         return;
+      }
       setSidebarOpen(false);
     };
+
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
   });
 
-  // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }: KeyboardEvent) => {
       if (!sidebarOpen || keyCode !== 27) return;
       setSidebarOpen(false);
     };
+
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
   });
-
-
 
   return (
     <aside
@@ -64,7 +62,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       }`}
       onClick={() => setSidebarOpen(false)}
     >
-      {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <NavLink to="/">
           <img src={logo} alt="Logo" />
@@ -94,158 +91,96 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       </div>
 
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
-        <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
-          <div>
-            {user.fullName !== "" &&
+        <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
+          {user.fullName !== '' && (
             <>
-            <div className="flex gap-5 pb-8 pt-3">
-              <Link to="/dashboard/deposit" className="w-full text-white bg-[#2a8f47] hover:bg-[#4ECB71] font-medium rounded-lg text-sm px-5 py-2.5 text-center">Deposit</Link>
-              <Link to="/dashboard/withdrawal" className="w-full text-red-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center border border-red-500">Withdrawal</Link>
-            </div>
+              <div className="flex gap-5 pb-8 pt-3">
+                <Link
+                  to="/dashboard/deposit"
+                  className="w-full rounded-lg bg-[#2a8f47] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#4ECB71]"
+                >
+                  Deposit
+                </Link>
+                <Link
+                  to="/dashboard/withdrawal"
+                  className="w-full rounded-lg border border-red-500 px-5 py-2.5 text-center text-sm font-medium text-red-500"
+                >
+                  Withdrawal
+                </Link>
+              </div>
 
               <ul className="mb-6 flex flex-col gap-1.5">
-                <NavLink
-                    to="/dashboard"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      (pathname === '/' ||
-                        pathname.includes('dashboard')) &&
-                      'bg-graydark dark:bg-meta-4'
-                    }`}
-                  >
-                  <LuLayoutDashboard className='text-xl' />
-                  Dashboard
-                </NavLink>
-
                 <li>
-                  <NavLink
-                    to="/dashboard/trades"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes('trades') &&
-                      'bg-graydark dark:bg-meta-4'
-                    }`}
-                  >
-                  <RiTokenSwapLine className='text-xl' />
-                    Trades
+                  <NavLink to="/dashboard" end className={itemClass}>
+                    <LuLayoutDashboard className="text-xl" />
+                    Dashboard
                   </NavLink>
                 </li>
-
                 <li>
-                  <NavLink
-                    to="/dashboard/liveTrades"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes('liveTrades') && 'bg-graydark dark:bg-meta-4'
-                    }`}
-                  >
-                    <PiPresentationChart className='text-xl'/>
-                    Watch Live Trades
+                  <NavLink to="/dashboard/copy-traders" className={itemClass}>
+                    <PiUsersThreeThin className="text-xl" />
+                    Copy Traders
                   </NavLink>
                 </li>
-
                 <li>
-                  <NavLink
-                    to="/dashboard/profile"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes('profile') && 'bg-graydark dark:bg-meta-4'
-                    }`}
-                  >
-                    <FiUser className='text-xl'/>
+                  <NavLink to="/dashboard/liveTrades" className={itemClass}>
+                    <PiPresentationChart className="text-xl" />
+                    Live Trades
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/profile" className={itemClass}>
+                    <FiUser className="text-xl" />
                     Profile
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to="/dashboard/bonus"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes('bonus') && 'bg-graydark dark:bg-meta-4'
-                    }`}
-                  >
-                    <TfiGift className='text-xl'/>
+                  <NavLink to="/dashboard/bonus" className={itemClass}>
+                    <TfiGift className="text-xl" />
                     Bonus
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to="/dashboard/ranking"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes('ranking') && 'bg-graydark dark:bg-meta-4'
-                    }`}
-                  >
-                    <SlBadge className='text-xl'/>
+                  <NavLink to="/dashboard/ranking" className={itemClass}>
+                    <SlBadge className="text-xl" />
                     Ranking
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to="/dashboard/transactions"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes('transactions') && 'bg-graydark dark:bg-meta-4'
-                    }`}
-                  >
-                    <TbTransform className='text-xl'/>
+                  <NavLink to="/dashboard/transactions" className={itemClass}>
+                    <TbTransform className="text-xl" />
                     Transactions
                   </NavLink>
                 </li>
               </ul>
-              </>
-            }
-            </div>
 
-            <div>
+              <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">OTHERS</h3>
 
-            {user.fullName !== "" &&
-            <>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              OTHERS
-            </h3>
               <ul className="mb-6 flex flex-col gap-1.5">
-                {/* <li>
-                  <NavLink
-                    to="/dashboard/kyc"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes('kyc') && 'bg-graydark dark:bg-meta-4'
-                    }`}
-                  >
-                    <LiaUserShieldSolid className='text-xl'/>
-                    KYC
-                  </NavLink>
-                </li> */}
-                
                 <li>
-                  <NavLink
-                    to="/dashboard/2fa"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes('2fa') && 'bg-graydark dark:bg-meta-4'
-                    }`}
-                  >
-                    <BsShieldPlus className='text-xl'/>
+                  <NavLink to="/dashboard/2fa" className={itemClass}>
+                    <BsShieldPlus className="text-xl" />
                     2FA
                   </NavLink>
                 </li>
-
                 <li>
-                  <NavLink
-                    to="/password-reset"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes('settings') && 'bg-graydark dark:bg-meta-4'
-                    }`}
-                  >
-                    <HiOutlineKey className='text-xl'/>
+                  <NavLink to="/password-reset" className={itemClass}>
+                    <HiOutlineKey className="text-xl" />
                     Reset Password
                   </NavLink>
                 </li>
               </ul>
-              </>
-            }
+            </>
+          )}
 
-            <NavLink
-              to="#"
-              className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4`}
-              onClick={() => logout()}
-            >
-              <CiLogout className='text-xl'/>
-              Sign out
-            </NavLink>
-          </div>
+          <NavLink
+            to="#"
+            className="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+            onClick={() => logout()}
+          >
+            <CiLogout className="text-xl" />
+            Sign out
+          </NavLink>
         </nav>
       </div>
     </aside>

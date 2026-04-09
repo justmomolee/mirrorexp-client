@@ -3,6 +3,7 @@ import BigChart from "@/components/BigChart";
 import ChartOne from "@/components/ChartOne";
 import ChartSlide from "@/components/ChartSlide";
 import ChartThree from "@/components/ChartThree";
+import CopyTradersSection from "@/components/copyTrading/CopyTradersSection";
 import MiniBals from "@/components/MiniBals";
 import NoDepositAlert from "@/components/NoDepositAlert";
 import PageLoader from "@/components/PageLoader";
@@ -14,8 +15,12 @@ import { useNavigate } from "react-router-dom";
 export default function Dashboard() {
   const { user } = contextData()
   const navigate = useNavigate()
-  const combinedBalance = user.deposit + user.trade + user.interest + user.bonus
-  const balancePlusWithdraw = combinedBalance + user.withdraw
+  const combinedBalance =
+    Number(user.deposit || 0) +
+    Number(user.trade || 0) +
+    Number(user.interest || 0) +
+    Number(user.bonus || 0)
+  const balancePlusWithdraw = combinedBalance + Number(user.withdraw || 0)
 
   useEffect(() => {
     if(!user) return navigate('/login')
@@ -43,6 +48,8 @@ export default function Dashboard() {
       <div className="flex items-center justify-center mb-4 rounded-[15px] p-1 shadow-1 bg-gray-50 dark:bg-gray-800">
         <ChartSlide />
       </div>
+
+      <CopyTradersSection layout="carousel" showPageLink />
 
       <div className="w-full flex gap-5 my-4 max-[1100px]:flex-col mb-4">
         <div className="flex-auto">

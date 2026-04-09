@@ -3,6 +3,7 @@ import s from './PasswordReset.module.css';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ImSpinner8 } from 'react-icons/im';
+import { buildApiUrl } from '@/lib/api';
 
 
 export default function PasswordReset() {
@@ -12,7 +13,6 @@ export default function PasswordReset() {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const { page } = useParams();
-  const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
 
   const handleReset = async(e:any) => {
@@ -24,7 +24,7 @@ export default function PasswordReset() {
 
     try {
       setLoading(true);
-      const res = await fetch(`${url}/users/reset-password/${email}`)
+      const res = await fetch(buildApiUrl(`/users/reset-password/${email}`))
       const data = await res.json();
 
       if(res.ok) setSuccess(data.message)
@@ -49,7 +49,7 @@ export default function PasswordReset() {
       setLoading(true)
       setError(null)
 
-      const res = await fetch(`${url}/users/new-password`, {
+      const res = await fetch(buildApiUrl('/users/new-password'), {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({email, password: newPassword})
